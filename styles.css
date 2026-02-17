@@ -1,0 +1,406 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #050505;
+    color: #e8e1d5;
+    font-family: 'Cormorant Garamond', serif;
+    overflow-x: hidden;
+}
+
+
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* NAVBAR */
+
+/* NAVBAR */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 28px 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  z-index: 1000;
+  transition: background 0.4s ease, backdrop-filter 0.4s ease;
+}
+
+.navbar.scrolled {
+  background: rgba(5, 5, 5, 0.85);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(232, 225, 213, 0.08);
+}
+
+.logo {
+  font-size: 18px;
+  letter-spacing: 4px;
+  font-weight: 400;
+  color: #e8e1d5;
+}
+
+.contact-btn {
+  text-decoration: none;
+  color: #e8e1d5;
+  font-size: 15px;
+  letter-spacing: 2px;
+  border: 1px solid rgba(232, 225, 213, 0.35);
+  padding: 8px 24px;
+  transition: all 0.3s ease;
+}
+
+.contact-btn:hover {
+  background: rgba(232, 225, 213, 0.08);
+  border-color: rgba(232, 225, 213, 0.6);
+}
+
+
+/* HERO SECTION */
+
+.hero {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+.hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+}
+
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.hero-content {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translateY(-50%);
+    max-width: 650px;
+    padding-right: 40px;
+}
+
+.hero-content h1 {
+    font-size: 72px;
+    font-weight: 300;
+    margin-bottom: 30px;
+    line-height: 1.1;
+}
+
+.hero-content p {
+    max-width: 520px;
+    font-size: 19px;
+    line-height: 1.9;
+    letter-spacing: 0.2px;
+    font-weight: 300;
+    opacity: 0.75;
+}
+
+/* CONTACT SECTION */
+
+.contact {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0b0b0b;
+}
+
+.contact h2 {
+    font-size: 48px;
+    font-weight: 300;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+
+    .navbar {
+        padding: 20px 40px;
+    }
+
+    .hero-content h1 {
+        font-size: 48px;
+    }
+
+    .hero-content p {
+        font-size: 18px;
+    }
+
+    .hero-content {
+        left: 8%;
+        max-width: 85%;
+    }
+}
+/* CHAPTERS */
+
+.chapter {
+  min-height: 110vh;   /* slightly taller than screen */
+  width: 100%;
+  position: relative;
+  padding: 120px 0;    /* vertical breathing space */
+  display: flex;
+  align-items: center;
+}
+
+
+.chapter-dark {
+  background: #050505;
+  display: flex;
+  align-items: center;
+}
+
+.chapter-contact {
+  background: #0b0b0b;
+  display: flex;
+  align-items: center;
+}
+
+.chapter-content {
+  width: min(800px, 85%);
+  margin-left: 10%;
+  max-width: 800px;
+}
+
+.chapter-content h2 {
+  font-size: 56px;
+  font-weight: 300;
+  margin-bottom: 18px;
+  line-height: 1.1;
+}
+
+.chapter-content p {
+  font-size: 20px;
+  line-height: 1.9;
+  opacity: 0.82;
+  max-width: 680px;
+}
+
+/* CONTACT AREA */
+
+.contact-text {
+  margin-bottom: 30px;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 30px 0;
+  max-width: 700px;
+}
+
+.contact-card {
+  border: 1px solid rgba(232,225,213,0.18);
+  padding: 14px 18px;
+}
+
+.contact-card .label {
+  font-size: 14px;
+  letter-spacing: 2px;
+  opacity: 0.65;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.contact-card .value {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.contact-form {
+  display: grid;
+  gap: 12px;
+  max-width: 700px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 14px 14px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(232,225,213,0.16);
+  color: #e8e1d5;
+  font-family: inherit;
+  font-size: 18px;
+  outline: none;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: rgba(232,225,213,0.35);
+}
+
+.contact-form button {
+  padding: 14px 18px;
+  background: transparent;
+  color: #e8e1d5;
+  border: 1px solid rgba(232,225,213,0.35);
+  font-family: inherit;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.contact-form button:hover {
+  background: rgba(232,225,213,0.08);
+}
+
+/* RESPONSIVE CHAPTERS */
+
+@media (max-width: 900px) {
+  .chapter-content {
+    margin-left: 8%;
+  }
+
+  .chapter-content h2 {
+    font-size: 40px;
+  }
+
+  .chapter-content p {
+    font-size: 18px;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* SCROLL REVEAL ANIMATION */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 1000ms ease, transform 1000ms ease;
+}
+
+
+.reveal.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* CHAPTER BACKGROUND IMAGES */
+#chapter-2 {
+  background: url("assets/chapter2.png") center/cover no-repeat;
+}
+
+#chapter-3 {
+  background: url("assets/chapter3.png") center/cover no-repeat;
+}
+
+#chapter-4 {
+  background: url("assets/chapter4.png") center/cover no-repeat;
+}
+
+#contact {
+  background: url("assets/chapter5.png") center/cover no-repeat;
+}
+
+/* Dark overlay for readability */
+.chapter::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.22),
+    rgba(0,0,0,0.32)
+  );
+  z-index: 0;
+}
+
+
+.chapter-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* MOBILE POLISH */
+@media (max-width: 700px) {
+
+  /* Navbar */
+  .navbar {
+    padding: 18px 18px;
+  }
+
+  .logo {
+    font-size: 15px;
+    letter-spacing: 3px;
+  }
+
+  .contact-btn {
+    font-size: 13px;
+    padding: 7px 16px;
+  }
+
+  /* Hero text */
+  .hero-content {
+    left: 7%;
+    max-width: 90%;
+  }
+
+  .hero-content h1 {
+    font-size: 42px;
+    line-height: 1.08;
+  }
+
+  .hero-content p {
+    font-size: 17px;
+    line-height: 1.8;
+  }
+
+  /* Chapters */
+  .chapter {
+    min-height: 100vh;
+    padding: 90px 0;
+  }
+
+  .chapter-content {
+    margin-left: 7%;
+    width: 86%;
+  }
+
+  .chapter-content h2 {
+    font-size: 38px;
+    line-height: 1.05;
+  }
+
+  .chapter-content p {
+    font-size: 17px;
+    line-height: 1.85;
+    max-width: 100%;
+  }
+
+  /* Contact grid already becomes 1 column, ensure spacing */
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 16px;
+  }
+
+  .contact-form button {
+    font-size: 16px;
+  }
+}
+
