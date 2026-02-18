@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>AL WASAT</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
@@ -14,14 +14,17 @@
   <!-- NAVBAR -->
   <nav class="navbar">
     <div class="logo">AL WASAT</div>
-    <a href="#contact" class="contact-btn">Contact</a>
+
+    <div class="nav-actions">
+      <a class="shop-btn" href="/shop" rel="noopener">Shop</a>
+      <button class="contact-btn" id="contactBtn" type="button">Contact</button>
+    </div>
   </nav>
 
-  <!-- HERO (CHAPTER 1) -->
+  <!-- HERO -->
   <section class="hero chapter" id="chapter-1">
-
     <video autoplay muted loop playsinline class="hero-video">
-      <source src="assets/hero.mp4" type="video/mp4">
+      <source src="assets/hero.mp4" type="video/mp4" />
     </video>
 
     <div class="overlay"></div>
@@ -34,6 +37,12 @@
       </p>
     </div>
 
+    <!-- HERO SHOP BUTTON (BOTTOM CENTER) -->
+    <div class="hero-shop">
+      <a class="hero-shop-btn" href="/shop" rel="noopener">
+        Discover the Collection
+      </a>
+    </div>
   </section>
 
   <!-- CHAPTER 2 -->
@@ -70,7 +79,7 @@
     </div>
   </section>
 
-  <!-- CHAPTER 5 (CONTACT) -->
+  <!-- CONTACT -->
   <section id="contact" class="chapter chapter-contact">
     <div class="chapter-content reveal">
       <h2>Contact</h2>
@@ -91,9 +100,9 @@
       </div>
 
       <form class="contact-form">
-        <input type="text" placeholder="Name" required>
-        <input type="text" placeholder="Company (optional)">
-        <input type="email" placeholder="Email" required>
+        <input type="text" placeholder="Name" required />
+        <input type="text" placeholder="Company (optional)" />
+        <input type="email" placeholder="Email" required />
         <textarea placeholder="Message" rows="5" required></textarea>
         <button type="submit">Submit Enquiry</button>
       </form>
