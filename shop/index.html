@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AL WASAT — The Collection</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar scrolled">
+    <div class="logo">AL WASAT</div>
+    <div class="nav-actions">
+      <a class="shop-btn" href="/">Home</a>
+      <button class="contact-btn" id="contactBtn" type="button">Contact</button>
+    </div>
+  </nav>
+
+  <!-- SHOP HERO -->
+  <section class="shop-hero">
+    <div class="shop-hero-inner">
+      <h1>The Collection</h1>
+      <p>
+        A single extra virgin olive oil—crafted with uncompromising standards.
+        Limited, traceable, and refined.
+      </p>
+    </div>
+  </section>
+
+  <!-- PRODUCT GRID -->
+  <section class="shop-wrap">
+    <div class="shop-grid">
+
+      <!-- Product Card -->
+      <a class="p-card" href="https://shop.al-wasat.co.uk" aria-label="AL WASAT — Extra Virgin Olive Oil 500ml">
+        <div class="p-media">
+          <img class="p-img p-img-1" src="../assets/product-500-1.png" alt="AL WASAT 500ml bottle front">
+          <img class="p-img p-img-2" src="../assets/product-500-2.png" alt="AL WASAT 500ml bottle detail">
+        </div>
+
+        <div class="p-meta">
+          <div class="p-title">AL WASAT — Extra Virgin Olive Oil</div>
+          <div class="p-sub">500ml · Cold-extracted · Harvest documented</div>
+          <div class="p-cta">View product</div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <script>
+    // Contact button to main site contact section
+    const contactBtn = document.getElementById("contactBtn");
+    if (contactBtn) {
+      contactBtn.addEventListener("click", () => {
+        window.location.href = "/#contact";
+      });
+    }
+  </script>
+
+</body>
+</html>
