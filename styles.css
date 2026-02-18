@@ -23,9 +23,11 @@ body {
 /* NAVBAR */
 /* ========================= */
 
-.navbar {
+/* NAVBAR */
+.navbar{
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   padding: 28px 80px;
   display: flex;
@@ -36,40 +38,47 @@ body {
   transition: background 0.4s ease, backdrop-filter 0.4s ease;
 }
 
-.navbar.scrolled {
+.navbar.scrolled{
   background: rgba(5, 5, 5, 0.85);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(232, 225, 213, 0.08);
 }
 
-.logo {
+.logo{
   font-size: 18px;
   letter-spacing: 4px;
   font-weight: 400;
   color: #e8e1d5;
 }
 
-.nav-actions {
+.nav-actions{
   display: flex;
   align-items: center;
   gap: 14px;
 }
 
 .shop-btn,
-.contact-btn {
-  text-decoration: none;
+.contact-btn{
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 1px solid rgba(232, 225, 213, 0.35);
   color: #e8e1d5;
+  text-decoration: none;
+  font-family: inherit;
   font-size: 15px;
   letter-spacing: 2px;
-  border: 1px solid rgba(232, 225, 213, 0.35);
   padding: 8px 24px;
-  transition: all 0.3s ease;
-  background: transparent;
   cursor: pointer;
+  transition: all 0.3s ease;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .shop-btn:hover,
-.contact-btn:hover {
+.contact-btn:hover{
   background: rgba(232, 225, 213, 0.08);
   border-color: rgba(232, 225, 213, 0.6);
 }
@@ -467,3 +476,4 @@ body {
   .shop-hero h1{ font-size: 44px; }
   .shop-hero p{ font-size: 17px; }
 }
+
