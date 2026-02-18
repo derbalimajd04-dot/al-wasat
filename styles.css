@@ -476,4 +476,50 @@ body {
   .shop-hero h1{ font-size: 44px; }
   .shop-hero p{ font-size: 17px; }
 }
+/* ========================= */
+/* SHOP HERO VIDEO BACKGROUND */
+/* ========================= */
+
+.shop-hero-video{
+  position: relative;
+  min-height: 70vh;
+  padding: 140px 0 90px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
+/* video layer */
+.shop-video{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* overlay above video */
+.shop-overlay{
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 1;
+}
+
+/* keep your text above overlay */
+.shop-hero-video .shop-hero-inner{
+  position: relative;
+  z-index: 2;
+}
+
+/* mobile tuning */
+@media (max-width: 900px){
+  .shop-hero-video{
+    min-height: 65vh;
+    padding: 120px 0 80px;
+  }
+}
+
+
 
