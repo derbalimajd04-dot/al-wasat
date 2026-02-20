@@ -576,37 +576,43 @@ body {
 }
 
 /* Responsive Overrides strictly for Mobile */
-@media (max-width: 900px){
+/* ======================================================= */
+/* RESPONSIVE OVERRIDES STRICTLY FOR MOBILE & TABLET       */
+/* ======================================================= */
+@media (max-width: 900px) {
+  /* Hide Desktop Nav, Show Mobile Nav */
   .desktop-nav { display: none; }
   .hamburger { display: flex; }
   .navbar { padding: 18px 24px; }
   
+  /* Show Sticky Bar */
   .mobile-sticky-bar { display: block; }
   body { padding-bottom: 70px; }
 
-  .shop-hero-video{
+  /* Hero Adjustments */
+  .shop-hero-video {
     min-height: 65vh;
     padding: 120px 0 80px;
   }
-  .shop-hero-inner{ margin-left: 8%; }
-  .shop-hero-inner h1{ font-size: 44px; }
-  .shop-hero-inner p{ font-size: 17px; }
+  .shop-hero-inner { margin-left: 8%; }
+  .shop-hero-inner h1 { font-size: 44px; }
+  .shop-hero-inner p { font-size: 17px; }
 
-  /* Horizontal Mobile Swipe Carousel */
-  /* Bulletproof Mobile Swipe Carousel */
+  /* ----------------------------------------- */
+  /* BULLETPROOF MOBILE SWIPE CAROUSEL (iPHONE FIX) */
+  /* ----------------------------------------- */
   .shop-grid {
-    display: grid !important;
-    grid-auto-flow: column;
-    grid-auto-columns: 85vw;           /* INCREASED: Makes the product much wider and heavier */
+    display: flex !important;          /* Flex is much safer for Safari/iPhone swiping */
     overflow-x: auto;
-    scroll-snap-type: x mandatory;     /* Forces the snap when you let go */
+    scroll-snap-type: x mandatory;
     gap: 16px; 
     
-    /* PERFECT CENTERING: (100vw screen - 85vw card) / 2 = 7.5vw on each side */
-    padding: 0 7.5vw 20px 7.5vw; 
+    /* PERFECT CENTERING: (100vw - 75vw card) / 2 = 12.5vw padding on left and right */
+    padding: 0 12.5vw 20px 12.5vw; 
+    
     width: 100%;
     margin: 0;
-    -webkit-overflow-scrolling: touch; /* Keeps the swipe buttery smooth on iPhones */
+    -webkit-overflow-scrolling: touch; /* Smooth iOS scrolling */
     scrollbar-width: none; 
     -ms-overflow-style: none; 
   }
@@ -616,15 +622,43 @@ body {
   }
 
   .p-card {
-    width: 100%;
-    scroll-snap-align: center;         /* Snaps the card exactly to the middle of the screen */
+    min-width: 75vw;                   /* Sets the width */
+    max-width: 75vw;                   /* Locks the width so Chrome doesn't stretch it */
+    scroll-snap-align: center;         /* Snaps perfectly to the middle */
+    flex-shrink: 0;                    /* Prevents squishing */
+    display: flex;
+    flex-direction: column;
+    height: auto;                      /* Prevents vertical stretching bugs */
   }
-  /* The luxurious sliding dots */
+
+  .p-media {
+    width: 100%;
+    display: block;
+    position: relative;
+    aspect-ratio: 1 / 1;               /* CRUCIAL: Makes the image a shorter square! */
+    overflow: hidden;
+  }
+
+  .p-meta {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px 12px;                /* Reduced padding for less height */
+  }
+
+  .p-title { font-size: 18px; }        /* Slightly smaller text for the smaller card */
+  .p-sub { font-size: 14px; margin-bottom: 8px; }
+  .p-cta { margin-top: 10px; padding: 8px 14px; }
+
+  /* ----------------------------------------- */
+  /* THE SLIDING DOTS                          */
+  /* ----------------------------------------- */
   .carousel-indicators {
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-top: 15px;
+    margin-top: 10px;
     margin-bottom: 20px;
   }
 
@@ -633,6 +667,7 @@ body {
     height: 6px;
     background: rgba(232, 225, 213, 0.25);
     transition: all 0.3s ease;
+    border-radius: 50%; /* Makes them elegant circles instead of squares */
   }
 
   .carousel-indicators .dot.active {
