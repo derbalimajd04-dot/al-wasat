@@ -13,19 +13,32 @@
 
   <nav class="navbar scrolled">
     <div class="logo">AL WASAT</div>
-    <div class="nav-actions">
+    
+    <div class="nav-actions desktop-nav">
       <a class="shop-btn" href="/">Home</a>
       <button class="contact-btn" id="contactBtn" type="button">Contact</button>
     </div>
+
+    <div class="hamburger" id="hamburgerBtn">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
   </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="/">Home</a>
+      <button class="mobile-contact-btn" id="mobileContactBtn" type="button">Contact</button>
+    </div>
+  </div>
 
   <section class="shop-hero shop-hero-video">
     <video autoplay muted loop playsinline class="shop-video" poster="../assets/shop-poster.jpg">
       <source src="../assets/shop-video.mp4" type="video/mp4" />
     </video>
-
     <div class="shop-overlay"></div>
-
+    
     <div class="shop-hero-inner">
       <h1>The Collection</h1>
       <p>
@@ -36,72 +49,78 @@
   </section>
 
   <section class="shop-wrap">
-    <div class="shop-grid">
+    <div class="shop-grid" id="shopGrid">
 
-      <a class="p-card" href="https://shop.al-wasat.co.uk" aria-label="AL WASAT — Extra Virgin Olive Oil 500ml">
+      <a class="p-card" href="https://shop.al-wasat.co.uk" aria-label="AL WASAT Extra Virgin Olive Oil 500ml">
         <div class="p-media">
-          <img class="p-img p-img-1" src="../assets/product-500-1.png" alt="AL WASAT 500ml bottle front">
-          <img class="p-img p-img-2" src="../assets/product-500-2.png" alt="AL WASAT 500ml bottle detail">
+          <img class="primary" src="../assets/product-500-1.png" alt="AL WASAT Classic 500ml bottle front">
+          <img class="hover-img" src="../assets/product-500-2.png" alt="AL WASAT Classic 500ml bottle detail">
         </div>
-
         <div class="p-meta">
-          <div class="p-title">AL WASAT — Extra Virgin Olive Oil</div>
-          <div class="p-sub">500ml · Cold-extracted · Harvest documented</div>
+          <div>
+            <div class="p-title">AL WASAT — Extra Virgin Olive Oil</div>
+            <div class="p-sub">500ml · Cold-extracted · Harvest documented</div>
+          </div>
           <div class="p-cta">View product</div>
         </div>
       </a>
 
-      <a class="p-card" href="https://shop.al-wasat.co.uk" aria-label="AL WASAT — Extra Virgin Olive Oil 1L">
+      <a class="p-card" href="https://shop.al-wasat.co.uk" aria-label="AL WASAT Extra Virgin Olive Oil 1L">
         <div class="p-media">
-          <img class="p-img p-img-1" src="../assets/product-1l-classic-1.png" alt="AL WASAT 1L bottle front">
-          <img class="p-img p-img-2" src="../assets/product-1l-classic-12.png" alt="AL WASAT 1L bottle detail">
+          <img class="primary" src="../assets/product-1l-classic-1.png" alt="AL WASAT 1L bottle front">
+          <img class="hover-img" src="../assets/product-1l-classic-12.png" alt="AL WASAT 1L bottle detail">
         </div>
-
         <div class="p-meta">
-          <div class="p-title">AL WASAT — Extra Virgin Olive Oil</div>
-          <div class="p-sub">1L · Cold-extracted · Harvest documented</div>
+          <div>
+            <div class="p-title">AL WASAT — Extra Virgin Olive Oil</div>
+            <div class="p-sub">1L · Cold-extracted · Harvest documented</div>
+          </div>
           <div class="p-cta">View product</div>
         </div>
       </a>
 
-      <a class="p-card" href="https://shop.al-wasat.co.uk" aria-label="AL WASAT — Organic Extra Virgin Olive Oil 500ml">
+      <a class="p-card" href="https://shop.al-wasat.co.uk" aria-label="AL WASAT Organic Extra Virgin Olive Oil 500ml">
         <div class="p-media">
-          <img class="p-img p-img-1" src="../assets/product-500-organic-1.png" alt="AL WASAT Organic 500ml bottle front">
-          <img class="p-img p-img-2" src="../assets/product-500-organic-12.png" alt="AL WASAT Organic 500ml bottle detail">
+          <img class="primary" src="../assets/product-500-organic-1.png" alt="AL WASAT Organic 500ml bottle front">
+          <img class="hover-img" src="../assets/product-500-organic-12.png" alt="AL WASAT Organic 500ml bottle detail">
         </div>
-
         <div class="p-meta">
-          <div class="p-title">AL WASAT — Organic Extra Virgin Olive Oil</div>
-          <div class="p-sub">500ml · Cold-extracted · Certified Organic</div>
+          <div>
+            <div class="p-title">AL WASAT — Organic Extra Virgin Olive Oil</div>
+            <div class="p-sub">500ml · Cold-extracted · Certified Organic</div>
+          </div>
           <div class="p-cta">View product</div>
         </div>
       </a>
 
-      <a class="p-card" href="https://shop.al-wasat.co.uk" aria-label="AL WASAT — Organic Extra Virgin Olive Oil 1L">
+      <a class="p-card" href="https://shop.al-wasat.co.uk" aria-label="AL WASAT Organic Extra Virgin Olive Oil 1L">
         <div class="p-media">
-          <img class="p-img p-img-1" src="../assets/product-1l-organic-1.png" alt="AL WASAT Organic 1L bottle front">
-          <img class="p-img p-img-2" src="../assets/product-1l-organic-12.png" alt="AL WASAT Organic 1L bottle detail">
+          <img class="primary" src="../assets/product-1l-organic-1.png" alt="AL WASAT Organic 1L bottle front">
+          <img class="hover-img" src="../assets/product-1l-organic-12.png" alt="AL WASAT Organic 1L bottle detail">
         </div>
-
         <div class="p-meta">
-          <div class="p-title">AL WASAT — Organic Extra Virgin Olive Oil</div>
-          <div class="p-sub">1L · Cold-extracted · Certified Organic</div>
+          <div>
+            <div class="p-title">AL WASAT — Organic Extra Virgin Olive Oil</div>
+            <div class="p-sub">1L · Cold-extracted · Certified Organic</div>
+          </div>
           <div class="p-cta">View product</div>
         </div>
       </a>
 
     </div>
+
+    <div class="carousel-indicators" id="carouselIndicators">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
   </section>
 
-  <script>
-    // Contact button to main site contact section
-    const contactBtn = document.getElementById("contactBtn");
-    if (contactBtn) {
-      contactBtn.addEventListener("click", () => {
-        window.location.href = "/#contact";
-      });
-    }
-  </script>
+  <div class="mobile-sticky-bar">
+    <a href="https://shop.al-wasat.co.uk" class="sticky-buy-btn">Shop The Collection</a>
+  </div>
 
+  <script src="../script.js"></script>
 </body>
 </html>
