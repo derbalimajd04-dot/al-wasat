@@ -399,26 +399,29 @@ body {
   gap: 40px;
 }
 
-.p-card{
+.p-card {
   text-decoration: none;
   color: inherit;
-  display: block;
+  display: flex;           /* Added to fix Chrome/Safari stretching */
+  flex-direction: column;  /* Added to fix Chrome/Safari stretching */
   transform: translateY(0);
   transition: transform 0.45s ease;
   border: 1px solid rgba(232,225,213,0.12);
   background: rgba(255,255,255,0.02);
 }
 
-.p-card:hover{
+.p-card:hover {
   transform: translateY(-6px);
   border-color: rgba(232,225,213,0.26);
   background: rgba(255,255,255,0.03);
 }
 
-.p-media{
+.p-media {
   position: relative;
   overflow: hidden;
-  aspect-ratio: 4/5;
+  width: 100%;             /* Crucial fix for iPhones */
+  display: block;          /* Crucial fix for iPhones */
+  aspect-ratio: 1 / 1;
 }
 
 /* Hover Image Swap */
@@ -444,9 +447,12 @@ body {
 }
 
 .p-meta {
-  padding: 24px 10px;
-  text-align: center;
-}
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px 10px 20px 10px; /* Reduced padding to make the card shorter */
+  }
 
 .p-title{
   font-size: 20px;
@@ -587,14 +593,20 @@ body {
   .shop-hero-inner p{ font-size: 17px; }
 
   /* Horizontal Mobile Swipe Carousel */
+  /* Bulletproof Mobile Swipe Carousel */
   .shop-grid {
-    display: flex !important;
+    display: grid !important;
+    grid-auto-flow: column;
+    grid-auto-columns: 85vw;           /* INCREASED: Makes the product much wider and heavier */
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: x mandatory;     /* Forces the snap when you let go */
     gap: 16px; 
-    padding: 0 5% 20px 5%;
+    
+    /* PERFECT CENTERING: (100vw screen - 85vw card) / 2 = 7.5vw on each side */
+    padding: 0 7.5vw 20px 7.5vw; 
     width: 100%;
     margin: 0;
+    -webkit-overflow-scrolling: touch; /* Keeps the swipe buttery smooth on iPhones */
     scrollbar-width: none; 
     -ms-overflow-style: none; 
   }
@@ -603,23 +615,10 @@ body {
     display: none; 
   }
 
-  /* Make products smaller and force equal heights */
   .p-card {
-    min-width: 65vw; 
-    max-width: 65vw;
-    scroll-snap-align: center;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
+    width: 100%;
+    scroll-snap-align: center;         /* Snaps the card exactly to the middle of the screen */
   }
-
-.p-meta {
-    flex-grow: 1; 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
   /* The luxurious sliding dots */
   .carousel-indicators {
     display: flex;
