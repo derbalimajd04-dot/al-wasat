@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AL WASAT — Rooted in Heritage.</title>
+<meta name="description" content="AL WASAT — Premium Tunisian extra virgin olive oil. Cold-extracted, harvest-documented, and lab-verified. Over 60 years of cultivation heritage.">
+<link rel="canonical" href="https://al-wasat.co.uk/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://al-wasat.co.uk/">
+<meta property="og:title" content="AL WASAT — Rooted in Heritage.">
+<meta property="og:description" content="Premium Tunisian extra virgin olive oil. Cold-extracted, harvest-documented, and lab-verified. Over 60 years of cultivation.">
+<meta property="og:image" content="https://al-wasat.co.uk/assets/chapter2.png">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Tenor+Sans&family=EB+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
@@ -189,6 +197,42 @@ footer{padding:2.5rem 5rem;display:grid;grid-template-columns:1fr auto 1fr;align
 .reveal.in{opacity:1;transform:none}
 .rd1{transition-delay:0.1s}.rd2{transition-delay:0.2s}.rd3{transition-delay:0.3s}.rd4{transition-delay:0.45s}
 
+/* HAMBURGER NAV */
+.nav-ham{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:none;padding:0;z-index:510;position:relative}
+.nav-ham span{display:block;width:22px;height:1px;background:var(--cream);transition:transform 0.35s,opacity 0.35s,background 0.3s}
+.nav-ham:hover span{background:var(--gold)}
+.nav-ham.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.nav-ham.open span:nth-child(2){opacity:0}
+.nav-ham.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(10,9,6,0.55);z-index:489;backdrop-filter:blur(2px)}
+.nav-overlay.open{display:block}
+
+/* CRAFT HERITAGE FLIP */
+.heritage-flip .float-tag{right:auto;left:-2.5rem}
+
+/* PROCESS SECTION */
+.process-sec{padding:8rem 5rem;background:var(--ink2);text-align:center;position:relative}
+.process-sec::before{content:'';position:absolute;top:0;left:5rem;right:5rem;height:1px;background:linear-gradient(to right,transparent,rgba(201,169,110,0.15),transparent)}
+.process-head{margin-bottom:5rem}
+.process-head .kicker{justify-content:center}
+.process-steps{display:grid;grid-template-columns:1fr 80px 1fr 80px 1fr;align-items:center}
+.ps{text-align:center;padding:0 1.5rem}
+.ps-num{font-family:var(--serif);font-size:5rem;font-weight:300;font-style:italic;color:rgba(201,169,110,0.12);line-height:1;margin-bottom:1.25rem}
+.ps-title{font-family:var(--tenor);font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--cream2);margin-bottom:0.75rem}
+.ps-desc{font-family:var(--body);font-size:0.95rem;font-style:italic;line-height:1.9;color:var(--stone)}
+.ps-connector{display:flex;align-items:center;justify-content:center;gap:6px}
+.ps-cl{width:20px;height:1px;background:rgba(201,169,110,0.22)}
+.ps-cg{width:5px;height:5px;border:1px solid rgba(201,169,110,0.38);transform:rotate(45deg);flex-shrink:0}
+
+/* FORM SUCCESS */
+.form-success{display:none;text-align:center;padding:3.5rem 0}
+.form-success.show{display:block;animation:fadeIn 0.8s ease forwards}
+.fs-title{font-family:var(--serif);font-size:2rem;font-weight:300;font-style:italic;color:var(--gold);margin:2rem 0 1rem;text-shadow:0 0 40px rgba(201,169,110,0.2)}
+.fs-body{font-family:var(--body);font-size:1.05rem;font-style:italic;color:var(--stone2);line-height:1.85}
+.field-error{font-size:0.63rem;letter-spacing:0.1em;color:#c06040;margin-top:0.3rem;display:none}
+.field.has-error .field-error{display:block}
+.field.has-error input,.field.has-error select,.field.has-error textarea{border-bottom-color:rgba(192,96,64,0.5)}
+
 @media(max-width:900px){
   nav,nav.scrolled{padding:1.5rem 2rem}
   .hero-content{padding:0 2rem 5rem}
@@ -202,8 +246,16 @@ footer{padding:2.5rem 5rem;display:grid;grid-template-columns:1fr auto 1fr;align
   footer{grid-template-columns:1fr;gap:0.75rem;text-align:center;padding:2.5rem 2rem}
   .fr{text-align:center}
   .quote-sec{padding:7rem 2rem}
+  .nav-ham{display:flex}
+  .nav-links{position:fixed;top:0;right:0;bottom:0;width:72%;background:rgba(10,9,6,0.97);backdrop-filter:blur(20px);flex-direction:column;justify-content:center;gap:2.5rem;padding:5rem 3rem;transform:translateX(110%);transition:transform 0.5s cubic-bezier(0.16,1,0.3,1);z-index:490;border-left:1px solid rgba(201,169,110,0.12)}
+  .nav-links.open{transform:translateX(0)}
+  .nav-links a{font-size:1.1rem;letter-spacing:0.12em}
+  .process-steps{grid-template-columns:1fr;gap:4rem}
+  .ps-connector{display:none}
+  .process-sec{padding:5rem 2rem}
 }
 </style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"AL WASAT","url":"https://al-wasat.co.uk","description":"Premium Tunisian extra virgin olive oil producer with over 60 years of cultivation heritage.","foundingDate":"1960","areaServed":"GB","brand":{"@type":"Brand","name":"AL WASAT"}}</script>
 </head>
 <body>
 
@@ -220,12 +272,14 @@ footer{padding:2.5rem 5rem;display:grid;grid-template-columns:1fr auto 1fr;align
 <nav id="nav">
   <div class="nav-blur"></div>
   <a href="/" class="nav-logo">Al Wasat</a>
-  <ul class="nav-links">
+  <ul class="nav-links" id="navLinks">
     <li><a href="/shop/">Collection</a></li>
     <li><a href="#heritage">Heritage</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <button class="nav-ham" id="navHam" aria-label="Open navigation menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
+<div class="nav-overlay" id="navOverlay"></div>
 
 <section class="hero">
   <div class="hero-video-wrap">
@@ -287,7 +341,7 @@ footer{padding:2.5rem 5rem;display:grid;grid-template-columns:1fr auto 1fr;align
       <div class="frame-corner fc-br"></div>
       <div class="frame-corner fc-tr"></div>
       <div class="frame-corner fc-bl"></div>
-      <img src="/assets/chapter2.png" alt="Olive grove heritage" onerror="this.style.cssText='background:linear-gradient(135deg,#1E1B16 0%,#0A0906 100%);min-height:500px;width:100%;display:block'">
+      <img loading="lazy" src="/assets/chapter2.png" alt="Olive grove heritage" onerror="this.style.cssText='background:linear-gradient(135deg,#1E1B16 0%,#0A0906 100%);min-height:500px;width:100%;display:block'">
     </div>
     <div class="float-tag">
       <span class="float-tag-num">60+</span>
@@ -317,6 +371,69 @@ footer{padding:2.5rem 5rem;display:grid;grid-template-columns:1fr auto 1fr;align
   </div>
 </section>
 
+<section class="heritage heritage-flip" id="craft">
+  <div>
+    <div class="reveal">
+      <p class="kicker"><span class="kicker-rule"></span>The Craft</p>
+      <h2 class="sec-heading">Extracted <em>cold,</em><br>bottled with precision.</h2>
+      <p class="sec-body">Within hours of harvest, olives are cold-extracted at controlled temperatures — preserving the polyphenols, the aroma, and the character that makes each batch distinct.</p>
+    </div>
+    <div class="pillar-list">
+      <div class="pillar-row reveal rd1">
+        <span class="pnum">I</span>
+        <div><div class="ptitle">Harvest to Press</div><div class="pdesc">Olives are pressed within 24 hours of harvest, capturing peak freshness and minimal acidity.</div></div>
+      </div>
+      <div class="pillar-row reveal rd2">
+        <span class="pnum">II</span>
+        <div><div class="ptitle">Cold Extraction</div><div class="pdesc">Temperatures never exceed 27°C — ensuring maximum polyphenol retention and flavour integrity.</div></div>
+      </div>
+      <div class="pillar-row reveal rd3">
+        <span class="pnum">III</span>
+        <div><div class="ptitle">Sealed &amp; Documented</div><div class="pdesc">Each bottle is batch-labelled, lab-tested, and stored under controlled conditions before dispatch.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="reveal">
+    <div class="img-frame">
+      <div class="frame-corner fc-tl"></div>
+      <div class="frame-corner fc-br"></div>
+      <div class="frame-corner fc-tr"></div>
+      <div class="frame-corner fc-bl"></div>
+      <img loading="lazy" src="/assets/chapter3.png" alt="Olive oil cold extraction process" onerror="this.style.cssText='background:linear-gradient(135deg,#1E1B16 0%,#0A0906 100%);min-height:500px;width:100%;display:block'">
+    </div>
+    <div class="float-tag">
+      <span class="float-tag-num">27°</span>
+      <span class="float-tag-label">Max extraction temp.</span>
+    </div>
+  </div>
+</section>
+
+<div class="process-sec">
+  <div class="process-head reveal">
+    <p class="kicker" style="justify-content:center"><span class="kicker-rule"></span>From Grove to Bottle</p>
+    <h2 class="sec-heading" style="text-align:center;margin-bottom:0">A <em>closed chain</em> of quality.</h2>
+  </div>
+  <div class="process-steps">
+    <div class="ps reveal">
+      <div class="ps-num">I</div>
+      <div class="ps-title">The Grove</div>
+      <p class="ps-desc">Hand-selected olives from long-established Tunisian groves, harvested at precise ripeness each season.</p>
+    </div>
+    <div class="ps-connector reveal rd1"><div class="ps-cl"></div><div class="ps-cg"></div><div class="ps-cl"></div></div>
+    <div class="ps reveal rd1">
+      <div class="ps-num">II</div>
+      <div class="ps-title">Cold Extraction</div>
+      <p class="ps-desc">Pressed within 24 hours of harvest at no more than 27°C. Every polyphenol and aroma preserved.</p>
+    </div>
+    <div class="ps-connector reveal rd2"><div class="ps-cl"></div><div class="ps-cg"></div><div class="ps-cl"></div></div>
+    <div class="ps reveal rd2">
+      <div class="ps-num">III</div>
+      <div class="ps-title">Verified &amp; Bottled</div>
+      <p class="ps-desc">Lab-tested, harvest-dated, and sealed — every batch documented before it reaches your table.</p>
+    </div>
+  </div>
+</div>
+
 <div class="quote-sec">
   <div class="q-glow"></div>
   <div class="q-mark">"</div>
@@ -342,15 +459,21 @@ footer{padding:2.5rem 5rem;display:grid;grid-template-columns:1fr auto 1fr;align
       <div class="cd-item"><div class="cd-label">WhatsApp</div><div class="cd-value">+216 XX XXX XXX</div></div>
     </div>
   </div>
-  <form class="form-grid reveal" onsubmit="return false;">
+  <div class="form-success" id="formSuccess">
+    <div class="ornament"><div class="orn-line"></div><div class="orn-gem"></div><div class="orn-line"></div></div>
+    <p class="fs-title">Enquiry Received</p>
+    <p class="fs-body">Thank you. We review all enquiries carefully<br>and will be in touch shortly.</p>
+  </div>
+  <form class="form-grid reveal" id="contactForm">
     <div class="form-row">
-      <div class="field"><label>First Name</label><input type="text" placeholder="Your name"></div>
+      <div class="field"><label>First Name</label><input type="text" placeholder="Your name" required><span class="field-error">Please enter your name.</span></div>
       <div class="field"><label>Organisation</label><input type="text" placeholder="Company or role"></div>
     </div>
-    <div class="field"><label>Email Address</label><input type="email" placeholder="your@email.com"></div>
+    <div class="field"><label>Email Address</label><input type="email" placeholder="your@email.com" required><span class="field-error">Please enter a valid email address.</span></div>
     <div class="field">
       <label>Nature of Enquiry</label>
-      <select><option value="" style="background:#151210">Select…</option><option style="background:#151210">Distribution</option><option style="background:#151210">Retail</option><option style="background:#151210">Culinary / Hospitality</option><option style="background:#151210">Other</option></select>
+      <select required><option value="" style="background:#151210">Select…</option><option style="background:#151210">Distribution</option><option style="background:#151210">Retail</option><option style="background:#151210">Culinary / Hospitality</option><option style="background:#151210">Other</option></select>
+      <span class="field-error">Please select an enquiry type.</span>
     </div>
     <div class="field"><label>Message</label><textarea placeholder="Tell us about your interest…"></textarea></div>
     <div class="submit-wrap">
@@ -360,7 +483,7 @@ footer{padding:2.5rem 5rem;display:grid;grid-template-columns:1fr auto 1fr;align
 </section>
 
 <footer>
-  <div class="fl">© 2025 AL WASAT. All rights reserved.</div>
+  <div class="fl">© 2026 AL WASAT. All rights reserved.</div>
   <div class="fc">Al Wasat</div>
   <div class="fr">Extra Virgin Olive Oil · Tunisia</div>
 </footer>
@@ -381,12 +504,32 @@ hoverEls.forEach(el=>{el.addEventListener('mouseenter',()=>ring.classList.add('h
 const nav=document.getElementById('nav');
 window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60));
 
+// Mobile hamburger
+const ham=document.getElementById('navHam'),navLinks=document.getElementById('navLinks'),overlay=document.getElementById('navOverlay');
+function toggleNav(open){ham.classList.toggle('open',open);navLinks.classList.toggle('open',open);overlay.classList.toggle('open',open);document.body.style.overflow=open?'hidden':'';ham.setAttribute('aria-expanded',open);}
+ham.addEventListener('click',()=>toggleNav(!ham.classList.contains('open')));
+overlay.addEventListener('click',()=>toggleNav(false));
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>toggleNav(false)));
+
 // Scroll reveal
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}})},{threshold:0.12});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
 // Subtle parallax on hero video
 window.addEventListener('scroll',()=>{const w=document.querySelector('.hero-video-wrap');if(w)w.style.transform=`translateY(${scrollY*0.025}px)`});
+
+// Contact form validation
+document.getElementById('contactForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  let valid=true;
+  this.querySelectorAll('[required]').forEach(field=>{
+    const wrap=field.closest('.field');
+    const ok=field.value.trim()!==''&&(field.type!=='email'||field.validity.valid);
+    wrap.classList.toggle('has-error',!ok);
+    if(!ok)valid=false;
+  });
+  if(valid){this.style.display='none';document.getElementById('formSuccess').classList.add('show');}
+});
 </script>
 </body>
 </html>
