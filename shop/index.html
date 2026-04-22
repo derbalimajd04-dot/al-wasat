@@ -75,7 +75,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:cen
   display:flex;flex-direction:column;
   position:relative;overflow:hidden;
   cursor:none;
-  transition:background 0.5s;
   opacity:0;transform:translateY(30px);
   transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1),transform 0.8s cubic-bezier(0.16,1,0.3,1),background 0.4s;
 }
@@ -353,7 +352,7 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
 // Product card reveal
 const cards=document.querySelectorAll('.p-card');
-const cardObs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*120);cardObs.unobserve(e.target)}})},{threshold:0.1});
+const cardObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const i=Array.from(cards).indexOf(e.target);setTimeout(()=>e.target.classList.add('in'),i*120);cardObs.unobserve(e.target)}})},{threshold:0.1});
 cards.forEach(c=>cardObs.observe(c));
 
 // Filter
@@ -363,6 +362,7 @@ function filter(cat,btn){
   cards.forEach(c=>{
     const match=cat==='all'||c.dataset.cat.includes(cat);
     c.style.display=match?'':'none';
+    if(match)c.classList.add('in');
   });
 }
 </script>
