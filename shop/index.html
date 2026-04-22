@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AL WASAT — The Collection</title>
+<meta name="description" content="AL WASAT Extra Virgin Olive Oil — Shop the Collection. Classic and Certified Organic, cold-extracted, harvest-documented Tunisian olive oil in 500ml and 1L.">
+<link rel="canonical" href="https://al-wasat.co.uk/shop/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://al-wasat.co.uk/shop/">
+<meta property="og:title" content="AL WASAT — The Collection">
+<meta property="og:description" content="Shop AL WASAT premium Tunisian extra virgin olive oil. Classic and Certified Organic, cold-extracted and harvest-documented. Available in 500ml and 1L.">
+<meta property="og:image" content="https://al-wasat.co.uk/assets/product-500-1.png">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Tenor+Sans&family=EB+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
@@ -167,6 +175,16 @@ footer{padding:2.5rem 5rem;display:grid;grid-template-columns:1fr auto 1fr;align
 .reveal.in{opacity:1;transform:none}
 .rd1{transition-delay:0.1s}.rd2{transition-delay:0.2s}.rd3{transition-delay:0.3s}
 
+/* HAMBURGER NAV */
+.nav-ham{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:none;padding:0;z-index:510}
+.nav-ham span{display:block;width:22px;height:1px;background:var(--cream);transition:transform 0.35s,opacity 0.35s,background 0.3s}
+.nav-ham:hover span{background:var(--gold)}
+.nav-ham.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.nav-ham.open span:nth-child(2){opacity:0}
+.nav-ham.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.nav-overlay{display:none;position:fixed;inset:0;background:rgba(10,9,6,0.55);z-index:489;backdrop-filter:blur(2px)}
+.nav-overlay.open{display:block}
+
 @media(max-width:900px){
   nav{padding:1.25rem 2rem}
   .page-hero{padding:8rem 2rem 4rem}
@@ -179,6 +197,10 @@ footer{padding:2.5rem 5rem;display:grid;grid-template-columns:1fr auto 1fr;align
   .bottom-cta{padding:6rem 2rem}
   footer{grid-template-columns:1fr;gap:0.75rem;text-align:center;padding:2.5rem 2rem}
   .fr{text-align:center}
+  .nav-ham{display:flex}
+  .nav-links{position:fixed;top:0;right:0;bottom:0;width:72%;background:rgba(10,9,6,0.97);backdrop-filter:blur(20px);flex-direction:column;justify-content:center;gap:2.5rem;padding:5rem 3rem;transform:translateX(110%);transition:transform 0.5s cubic-bezier(0.16,1,0.3,1);z-index:490;border-left:1px solid rgba(201,169,110,0.12)}
+  .nav-links.open{transform:translateX(0)}
+  .nav-links a{font-size:1.1rem;letter-spacing:0.12em}
 }
 </style>
 </head>
@@ -190,12 +212,14 @@ footer{padding:2.5rem 5rem;display:grid;grid-template-columns:1fr auto 1fr;align
 
 <nav>
   <a href="/" class="nav-logo">Al Wasat</a>
-  <ul class="nav-links">
+  <ul class="nav-links" id="navLinks">
     <li><a href="/">Home</a></li>
     <li><a href="#" class="active">Collection</a></li>
     <li><a href="/#contact">Contact</a></li>
   </ul>
+  <button class="nav-ham" id="navHam" aria-label="Open navigation menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
+<div class="nav-overlay" id="navOverlay"></div>
 
 <section class="page-hero">
   <div class="page-hero-bg"></div>
@@ -243,8 +267,8 @@ footer{padding:2.5rem 5rem;display:grid;grid-template-columns:1fr auto 1fr;align
   <a href="https://shop.al-wasat.co.uk" class="p-card" data-cat="classic 500ml">
     <div class="p-tag">Classic</div>
     <div class="p-img-wrap">
-      <img class="p-img front" src="/assets/product-500-1.png" alt="AL WASAT Classic 500ml front" onerror="this.style.cssText='min-height:200px;display:block'">
-      <img class="p-img back" src="/assets/product-500-2.png" alt="AL WASAT Classic 500ml detail" onerror="this.style.display='none'">
+      <img loading="lazy" class="p-img front" src="/assets/product-500-1.png" alt="AL WASAT Classic 500ml front" onerror="this.style.cssText='min-height:200px;display:block'">
+      <img loading="lazy" class="p-img back" src="/assets/product-500-2.png" alt="AL WASAT Classic 500ml detail" onerror="this.style.display='none'">
     </div>
     <div class="p-name">AL WASAT Classic</div>
     <div class="p-sub">Extra Virgin Olive Oil</div>
@@ -259,8 +283,8 @@ footer{padding:2.5rem 5rem;display:grid;grid-template-columns:1fr auto 1fr;align
   <a href="https://shop.al-wasat.co.uk" class="p-card" data-cat="classic 1l">
     <div class="p-tag">Classic</div>
     <div class="p-img-wrap">
-      <img class="p-img front" src="/assets/product-1l-classic-1.png" alt="AL WASAT Classic 1L front" onerror="this.style.cssText='min-height:200px;display:block'">
-      <img class="p-img back" src="/assets/product-1l-classic-12.png" alt="AL WASAT Classic 1L detail" onerror="this.style.display='none'">
+      <img loading="lazy" class="p-img front" src="/assets/product-1l-classic-1.png" alt="AL WASAT Classic 1L front" onerror="this.style.cssText='min-height:200px;display:block'">
+      <img loading="lazy" class="p-img back" src="/assets/product-1l-classic-12.png" alt="AL WASAT Classic 1L detail" onerror="this.style.display='none'">
     </div>
     <div class="p-name">AL WASAT Classic</div>
     <div class="p-sub">Extra Virgin Olive Oil</div>
@@ -275,8 +299,8 @@ footer{padding:2.5rem 5rem;display:grid;grid-template-columns:1fr auto 1fr;align
   <a href="https://shop.al-wasat.co.uk" class="p-card" data-cat="organic 500ml">
     <div class="p-tag">Organic <span class="organic-pill">Certified</span></div>
     <div class="p-img-wrap">
-      <img class="p-img front" src="/assets/product-500-organic-1.png" alt="AL WASAT Organic 500ml front" onerror="this.style.cssText='min-height:200px;display:block'">
-      <img class="p-img back" src="/assets/product-500-organic-12.png" alt="AL WASAT Organic 500ml detail" onerror="this.style.display='none'">
+      <img loading="lazy" class="p-img front" src="/assets/product-500-organic-1.png" alt="AL WASAT Organic 500ml front" onerror="this.style.cssText='min-height:200px;display:block'">
+      <img loading="lazy" class="p-img back" src="/assets/product-500-organic-12.png" alt="AL WASAT Organic 500ml detail" onerror="this.style.display='none'">
     </div>
     <div class="p-name">AL WASAT Organic</div>
     <div class="p-sub">Organic Extra Virgin Olive Oil</div>
@@ -291,8 +315,8 @@ footer{padding:2.5rem 5rem;display:grid;grid-template-columns:1fr auto 1fr;align
   <a href="https://shop.al-wasat.co.uk" class="p-card" data-cat="organic 1l">
     <div class="p-tag">Organic <span class="organic-pill">Certified</span></div>
     <div class="p-img-wrap">
-      <img class="p-img front" src="/assets/product-1l-organic-1.png" alt="AL WASAT Organic 1L front" onerror="this.style.cssText='min-height:200px;display:block'">
-      <img class="p-img back" src="/assets/product-1l-organic-12.png" alt="AL WASAT Organic 1L detail" onerror="this.style.display='none'">
+      <img loading="lazy" class="p-img front" src="/assets/product-1l-organic-1.png" alt="AL WASAT Organic 1L front" onerror="this.style.cssText='min-height:200px;display:block'">
+      <img loading="lazy" class="p-img back" src="/assets/product-1l-organic-12.png" alt="AL WASAT Organic 1L detail" onerror="this.style.display='none'">
     </div>
     <div class="p-name">AL WASAT Organic</div>
     <div class="p-sub">Organic Extra Virgin Olive Oil</div>
@@ -334,7 +358,7 @@ footer{padding:2.5rem 5rem;display:grid;grid-template-columns:1fr auto 1fr;align
 </section>
 
 <footer>
-  <div class="fl">© 2025 AL WASAT. All rights reserved.</div>
+  <div class="fl">© 2026 AL WASAT. All rights reserved.</div>
   <div class="fc">Al Wasat</div>
   <div class="fr">Extra Virgin Olive Oil · Tunisia</div>
 </footer>
@@ -346,6 +370,13 @@ let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px'});
 document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>ring.classList.add('hover'));el.addEventListener('mouseleave',()=>ring.classList.remove('hover'))});
 (function r(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(r)})();
+
+// Mobile hamburger
+const ham=document.getElementById('navHam'),navLinks=document.getElementById('navLinks'),overlay=document.getElementById('navOverlay');
+function toggleNav(open){ham.classList.toggle('open',open);navLinks.classList.toggle('open',open);overlay.classList.toggle('open',open);document.body.style.overflow=open?'hidden':'';ham.setAttribute('aria-expanded',open);}
+ham.addEventListener('click',()=>toggleNav(!ham.classList.contains('open')));
+overlay.addEventListener('click',()=>toggleNav(false));
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>toggleNav(false)));
 
 // Reveal
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}})},{threshold:0.12});
