@@ -9,9 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
       mx = e.clientX; my = e.clientY;
       dot.style.left = mx + 'px'; dot.style.top = my + 'px';
     });
-    document.querySelectorAll('a,button').forEach(el => {
-      el.addEventListener('mouseenter', () => ring.classList.add('hover'));
-      el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
+    document.addEventListener('mouseover', e => {
+      if (e.target.closest('a,button')) ring.classList.add('hover');
+    });
+    document.addEventListener('mouseout', e => {
+      if (!e.relatedTarget || !e.relatedTarget.closest('a,button')) ring.classList.remove('hover');
     });
     (function lagRing() {
       rx += (mx - rx) * 0.1; ry += (my - ry) * 0.1;
@@ -99,6 +101,36 @@ document.addEventListener('DOMContentLoaded', () => {
         label.textContent = 'Try again'; btn.disabled = false;
       }
     });
+  }
+
+  /* === PRODUCT DETAIL MODAL (shop only) === */
+  const PRODUCT_DATA = {
+    'classic-500':  { tag:'Classic', name:'AL WASAT Classic', sub:'Extra Virgin Olive Oil', price:'£13.99', unit:'/ 500ml', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Acidity',v:'< 0.8%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Harvest',v:'October – November'},{l:'Format',v:'500ml glass bottle'}] },
+    'classic-1l':   { tag:'Classic', name:'AL WASAT Classic', sub:'Extra Virgin Olive Oil', price:'£22.99', unit:'/ 1 Litre', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Acidity',v:'< 0.8%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Harvest',v:'October – November'},{l:'Format',v:'1 Litre glass bottle'}] },
+    'organic-500':  { tag:'Organic · Certified', name:'AL WASAT Organic', sub:'Organic Extra Virgin Olive Oil', price:'£16.99', unit:'/ 500ml', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Certification',v:'EU Organic Certified'},{l:'Acidity',v:'< 0.6%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'500ml glass bottle'}] },
+    'organic-1l':   { tag:'Organic · Certified', name:'AL WASAT Organic', sub:'Organic Extra Virgin Olive Oil', price:'£28.99', unit:'/ 1 Litre', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Certification',v:'EU Organic Certified'},{l:'Acidity',v:'< 0.6%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'1 Litre glass bottle'}] }
+  };
+  const pdModal = document.getElementById('pdModal');
+  if (pdModal) {
+    const pdmClose = document.getElementById('pdmClose');
+    function closePdm() { pdModal.classList.remove('open'); document.body.style.overflow = ''; }
+    pdmClose.addEventListener('click', closePdm);
+    pdModal.addEventListener('click', e => { if (e.target === pdModal) closePdm(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closePdm(); });
+    window['openDetails'] = function(e, btn) {
+      e.preventDefault(); e.stopPropagation();
+      const d = PRODUCT_DATA[btn.closest('.p-card').dataset.pid];
+      if (!d) return;
+      document.getElementById('pdmInner').innerHTML =
+        `<div class="pdm-tag">${d.tag}</div>
+         <div class="pdm-name">${d.name}</div>
+         <div class="pdm-sub">${d.sub}</div>
+         <div class="pdm-price">${d.price} <span class="pdm-price-lbl">${d.unit}</span></div>
+         <div class="pdm-specs">${d.specs.map(s=>`<div class="pdm-spec"><div class="pdm-spec-label">${s.l}</div><div class="pdm-spec-val">${s.v}</div></div>`).join('')}</div>
+         <a href="https://shop.al-wasat.co.uk" class="pdm-shop">Shop Now &nbsp;→</a>`;
+      pdModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
   }
 
   /* === PRODUCT CARDS + FILTER (shop only) === */

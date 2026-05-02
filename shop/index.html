@@ -77,7 +77,7 @@
 
 <div class="product-grid" id="grid">
 
-  <a href="https://shop.al-wasat.co.uk" class="p-card" data-cat="classic 500ml">
+  <a href="https://shop.al-wasat.co.uk" class="p-card" data-cat="classic 500ml" data-pid="classic-500">
     <div class="p-tag">Classic</div>
     <div class="p-img-wrap">
       <img loading="lazy" class="p-img front" src="/assets/product-500-1.png" alt="AL WASAT Classic 500ml front" onerror="this.style.cssText='min-height:200px;display:block'">
@@ -85,15 +85,19 @@
     </div>
     <div class="p-name">AL WASAT Classic</div>
     <div class="p-sub">Extra Virgin Olive Oil</div>
+    <div class="p-price">£13.99 <span class="p-price-label">/ 500ml</span></div>
     <div class="p-attrs">
       <div class="p-attr">500ml</div>
       <div class="p-attr">Cold-extracted</div>
       <div class="p-attr">Harvest dated</div>
     </div>
-    <div class="p-cta">View Product <span class="p-arrow"></span></div>
+    <div class="p-actions">
+      <div class="p-cta">Shop Now <span class="p-arrow"></span></div>
+      <button class="p-details-btn" onclick="openDetails(event,this)">Details</button>
+    </div>
   </a>
 
-  <a href="https://shop.al-wasat.co.uk" class="p-card" data-cat="classic 1l">
+  <a href="https://shop.al-wasat.co.uk" class="p-card" data-cat="classic 1l" data-pid="classic-1l">
     <div class="p-tag">Classic</div>
     <div class="p-img-wrap">
       <img loading="lazy" class="p-img front" src="/assets/product-1l-classic-1.png" alt="AL WASAT Classic 1L front" onerror="this.style.cssText='min-height:200px;display:block'">
@@ -101,15 +105,19 @@
     </div>
     <div class="p-name">AL WASAT Classic</div>
     <div class="p-sub">Extra Virgin Olive Oil</div>
+    <div class="p-price">£22.99 <span class="p-price-label">/ 1 Litre</span></div>
     <div class="p-attrs">
       <div class="p-attr">1 Litre</div>
       <div class="p-attr">Cold-extracted</div>
       <div class="p-attr">Harvest dated</div>
     </div>
-    <div class="p-cta">View Product <span class="p-arrow"></span></div>
+    <div class="p-actions">
+      <div class="p-cta">Shop Now <span class="p-arrow"></span></div>
+      <button class="p-details-btn" onclick="openDetails(event,this)">Details</button>
+    </div>
   </a>
 
-  <a href="https://shop.al-wasat.co.uk" class="p-card" data-cat="organic 500ml">
+  <a href="https://shop.al-wasat.co.uk" class="p-card" data-cat="organic 500ml" data-pid="organic-500">
     <div class="p-tag">Organic <span class="organic-pill">Certified</span></div>
     <div class="p-img-wrap">
       <img loading="lazy" class="p-img front" src="/assets/product-500-organic-1.png" alt="AL WASAT Organic 500ml front" onerror="this.style.cssText='min-height:200px;display:block'">
@@ -117,15 +125,19 @@
     </div>
     <div class="p-name">AL WASAT Organic</div>
     <div class="p-sub">Organic Extra Virgin Olive Oil</div>
+    <div class="p-price">£16.99 <span class="p-price-label">/ 500ml</span></div>
     <div class="p-attrs">
       <div class="p-attr">500ml</div>
       <div class="p-attr">Cold-extracted</div>
       <div class="p-attr">Certified organic</div>
     </div>
-    <div class="p-cta">View Product <span class="p-arrow"></span></div>
+    <div class="p-actions">
+      <div class="p-cta">Shop Now <span class="p-arrow"></span></div>
+      <button class="p-details-btn" onclick="openDetails(event,this)">Details</button>
+    </div>
   </a>
 
-  <a href="https://shop.al-wasat.co.uk" class="p-card" data-cat="organic 1l">
+  <a href="https://shop.al-wasat.co.uk" class="p-card" data-cat="organic 1l" data-pid="organic-1l">
     <div class="p-tag">Organic <span class="organic-pill">Certified</span></div>
     <div class="p-img-wrap">
       <img loading="lazy" class="p-img front" src="/assets/product-1l-organic-1.png" alt="AL WASAT Organic 1L front" onerror="this.style.cssText='min-height:200px;display:block'">
@@ -133,12 +145,16 @@
     </div>
     <div class="p-name">AL WASAT Organic</div>
     <div class="p-sub">Organic Extra Virgin Olive Oil</div>
+    <div class="p-price">£28.99 <span class="p-price-label">/ 1 Litre</span></div>
     <div class="p-attrs">
       <div class="p-attr">1 Litre</div>
       <div class="p-attr">Cold-extracted</div>
       <div class="p-attr">Certified organic</div>
     </div>
-    <div class="p-cta">View Product <span class="p-arrow"></span></div>
+    <div class="p-actions">
+      <div class="p-cta">Shop Now <span class="p-arrow"></span></div>
+      <button class="p-details-btn" onclick="openDetails(event,this)">Details</button>
+    </div>
   </a>
 
 </div>
@@ -169,6 +185,13 @@
   <p class="bcta-sub reveal">Serious enquiries from distributors, retailers, and culinary professionals.</p>
   <a href="/#contact" class="bcta-btn reveal"><span>Get in Touch</span><span>&nbsp;→</span></a>
 </section>
+
+<div class="pdm-overlay" id="pdModal">
+  <div class="pdm">
+    <button class="pdm-close" id="pdmClose">✕</button>
+    <div id="pdmInner"></div>
+  </div>
+</div>
 
 <footer>
   <div class="fl">© 2026 AL WASAT. All rights reserved.</div>
