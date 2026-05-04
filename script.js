@@ -10,10 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
       dot.style.left = mx + 'px'; dot.style.top = my + 'px';
     });
     document.addEventListener('mouseover', e => {
-      if (e.target.closest('a,button')) ring.classList.add('hover');
+      if (e.target.closest('a,.p-card,button')) ring.classList.add('hover');
     });
     document.addEventListener('mouseout', e => {
-      if (!e.relatedTarget || !e.relatedTarget.closest('a,button')) ring.classList.remove('hover');
+      if (!e.relatedTarget || !e.relatedTarget.closest('a,.p-card,button')) ring.classList.remove('hover');
     });
     (function lagRing() {
       rx += (mx - rx) * 0.1; ry += (my - ry) * 0.1;
@@ -146,6 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }, { threshold: 0.1 });
     cards.forEach(c => cardObs.observe(c));
+
 
     function updateLastRow() {
       const vis = [...cards].filter(c => c.style.display !== 'none');
