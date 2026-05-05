@@ -244,6 +244,22 @@ document.addEventListener('DOMContentLoaded', () => {
     window.location.href = '/checkout/';
   };
 
+  /* === HARVEST BANNER DISMISS (home only) === */
+  (function(){
+    const banner = document.getElementById('harvestBanner');
+    const btn = document.getElementById('harvestClose');
+    if (!banner || !btn) return;
+    if (!localStorage.getItem('awHarvestDismissed')) {
+      banner.style.display = 'flex';
+      document.body.classList.add('has-banner');
+    }
+    btn.addEventListener('click', function(){
+      banner.style.display = 'none';
+      document.body.classList.remove('has-banner');
+      localStorage.setItem('awHarvestDismissed', '1');
+    });
+  })();
+
   /* === PRODUCT CARDS + FILTER (shop only) === */
   const cards = document.querySelectorAll('.p-card');
   if (cards.length > 0) {
@@ -278,3 +294,35 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
+
+/* ============================================================= */
+/* === NEW ADDITIONS — Features 1–6                          === */
+/* ============================================================= */
+
+/* === 5. STAT NUMBER COUNTER === */
+(function(){
+  const els = document.querySelectorAll('.stat-n');
+  if (!els.length) return;
+  const obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (!entry.isIntersecting) return;
+      obs.unobserve(entry.target);
+      const el = entry.target;
+      const raw = el.textContent.trim();
+      if (raw === '∞' || raw === '0') return;
+      const suffix = raw.replace(/[0-9.]/g, '');
+      const end = parseFloat(raw);
+      if (isNaN(end)) return;
+      const dur = 1800;
+      const t0 = performance.now();
+      (function tick(now){
+        const p = Math.min((now - t0) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(eased * end) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+        else el.textContent = raw;
+      })(t0);
+    });
+  }, {threshold:0.6});
+  els.forEach(function(el){ obs.observe(el); });
+})();

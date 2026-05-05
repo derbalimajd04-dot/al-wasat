@@ -21,6 +21,12 @@
 </head>
 <body>
 
+<!-- Harvest year banner -->
+<div class="harvest-banner" id="harvestBanner" style="display:none">
+  <span class="harvest-text">NOW AVAILABLE — 2024 HARVEST · LIMITED QUANTITY</span>
+  <button class="harvest-close" id="harvestClose" aria-label="Dismiss banner">×</button>
+</div>
+
 <div class="grain"></div>
 <div class="cursor-dot" id="curDot"></div>
 <div class="cursor-ring" id="curRing"></div>
@@ -44,6 +50,7 @@
     <span class="cart-count" id="cartCount"></span>
   </button>
   <button class="nav-ham" id="navHam" aria-label="Open navigation menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <div class="nav-ship">Free delivery on orders over £50</div>
 </nav>
 <div class="nav-overlay" id="navOverlay"></div>
 
@@ -250,6 +257,31 @@
   <div class="stat-cell reveal rd1"><div class="stat-n">100%</div><div class="stat-l">Cold-extracted</div></div>
   <div class="stat-cell reveal rd2"><div class="stat-n">0</div><div class="stat-l">Cross-harvest blending</div></div>
   <div class="stat-cell reveal rd3"><div class="stat-n">∞</div><div class="stat-l">Uncompromised batches</div></div>
+</div>
+
+<div class="cert-strip reveal">
+  <div class="cert-track">
+    <span class="cert-item">IOC Certified</span>
+    <span class="cert-div">·</span>
+    <span class="cert-item">Cold Extracted</span>
+    <span class="cert-div">·</span>
+    <span class="cert-item">Polyphenols Tested</span>
+    <span class="cert-div">·</span>
+    <span class="cert-item">Harvest Dated</span>
+    <span class="cert-div">·</span>
+    <span class="cert-item">Organic Available</span>
+    <!-- duplicate set for mobile marquee loop -->
+    <span class="cert-div cert-dup">·</span>
+    <span class="cert-item cert-dup">IOC Certified</span>
+    <span class="cert-div cert-dup">·</span>
+    <span class="cert-item cert-dup">Cold Extracted</span>
+    <span class="cert-div cert-dup">·</span>
+    <span class="cert-item cert-dup">Polyphenols Tested</span>
+    <span class="cert-div cert-dup">·</span>
+    <span class="cert-item cert-dup">Harvest Dated</span>
+    <span class="cert-div cert-dup">·</span>
+    <span class="cert-item cert-dup">Organic Available</span>
+  </div>
 </div>
 
 <section class="contact-sec" id="contact">
