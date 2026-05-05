@@ -10,7 +10,15 @@ const PRODUCT_DATA = {
 const _CK = 'alwasat_cart';
 
 function getCart() {
-  try { return JSON.parse(localStorage.getItem(_CK) || '[]'); } catch { return []; }
+  try {
+    const raw = localStorage.getItem(_CK);
+    const cart = raw ? JSON.parse(raw) : [];
+    if (!Array.isArray(cart)) return [];
+    return cart.filter(i =>
+      i && typeof i.pid === 'string' && i.pid in PRODUCT_DATA &&
+      typeof i.qty === 'number' && Number.isInteger(i.qty) && i.qty > 0
+    );
+  } catch { return []; }
 }
 
 function saveCart(c) {
@@ -164,6 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!ok) valid = false;
       });
       if (!valid) return;
+      if (this._honeypot && this._honeypot.value !== '') return;
       const btn = this.querySelector('.submit-btn');
       const label = btn.querySelector('span:first-child');
       btn.disabled = true; label.textContent = 'Sending…';
