@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AL WASAT — Checkout</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Tenor+Sans&family=EB+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<div class="grain"></div>
+<div class="cursor-dot" id="curDot"></div>
+<div class="cursor-ring" id="curRing"></div>
+
+<nav>
+  <a href="/" class="nav-logo">Al Wasat</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/">Home</a></li>
+    <li><a href="/shop/" class="active">Collection</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+  <button class="nav-ham" id="navHam" aria-label="Open navigation menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<!-- Checkout -->
+<div id="checkoutWrap" class="checkout-wrap">
+  <div class="checkout-inner">
+
+    <div class="checkout-header">
+      <p class="kicker reveal"><span class="kicker-rule"></span>Checkout</p>
+      <h1 class="checkout-title reveal">Your <em>Order</em></h1>
+    </div>
+
+    <div class="checkout-grid">
+
+      <!-- Order summary -->
+      <div class="co-summary reveal">
+        <div class="co-head">Order Summary</div>
+        <div id="coItems"></div>
+        <div class="co-total">
+          <span class="co-total-label">Total</span>
+          <span class="co-total-val" id="coTotal">£0.00</span>
+        </div>
+        <a href="/shop/" class="co-edit">← Edit cart</a>
+      </div>
+
+      <!-- Shipping + Payment -->
+      <div class="co-form-wrap reveal rd1">
+
+        <div class="co-section-title">Contact &amp; Shipping</div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="co-first">First Name</label>
+            <input id="co-first" type="text" placeholder="First name" required>
+            <span class="field-error">Required</span>
+          </div>
+          <div class="field">
+            <label for="co-last">Last Name</label>
+            <input id="co-last" type="text" placeholder="Last name" required>
+            <span class="field-error">Required</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="co-email">Email</label>
+          <input id="co-email" type="email" placeholder="your@email.com" required>
+          <span class="field-error">Valid email required</span>
+        </div>
+
+        <div class="field">
+          <label for="co-phone">Phone <span style="color:var(--stone);font-style:italic">(optional)</span></label>
+          <input id="co-phone" type="tel" placeholder="+44 ...">
+        </div>
+
+        <div class="field">
+          <label for="co-addr">Address</label>
+          <input id="co-addr" type="text" placeholder="Street address" required>
+          <span class="field-error">Required</span>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="co-city">City</label>
+            <input id="co-city" type="text" placeholder="City" required>
+            <span class="field-error">Required</span>
+          </div>
+          <div class="field">
+            <label for="co-post">Postcode</label>
+            <input id="co-post" type="text" placeholder="Postcode" required>
+            <span class="field-error">Required</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="co-country">Country</label>
+          <select id="co-country" required>
+            <option value="">Select country</option>
+            <option value="GB">United Kingdom</option>
+            <option value="FR">France</option>
+            <option value="DE">Germany</option>
+            <option value="NL">Netherlands</option>
+            <option value="BE">Belgium</option>
+            <option value="ES">Spain</option>
+            <option value="IT">Italy</option>
+            <option value="other">Other</option>
+          </select>
+          <span class="field-error">Required</span>
+        </div>
+
+        <div class="co-section-title">Payment</div>
+        <p class="co-pay-note">Secure checkout powered by PayPal. Pay with your PayPal account or any major debit or credit card.</p>
+        <div class="co-pay-box" id="paypal-button-container"></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Order confirmed state -->
+<div id="orderSuccess" class="order-success" style="display:none">
+  <div class="os-inner">
+    <div class="ornament"><div class="orn-line"></div><div class="orn-gem"></div><div class="orn-line"></div></div>
+    <h2 class="os-title">Order <em>Confirmed</em></h2>
+    <p class="os-body">Thank you. You'll receive a confirmation email shortly.<br>Your AL WASAT olive oil is on its way.</p>
+    <a href="/" class="bcta-btn os-btn"><span>Back to Home</span><span>&nbsp;→</span></a>
+  </div>
+</div>
+
+<footer>
+  <div class="fl">© 2026 AL WASAT. All rights reserved.</div>
+  <div class="fc">Al Wasat</div>
+  <div class="fr">Extra Virgin Olive Oil · Tunisia</div>
+</footer>
+
+<script src="/script.js"></script>
+<!--
+  PAYMENT SETUP — PayPal (no server required)
+  1. Go to developer.paypal.com → My Apps & Credentials → Create App
+  2. Copy the Client ID (use Live client ID for production)
+  3. Replace YOUR_PAYPAL_CLIENT_ID below with your actual Client ID
+-->
+<script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=GBP"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const cart = getCart();
+  if (!cart.length) { window.location.href = '/shop/'; return; }
+
+  // Populate order summary
+  const total = cart.reduce((s, i) => s + i.priceNum * i.qty, 0);
+  document.getElementById('coItems').innerHTML = cart.map(i =>
+    `<div class="co-item">
+      <div>
+        <div class="co-item-name">${i.name}</div>
+        <div class="co-item-sub">${i.unit.replace('/ ','')} &times; ${i.qty}</div>
+      </div>
+      <div class="co-item-price">£${(i.priceNum * i.qty).toFixed(2)}</div>
+    </div>`
+  ).join('');
+  document.getElementById('coTotal').textContent = '£' + total.toFixed(2);
+
+  // Validate shipping fields
+  const requiredFields = ['co-first','co-last','co-email','co-addr','co-city','co-post','co-country'];
+  function shippingValid() {
+    let ok = true;
+    requiredFields.forEach(id => {
+      const el = document.getElementById(id);
+      const valid = el.value.trim() !== '' && (el.type !== 'email' || el.validity.valid);
+      el.closest('.field').classList.toggle('has-error', !valid);
+      if (!valid) ok = false;
+    });
+    return ok;
+  }
+  requiredFields.forEach(id => {
+    document.getElementById(id).addEventListener('input', () => {
+      const el = document.getElementById(id);
+      const valid = el.value.trim() !== '' && (el.type !== 'email' || el.validity.valid);
+      el.closest('.field').classList.toggle('has-error', !valid);
+    });
+  });
+
+  // PayPal integration
+  if (typeof paypal === 'undefined') {
+    document.getElementById('paypal-button-container').innerHTML =
+      '<p class="co-pay-fallback">Payment unavailable. Please <a href="/#contact">contact us</a> to place your order.</p>';
+    return;
+  }
+
+  paypal.Buttons({
+    style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal', height: 48 },
+    onClick(data, actions) {
+      if (!shippingValid()) {
+        document.getElementById('co-first').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return actions.reject();
+      }
+      return actions.resolve();
+    },
+    createOrder(data, actions) {
+      const c = getCart();
+      const tot = c.reduce((s, i) => s + i.priceNum * i.qty, 0);
+      return actions.order.create({
+        purchase_units: [{
+          description: 'AL WASAT Extra Virgin Olive Oil',
+          amount: {
+            currency_code: 'GBP',
+            value: tot.toFixed(2),
+            breakdown: { item_total: { currency_code: 'GBP', value: tot.toFixed(2) } }
+          },
+          items: c.map(i => ({
+            name: `${i.name} ${i.unit}`,
+            quantity: String(i.qty),
+            unit_amount: { currency_code: 'GBP', value: i.priceNum.toFixed(2) }
+          }))
+        }]
+      });
+    },
+    onApprove(data, actions) {
+      return actions.order.capture().then(() => {
+        saveCart([]);
+        document.getElementById('checkoutWrap').style.display = 'none';
+        document.getElementById('orderSuccess').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    },
+    onError(err) {
+      console.error('PayPal error:', err);
+    }
+  }).render('#paypal-button-container');
+});
+</script>
+</body>
+</html>

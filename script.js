@@ -1,3 +1,85 @@
+/* === PRODUCT DATA (global — used by modal + cart) === */
+const PRODUCT_DATA = {
+  'classic-500':  { tag:'Classic', name:'AL WASAT Classic', sub:'Extra Virgin Olive Oil', price:'£13.99', unit:'/ 500ml', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Acidity',v:'< 0.8%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Harvest',v:'October – November'},{l:'Format',v:'500ml glass bottle'}] },
+  'classic-1l':   { tag:'Classic', name:'AL WASAT Classic', sub:'Extra Virgin Olive Oil', price:'£22.99', unit:'/ 1 Litre', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Acidity',v:'< 0.8%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Harvest',v:'October – November'},{l:'Format',v:'1 Litre glass bottle'}] },
+  'organic-500':  { tag:'Organic · Certified', name:'AL WASAT Organic', sub:'Organic Extra Virgin Olive Oil', price:'£16.99', unit:'/ 500ml', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Certification',v:'EU Organic Certified'},{l:'Acidity',v:'< 0.6%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'500ml glass bottle'}] },
+  'organic-1l':   { tag:'Organic · Certified', name:'AL WASAT Organic', sub:'Organic Extra Virgin Olive Oil', price:'£28.99', unit:'/ 1 Litre', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Certification',v:'EU Organic Certified'},{l:'Acidity',v:'< 0.6%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'1 Litre glass bottle'}] }
+};
+
+/* === CART (global) === */
+const _CK = 'alwasat_cart';
+
+function getCart() {
+  try { return JSON.parse(localStorage.getItem(_CK) || '[]'); } catch { return []; }
+}
+
+function saveCart(c) {
+  localStorage.setItem(_CK, JSON.stringify(c));
+  _cartBadge();
+  _cartRender();
+}
+
+function addToCartById(pid) {
+  const d = PRODUCT_DATA[pid]; if (!d) return;
+  const c = getCart();
+  const x = c.find(i => i.pid === pid);
+  if (x) x.qty++; else c.push({ pid, name:d.name, price:d.price, priceNum:parseFloat(d.price.replace('£','')), unit:d.unit, qty:1 });
+  saveCart(c);
+}
+
+function cartQty(pid, delta) {
+  const c = getCart(), x = c.find(i => i.pid === pid); if (!x) return;
+  x.qty = Math.max(1, x.qty + delta); saveCart(c);
+}
+
+function cartRemove(pid) { saveCart(getCart().filter(i => i.pid !== pid)); }
+
+function openCart() {
+  const dr = document.getElementById('cartDrawer'), ov = document.getElementById('cartOverlay');
+  if (!dr) return;
+  _cartRender();
+  dr.classList.add('open'); ov.classList.add('open'); document.body.style.overflow = 'hidden';
+}
+
+function closeCart() {
+  const dr = document.getElementById('cartDrawer'), ov = document.getElementById('cartOverlay');
+  if (!dr) return;
+  dr.classList.remove('open'); ov.classList.remove('open'); document.body.style.overflow = '';
+}
+
+function _cartBadge() {
+  const n = getCart().reduce((s,i) => s+i.qty, 0);
+  document.querySelectorAll('.cart-count').forEach(el => { el.textContent = n; el.style.display = n ? '' : 'none'; });
+}
+
+function _cartRender() {
+  const el = document.getElementById('cartItems'); if (!el) return;
+  const c = getCart(), foot = document.getElementById('cartFooter');
+  if (!c.length) {
+    el.innerHTML = '<div class="cd-empty"><p>Your cart is empty.</p><a href="/shop/" class="cd-empty-link">Browse Collection →</a></div>';
+    if (foot) foot.style.display = 'none'; return;
+  }
+  if (foot) foot.style.display = '';
+  const tot = c.reduce((s,i) => s+i.priceNum*i.qty, 0);
+  el.innerHTML = c.map(i => `<div class="cd-item">
+    <div class="cd-item-info">
+      <div class="cd-item-name">${i.name}</div>
+      <div class="cd-item-meta">${i.unit.replace('/ ','')} · ${i.price} each</div>
+      <div class="cd-item-price">£${(i.priceNum * i.qty).toFixed(2)}</div>
+    </div>
+    <div class="cd-item-right">
+      <div class="cd-qty-row">
+        <button class="cd-qty-btn" onclick="cartQty('${i.pid}',-1)">−</button>
+        <span class="cd-qty">${i.qty}</span>
+        <button class="cd-qty-btn" onclick="cartQty('${i.pid}',1)">+</button>
+      </div>
+      <button class="cd-remove" onclick="cartRemove('${i.pid}')">✕</button>
+    </div>
+  </div>`).join('');
+  const totEl = document.getElementById('cartTotal'); if (totEl) totEl.textContent = '£'+tot.toFixed(2);
+}
+
+/* === DOMContentLoaded === */
 document.addEventListener('DOMContentLoaded', () => {
 
   /* === CURSOR === */
@@ -103,23 +185,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /* === CART INIT === */
+  _cartBadge();
+  const cartCloseBtn = document.getElementById('cartClose');
+  if (cartCloseBtn) cartCloseBtn.addEventListener('click', closeCart);
+  const cartOv = document.getElementById('cartOverlay');
+  if (cartOv) cartOv.addEventListener('click', closeCart);
+
   /* === PRODUCT DETAIL MODAL (shop only) === */
-  const PRODUCT_DATA = {
-    'classic-500':  { tag:'Classic', name:'AL WASAT Classic', sub:'Extra Virgin Olive Oil', price:'£13.99', unit:'/ 500ml', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Acidity',v:'< 0.8%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Harvest',v:'October – November'},{l:'Format',v:'500ml glass bottle'}] },
-    'classic-1l':   { tag:'Classic', name:'AL WASAT Classic', sub:'Extra Virgin Olive Oil', price:'£22.99', unit:'/ 1 Litre', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Acidity',v:'< 0.8%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Harvest',v:'October – November'},{l:'Format',v:'1 Litre glass bottle'}] },
-    'organic-500':  { tag:'Organic · Certified', name:'AL WASAT Organic', sub:'Organic Extra Virgin Olive Oil', price:'£16.99', unit:'/ 500ml', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Certification',v:'EU Organic Certified'},{l:'Acidity',v:'< 0.6%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'500ml glass bottle'}] },
-    'organic-1l':   { tag:'Organic · Certified', name:'AL WASAT Organic', sub:'Organic Extra Virgin Olive Oil', price:'£28.99', unit:'/ 1 Litre', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Certification',v:'EU Organic Certified'},{l:'Acidity',v:'< 0.6%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'1 Litre glass bottle'}] }
-  };
   const pdModal = document.getElementById('pdModal');
   if (pdModal) {
     const pdmClose = document.getElementById('pdmClose');
     function closePdm() { pdModal.classList.remove('open'); document.body.style.overflow = ''; }
     pdmClose.addEventListener('click', closePdm);
     pdModal.addEventListener('click', e => { if (e.target === pdModal) closePdm(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closePdm(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closePdm(); closeCart(); } });
     window['openDetails'] = function(e, btn) {
       e.preventDefault(); e.stopPropagation();
-      const d = PRODUCT_DATA[btn.closest('.p-card').dataset.pid];
+      const pid = btn.closest('.p-card').dataset.pid;
+      const d = PRODUCT_DATA[pid];
       if (!d) return;
       document.getElementById('pdmInner').innerHTML =
         `<div class="pdm-tag">${d.tag}</div>
@@ -127,11 +211,29 @@ document.addEventListener('DOMContentLoaded', () => {
          <div class="pdm-sub">${d.sub}</div>
          <div class="pdm-price">${d.price} <span class="pdm-price-lbl">${d.unit}</span></div>
          <div class="pdm-specs">${d.specs.map(s=>`<div class="pdm-spec"><div class="pdm-spec-label">${s.l}</div><div class="pdm-spec-val">${s.v}</div></div>`).join('')}</div>
-         <a href="https://shop.al-wasat.co.uk" class="pdm-shop">Shop Now &nbsp;→</a>`;
+         <button class="pdm-add-btn" onclick="event.stopPropagation();addToCartById('${pid}');document.getElementById('pdModal').classList.remove('open');document.body.style.overflow='';openCart();">Add to Cart</button>`;
       pdModal.classList.add('open');
       document.body.style.overflow = 'hidden';
     };
   }
+
+  /* === ADD TO CART (shop only) === */
+  window['addToCart'] = function(e, btn) {
+    e.preventDefault(); e.stopPropagation();
+    const pid = btn.closest('.p-card').dataset.pid;
+    addToCartById(pid);
+    const orig = btn.textContent;
+    btn.textContent = 'Added ✓'; btn.classList.add('added');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('added'); }, 1600);
+    openCart();
+  };
+
+  /* === SHOP NOW (shop only) — add to cart + go to checkout === */
+  window['shopNow'] = function(e, btn) {
+    e.preventDefault(); e.stopPropagation();
+    addToCartById(btn.closest('.p-card').dataset.pid);
+    window.location.href = '/checkout/';
+  };
 
   /* === PRODUCT CARDS + FILTER (shop only) === */
   const cards = document.querySelectorAll('.p-card');
@@ -146,7 +248,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }, { threshold: 0.1 });
     cards.forEach(c => cardObs.observe(c));
-
 
     function updateLastRow() {
       const vis = [...cards].filter(c => c.style.display !== 'none');
