@@ -503,3 +503,63 @@ footer{padding:2.5rem 5rem;display:grid;grid-template-columns:1fr auto 1fr;align
   .checkout-wrap{padding:6rem 1.25rem 3rem}
   .co-summary{padding:2rem 1.5rem}
 }
+
+/* ================================================================ */
+/* MOBILE IMPROVEMENTS — appended, no existing rules modified        */
+/* ================================================================ */
+
+/* === SHOP GRID — 2 columns at tablet (overrides 1-col default) === */
+@media(max-width:900px){
+  .product-grid{grid-template-columns:1fr 1fr}
+  .p-card:nth-child(odd){border-right:1px solid rgba(201,169,110,0.08) !important}
+  .p-card:nth-child(even){border-right:none !important}
+  .p-card:nth-last-child(-n+2){border-bottom:none !important}
+  /* Page hero — left-aligned, tighter gap */
+  .page-hero-inner{align-items:start;gap:2rem}
+  /* Assurance — force 2 columns */
+  .assurance{grid-template-columns:1fr 1fr}
+  /* Tap targets */
+  .cart-nav-btn,.filter-btn{min-height:44px}
+  .nav-links a{min-height:44px;display:flex;align-items:center}
+}
+
+/* === HERO — hide video on mobile, show static image === */
+@media(max-width:768px){
+  .hero-video{display:none}
+  .hero-video-wrap{background-image:url('/assets/chapter2.png');background-size:cover;background-position:center}
+}
+
+/* === 500px — small mobile === */
+@media(max-width:500px){
+  /* Heritage — tighter vertical padding */
+  .heritage,.heritage-flip{padding:3rem 1.25rem}
+  .img-frame{aspect-ratio:3/2}
+  /* Shop grid — restore 1-col border behaviour */
+  .p-card:nth-child(odd){border-right:none !important}
+  .p-card:not(:last-child){border-bottom:1px solid rgba(201,169,110,0.08) !important}
+  .p-card:last-child{border-bottom:none !important}
+  /* Smaller images and card padding */
+  .p-img-wrap{height:200px}
+  .p-card{padding:2rem 1rem}
+  /* Assurance — keep 2 columns (overrides existing 1-col rule) */
+  .assurance{grid-template-columns:1fr 1fr}
+  /* Product detail modal — bottom sheet */
+  .pdm-overlay{align-items:flex-end;padding:0}
+  .pdm{width:100%;max-width:100%;max-height:82vh;padding:2rem 1.5rem 2.5rem;border-left:none;border-right:none;border-bottom:none;transform:translateY(100%)}
+  .pdm-overlay.open .pdm{transform:translateY(0)}
+  /* Tap targets */
+  .submit-btn,.cart-nav-btn,.p-add-btn,.p-details-btn,.co-stripe-btn,.pdm-add-btn{min-height:44px}
+}
+
+/* === 390px — small phones, hero heading === */
+@media(max-width:390px){
+  .hero-h1{font-size:clamp(2.4rem,9vw,3rem);line-height:1.0}
+}
+
+/* === 375px — iPhone SE micro-breakpoint === */
+@media(max-width:375px){
+  nav,nav.nav-transparent,nav.nav-transparent.scrolled{padding:1rem 1rem}
+  .stat-n{font-size:2.4rem}
+  .q-text{font-size:1.35rem}
+  .sec-heading{font-size:clamp(1.5rem,5.5vw,1.9rem)}
+}
