@@ -1,5 +1,19 @@
 const Stripe = require('stripe');
 
+// In-memory rate limit: 10 requests per IP per 60 seconds.
+// Effective within a warm Lambda instance; does not persist across cold starts.
+const _rl = new Map();
+function rateLimit(ip) {
+  const now = Date.now();
+  const window = 60_000;
+  const max = 10;
+  const hits = (_rl.get(ip) || []).filter(t => now - t < window);
+  if (hits.length >= max) return false;
+  hits.push(now);
+  _rl.set(ip, hits);
+  return true;
+}
+
 const PRODUCTS = {
   'classic-500': { name: 'AL WASAT Classic — 500ml',    amount: 1399 },
   'classic-1l':  { name: 'AL WASAT Classic — 1 Litre',  amount: 2299 },
@@ -35,6 +49,11 @@ exports.handler = async (event) => {
 
   if (!ALLOWED_ORIGINS.includes(origin)) {
     return { statusCode: 403, body: 'Forbidden' };
+  }
+
+  const ip = event.headers['x-nf-client-connection-ip'] || event.headers['x-forwarded-for'] || 'unknown';
+  if (!rateLimit(ip)) {
+    return { statusCode: 429, headers: { 'Access-Control-Allow-Origin': corsOrigin }, body: JSON.stringify({ error: 'Too many requests' }) };
   }
 
   try {
