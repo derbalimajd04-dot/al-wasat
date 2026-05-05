@@ -494,6 +494,9 @@ footer{padding:2.5rem 5rem;display:grid;grid-template-columns:1fr auto 1fr;align
 .co-pay-fallback a{color:var(--gold)}
 .co-stripe-btn{font-family:var(--tenor);font-size:0.85rem;letter-spacing:0.12em;text-transform:uppercase;background:var(--gold);color:var(--ink);border:none;padding:1rem 2rem;width:100%;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:0.25rem;transition:background 0.3s,opacity 0.3s}
 .co-stripe-btn:hover{background:var(--gold2)}
+.co-stripe-btn:disabled{opacity:0.6;cursor:not-allowed}
+.co-pay-methods{font-family:var(--body);font-size:0.78rem;color:var(--stone);text-align:center;margin-top:1rem;letter-spacing:0.05em}
+.checkout-grid--slim{grid-template-columns:1fr 1fr}
 /* Order success */
 .order-success{min-height:calc(100vh - 100px);display:flex;align-items:center;justify-content:center;padding:8rem 2rem}
 .os-inner{text-align:center;max-width:600px}

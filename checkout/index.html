@@ -37,7 +37,7 @@
       <h1 class="checkout-title reveal">Your <em>Order</em></h1>
     </div>
 
-    <div class="checkout-grid">
+    <div class="checkout-grid checkout-grid--slim">
 
       <!-- Order summary -->
       <div class="co-summary reveal">
@@ -50,79 +50,18 @@
         <a href="/shop/" class="co-edit">← Edit cart</a>
       </div>
 
-      <!-- Shipping + Payment -->
+      <!-- Payment -->
       <div class="co-form-wrap reveal rd1">
-
-        <div class="co-section-title">Contact &amp; Shipping</div>
-
-        <div class="form-row">
-          <div class="field">
-            <label for="co-first">First Name</label>
-            <input id="co-first" type="text" placeholder="First name" required>
-            <span class="field-error">Required</span>
-          </div>
-          <div class="field">
-            <label for="co-last">Last Name</label>
-            <input id="co-last" type="text" placeholder="Last name" required>
-            <span class="field-error">Required</span>
-          </div>
-        </div>
-
-        <div class="field">
-          <label for="co-email">Email</label>
-          <input id="co-email" type="email" placeholder="your@email.com" required>
-          <span class="field-error">Valid email required</span>
-        </div>
-
-        <div class="field">
-          <label for="co-phone">Phone <span style="color:var(--stone);font-style:italic">(optional)</span></label>
-          <input id="co-phone" type="tel" placeholder="+44 ...">
-        </div>
-
-        <div class="field">
-          <label for="co-addr">Address</label>
-          <input id="co-addr" type="text" placeholder="Street address" required>
-          <span class="field-error">Required</span>
-        </div>
-
-        <div class="form-row">
-          <div class="field">
-            <label for="co-city">City</label>
-            <input id="co-city" type="text" placeholder="City" required>
-            <span class="field-error">Required</span>
-          </div>
-          <div class="field">
-            <label for="co-post">Postcode</label>
-            <input id="co-post" type="text" placeholder="Postcode" required>
-            <span class="field-error">Required</span>
-          </div>
-        </div>
-
-        <div class="field">
-          <label for="co-country">Country</label>
-          <select id="co-country" required>
-            <option value="">Select country</option>
-            <option value="GB">United Kingdom</option>
-            <option value="FR">France</option>
-            <option value="DE">Germany</option>
-            <option value="NL">Netherlands</option>
-            <option value="BE">Belgium</option>
-            <option value="ES">Spain</option>
-            <option value="IT">Italy</option>
-            <option value="other">Other</option>
-          </select>
-          <span class="field-error">Required</span>
-        </div>
-
         <div class="co-section-title">Payment</div>
-        <p class="co-pay-note">Secure checkout powered by Stripe. Pay with any major debit or credit card.</p>
+        <p class="co-pay-note">Secure checkout powered by Stripe. Your shipping address and payment details are collected on the next page.</p>
         <div class="co-pay-box">
           <button class="co-stripe-btn" id="stripeBtn" type="button">
-            <span>Proceed to Payment</span><span>&nbsp;→</span>
+            <span>Pay Securely with Stripe</span><span>&nbsp;→</span>
           </button>
+          <p class="co-pay-methods">Visa · Mastercard · Amex · Apple Pay · Google Pay</p>
         </div>
-
       </div>
+
     </div>
   </div>
 </div>
@@ -145,12 +84,20 @@
 
 <script src="/script.js"></script>
 <script>
-const STRIPE_LINK = 'https://buy.stripe.com/test_8x29AT08rcZ05NZeiE6Zy00';
-
 document.addEventListener('DOMContentLoaded', () => {
+  // Handle return from Stripe success
+  if (new URLSearchParams(window.location.search).get('success') === 'true') {
+    saveCart([]);
+    document.getElementById('checkoutWrap').style.display = 'none';
+    document.getElementById('orderSuccess').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
+
   const cart = getCart();
   if (!cart.length) { window.location.href = '/shop/'; return; }
 
+  // Populate order summary
   const total = cart.reduce((s, i) => s + i.priceNum * i.qty, 0);
   document.getElementById('coItems').innerHTML = cart.map(i =>
     `<div class="co-item">
@@ -163,32 +110,28 @@ document.addEventListener('DOMContentLoaded', () => {
   ).join('');
   document.getElementById('coTotal').textContent = '£' + total.toFixed(2);
 
-  const requiredFields = ['co-first','co-last','co-email','co-addr','co-city','co-post','co-country'];
-  function shippingValid() {
-    let ok = true;
-    requiredFields.forEach(id => {
-      const el = document.getElementById(id);
-      const valid = el.value.trim() !== '' && (el.type !== 'email' || el.validity.valid);
-      el.closest('.field').classList.toggle('has-error', !valid);
-      if (!valid) ok = false;
-    });
-    return ok;
-  }
-  requiredFields.forEach(id => {
-    document.getElementById(id).addEventListener('input', () => {
-      const el = document.getElementById(id);
-      const valid = el.value.trim() !== '' && (el.type !== 'email' || el.validity.valid);
-      el.closest('.field').classList.toggle('has-error', !valid);
-    });
-  });
-
-  document.getElementById('stripeBtn').addEventListener('click', () => {
-    if (!shippingValid()) {
-      document.getElementById('co-first').scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return;
+  // Stripe redirect
+  const btn = document.getElementById('stripeBtn');
+  btn.addEventListener('click', async () => {
+    btn.disabled = true;
+    btn.innerHTML = '<span>Redirecting…</span>';
+    try {
+      const res = await fetch('/.netlify/functions/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: getCart() })
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error(data.error || 'No URL returned');
+      }
+    } catch (err) {
+      btn.disabled = false;
+      btn.innerHTML = '<span>Pay Securely with Stripe</span><span>&nbsp;→</span>';
+      alert('Payment unavailable. Please try again or contact us.');
     }
-    saveCart([]);
-    window.location.href = STRIPE_LINK;
   });
 });
 </script>
