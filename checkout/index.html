@@ -115,8 +115,12 @@
         </div>
 
         <div class="co-section-title">Payment</div>
-        <p class="co-pay-note">Secure checkout powered by PayPal. Pay with your PayPal account or any major debit or credit card.</p>
-        <div class="co-pay-box" id="paypal-button-container"></div>
+        <p class="co-pay-note">Secure checkout powered by Stripe. Pay with any major debit or credit card.</p>
+        <div class="co-pay-box">
+          <button class="co-stripe-btn" id="stripeBtn" type="button">
+            <span>Proceed to Payment</span><span>&nbsp;→</span>
+          </button>
+        </div>
 
       </div>
     </div>
@@ -140,19 +144,13 @@
 </footer>
 
 <script src="/script.js"></script>
-<!--
-  PAYMENT SETUP — PayPal (no server required)
-  1. Go to developer.paypal.com → My Apps & Credentials → Create App
-  2. Copy the Client ID (use Live client ID for production)
-  3. Replace YOUR_PAYPAL_CLIENT_ID below with your actual Client ID
--->
-<script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=GBP"></script>
 <script>
+const STRIPE_LINK = 'https://buy.stripe.com/test_8x29AT08rcZ05NZeiE6Zy00';
+
 document.addEventListener('DOMContentLoaded', () => {
   const cart = getCart();
   if (!cart.length) { window.location.href = '/shop/'; return; }
 
-  // Populate order summary
   const total = cart.reduce((s, i) => s + i.priceNum * i.qty, 0);
   document.getElementById('coItems').innerHTML = cart.map(i =>
     `<div class="co-item">
@@ -165,7 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
   ).join('');
   document.getElementById('coTotal').textContent = '£' + total.toFixed(2);
 
-  // Validate shipping fields
   const requiredFields = ['co-first','co-last','co-email','co-addr','co-city','co-post','co-country'];
   function shippingValid() {
     let ok = true;
@@ -185,53 +182,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // PayPal integration
-  if (typeof paypal === 'undefined') {
-    document.getElementById('paypal-button-container').innerHTML =
-      '<p class="co-pay-fallback">Payment unavailable. Please <a href="/#contact">contact us</a> to place your order.</p>';
-    return;
-  }
-
-  paypal.Buttons({
-    style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal', height: 48 },
-    onClick(data, actions) {
-      if (!shippingValid()) {
-        document.getElementById('co-first').scrollIntoView({ behavior: 'smooth', block: 'center' });
-        return actions.reject();
-      }
-      return actions.resolve();
-    },
-    createOrder(data, actions) {
-      const c = getCart();
-      const tot = c.reduce((s, i) => s + i.priceNum * i.qty, 0);
-      return actions.order.create({
-        purchase_units: [{
-          description: 'AL WASAT Extra Virgin Olive Oil',
-          amount: {
-            currency_code: 'GBP',
-            value: tot.toFixed(2),
-            breakdown: { item_total: { currency_code: 'GBP', value: tot.toFixed(2) } }
-          },
-          items: c.map(i => ({
-            name: `${i.name} ${i.unit}`,
-            quantity: String(i.qty),
-            unit_amount: { currency_code: 'GBP', value: i.priceNum.toFixed(2) }
-          }))
-        }]
-      });
-    },
-    onApprove(data, actions) {
-      return actions.order.capture().then(() => {
-        saveCart([]);
-        document.getElementById('checkoutWrap').style.display = 'none';
-        document.getElementById('orderSuccess').style.display = 'block';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-    },
-    onError(err) {
-      console.error('PayPal error:', err);
+  document.getElementById('stripeBtn').addEventListener('click', () => {
+    if (!shippingValid()) {
+      document.getElementById('co-first').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
     }
-  }).render('#paypal-button-container');
+    saveCart([]);
+    window.location.href = STRIPE_LINK;
+  });
 });
 </script>
 </body>
