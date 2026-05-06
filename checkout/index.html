@@ -21,7 +21,9 @@
   <a href="/" class="nav-logo">Al Wasat</a>
   <ul class="nav-links" id="navLinks">
     <li><a href="/">Home</a></li>
-    <li><a href="/shop/" class="active">Collection</a></li>
+    <li><a href="/shop/">Collection</a></li>
+    <li><a href="/journal/">Journal</a></li>
+    <li><a href="/trade/">Trade</a></li>
     <li><a href="/#contact">Contact</a></li>
   </ul>
   <button class="nav-ham" id="navHam" aria-label="Open navigation menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -82,30 +84,50 @@
   <div class="fr">Extra Virgin Olive Oil · Tunisia</div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lenis/1.1.1/lenis.min.js"></script>
 <script src="/script.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   // Handle return from Stripe success
-  if (new URLSearchParams(window.location.search).get('success') === 'true') {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('success') === 'true') {
+    const sessionId = params.get('session_id') || '';
     saveCart([]);
+    if (typeof window._clearPromoCode === 'function') window._clearPromoCode();
+    localStorage.removeItem('alwasat_sub');
     document.getElementById('checkoutWrap').style.display = 'none';
     document.getElementById('orderSuccess').style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Fire-and-forget confirmation email
+    if (sessionId) {
+      fetch('/.netlify/functions/send-confirmation?session_id=' + encodeURIComponent(sessionId))
+        .catch(() => {});
+    }
     return;
   }
 
   const cart = getCart();
   if (!cart.length) { window.location.href = '/shop/'; return; }
 
-  // Populate order summary
-  const total = cart.reduce((s, i) => s + i.priceNum * i.qty, 0);
+  // Populate order summary with discount preview
+  const sub        = localStorage.getItem('alwasat_sub') === '1';
+  const promoRaw   = localStorage.getItem('alwasat_promo');
+  const promo      = promoRaw ? JSON.parse(promoRaw) : null;
+  const subMult    = sub   ? 0.90 : 1;
+  const promoMult  = promo ? (1 - promo.pct / 100) : 1;
+  const multiplier = subMult * promoMult;
+
+  const base  = cart.reduce((s, i) => s + i.priceNum * i.qty, 0);
+  const total = base * multiplier;
+
   document.getElementById('coItems').innerHTML = cart.map(i =>
     `<div class="co-item">
       <div>
         <div class="co-item-name">${i.name}</div>
-        <div class="co-item-sub">${i.unit.replace('/ ','')} &times; ${i.qty}</div>
+        <div class="co-item-sub">${i.unit.replace('/ ','')} &times; ${i.qty}${sub ? ' · Subscribe &amp; Save' : ''}</div>
       </div>
-      <div class="co-item-price">£${(i.priceNum * i.qty).toFixed(2)}</div>
+      <div class="co-item-price">£${(i.priceNum * i.qty * multiplier).toFixed(2)}</div>
     </div>`
   ).join('');
   document.getElementById('coTotal').textContent = '£' + total.toFixed(2);
@@ -119,7 +141,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const res = await fetch('/.netlify/functions/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items: getCart() })
+        body: JSON.stringify({
+          items: getCart(),
+          subscription: sub,
+          promoCode: promo ? promo.code : '',
+        })
       });
       const data = await res.json();
       if (data.url) {

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AL WASAT — The Journal</title>
+<meta name="description" content="AL WASAT Journal — Editorial perspectives on olive oil, cold extraction, harvest documentation, and the craft behind premium Tunisian extra virgin olive oil.">
+<link rel="canonical" href="https://al-wasat.co.uk/journal/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://al-wasat.co.uk/journal/">
+<meta property="og:title" content="AL WASAT — The Journal">
+<meta property="og:description" content="Editorial perspectives on cold extraction, harvest documentation, and the craft behind premium Tunisian olive oil.">
+<meta property="og:image" content="https://al-wasat.co.uk/assets/chapter2.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Tenor+Sans&family=EB+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<div class="grain"></div>
+<div class="cursor-dot" id="curDot"></div>
+<div class="cursor-ring" id="curRing"></div>
+
+<nav>
+  <a href="/" class="nav-logo">Al Wasat</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/">Home</a></li>
+    <li><a href="/shop/">Collection</a></li>
+    <li><a href="#" class="active">Journal</a></li>
+    <li><a href="/trade/">Trade</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+  <button class="cart-nav-btn" aria-label="Open cart" onclick="openCart()">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    <span class="cart-count" id="cartCount"></span>
+  </button>
+  <button class="nav-ham" id="navHam" aria-label="Open navigation menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<section class="journal-hero">
+  <div class="journal-hero-bg"></div>
+  <div class="journal-hero-inner">
+    <p class="kicker reveal" style="justify-content:center"><span class="kicker-rule"></span>Editorial</p>
+    <h1 class="journal-hero-title reveal">The <em>Journal</em></h1>
+    <p class="journal-hero-sub reveal rd1">Perspectives on craft, provenance, and what it means to press with discipline.</p>
+  </div>
+</section>
+
+<div class="marquee">
+  <div class="marquee-track">
+    <div class="mq-item"><span class="mq-gem"></span>Cold Extraction</div>
+    <div class="mq-item"><span class="mq-gem"></span>Harvest Timing</div>
+    <div class="mq-item"><span class="mq-gem"></span>Polyphenols</div>
+    <div class="mq-item"><span class="mq-gem"></span>Tunisia</div>
+    <div class="mq-item"><span class="mq-gem"></span>Provenance</div>
+    <div class="mq-item"><span class="mq-gem"></span>Lab Verified</div>
+    <div class="mq-item"><span class="mq-gem"></span>Craft</div>
+    <div class="mq-item"><span class="mq-gem"></span>Extra Virgin</div>
+    <div class="mq-item"><span class="mq-gem"></span>Cold Extraction</div>
+    <div class="mq-item"><span class="mq-gem"></span>Harvest Timing</div>
+    <div class="mq-item"><span class="mq-gem"></span>Polyphenols</div>
+    <div class="mq-item"><span class="mq-gem"></span>Tunisia</div>
+    <div class="mq-item"><span class="mq-gem"></span>Provenance</div>
+    <div class="mq-item"><span class="mq-gem"></span>Lab Verified</div>
+    <div class="mq-item"><span class="mq-gem"></span>Craft</div>
+    <div class="mq-item"><span class="mq-gem"></span>Extra Virgin</div>
+  </div>
+</div>
+
+<div class="journal-grid" id="journalGrid">
+
+  <article class="j-card">
+    <a href="/journal/article-1.html" class="j-card-link">
+      <div class="j-card-img-wrap">
+        <img loading="lazy" src="/assets/chapter2.png" alt="Cold extraction equipment" onerror="this.style.cssText='background:linear-gradient(135deg,#1E1B16 0%,#0A0906 100%);min-height:240px;width:100%;display:block'">
+      </div>
+      <div class="j-card-body">
+        <div class="j-cat">Craft</div>
+        <div class="j-title">What Cold Extraction Actually Means</div>
+        <div class="j-excerpt">The science behind temperature-controlled pressing, and why 27°C is not an arbitrary number.</div>
+        <div class="j-arrow">Read <span>→</span></div>
+      </div>
+    </a>
+  </article>
+
+  <article class="j-card">
+    <a href="/journal/article-1.html" class="j-card-link">
+      <div class="j-card-img-wrap">
+        <img loading="lazy" src="/assets/chapter3.png" alt="Olive grove at harvest" onerror="this.style.cssText='background:linear-gradient(135deg,#1E1B16 0%,#0A0906 100%);min-height:240px;width:100%;display:block'">
+      </div>
+      <div class="j-card-body">
+        <div class="j-cat">Origins</div>
+        <div class="j-title">The Harvest Window</div>
+        <div class="j-excerpt">Why the precise timing of picking defines every quality variable in the bottle.</div>
+        <div class="j-arrow">Read <span>→</span></div>
+      </div>
+    </a>
+  </article>
+
+  <article class="j-card">
+    <a href="/journal/article-1.html" class="j-card-link">
+      <div class="j-card-img-wrap">
+        <img loading="lazy" src="/assets/chapter4.png" alt="Laboratory analysis of olive oil" onerror="this.style.cssText='background:linear-gradient(135deg,#1E1B16 0%,#0A0906 100%);min-height:240px;width:100%;display:block'">
+      </div>
+      <div class="j-card-body">
+        <div class="j-cat">Standards</div>
+        <div class="j-title">Polyphenols and What They Tell You</div>
+        <div class="j-excerpt">How to read an olive oil's lab report — and what those numbers actually mean in practice.</div>
+        <div class="j-arrow">Read <span>→</span></div>
+      </div>
+    </a>
+  </article>
+
+</div>
+
+<section class="bottom-cta">
+  <div class="bcta-glow"></div>
+  <div class="ornament reveal"><div class="orn-line"></div><div class="orn-gem"></div><div class="orn-line"></div></div>
+  <h2 class="bcta-title reveal">Ready to <em>order?</em></h2>
+  <p class="bcta-sub reveal">Cold-extracted, harvest-documented, and lab-verified.</p>
+  <a href="/shop/" class="bcta-btn reveal"><span>View the Collection</span><span>&nbsp;→</span></a>
+</section>
+
+<footer>
+  <div class="fl">© 2026 AL WASAT. All rights reserved.</div>
+  <div class="fc">Al Wasat</div>
+  <div class="fr">Extra Virgin Olive Oil · Tunisia</div>
+</footer>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cd-header">
+    <span class="cd-title">Your Selection</span>
+    <button class="cd-close" id="cartClose" aria-label="Close cart">✕</button>
+  </div>
+  <div class="cd-items" id="cartItems"></div>
+  <div class="cd-footer" id="cartFooter" style="display:none">
+    <div class="cd-total-row">
+      <span class="cd-total-label">Total</span>
+      <span class="cd-total-val" id="cartTotal">£0.00</span>
+    </div>
+    <a href="/checkout/" class="cd-checkout-btn">Proceed to Checkout <span>→</span></a>
+    <button class="cd-continue" onclick="closeCart()">Continue Shopping</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lenis/1.1.1/lenis.min.js"></script>
+<script src="/script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var cards = document.querySelectorAll('.j-card');
+  if (!cards.length) return;
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        var i = Array.from(cards).indexOf(e.target);
+        setTimeout(function() { e.target.classList.add('in'); }, i * 140);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  cards.forEach(function(c) { obs.observe(c); });
+});
+</script>
+</body>
+</html>

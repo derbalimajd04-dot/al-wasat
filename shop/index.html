@@ -29,6 +29,8 @@
   <ul class="nav-links" id="navLinks">
     <li><a href="/">Home</a></li>
     <li><a href="#" class="active">Collection</a></li>
+    <li><a href="/journal/">Journal</a></li>
+    <li><a href="/trade/">Trade</a></li>
     <li><a href="/#contact">Contact</a></li>
   </ul>
   <button class="cart-nav-btn" aria-label="Open cart" onclick="openCart()">
@@ -36,7 +38,6 @@
     <span class="cart-count" id="cartCount"></span>
   </button>
   <button class="nav-ham" id="navHam" aria-label="Open navigation menu" aria-expanded="false"><span></span><span></span><span></span></button>
-  <div class="nav-ship">Free delivery on orders over £50</div>
 </nav>
 <div class="nav-overlay" id="navOverlay"></div>
 
@@ -55,10 +56,20 @@
         <button class="filter-btn" onclick="filter('organic',this)"><span>Organic</span></button>
         <button class="filter-btn" onclick="filter('500ml',this)"><span>500ml</span></button>
         <button class="filter-btn" onclick="filter('1l',this)"><span>1L</span></button>
+        <button class="filter-btn" onclick="filter('gift',this)"><span>Gift</span></button>
       </div>
     </div>
   </div>
 </section>
+
+<!-- Subscription toggle -->
+<div class="sub-toggle-wrap reveal">
+  <span class="sub-toggle-option" id="subOptOne">One-time</span>
+  <button class="sub-toggle-btn" id="subToggleBtn" role="switch" aria-checked="false" aria-label="Toggle subscribe and save">
+    <span class="sub-toggle-thumb"></span>
+  </button>
+  <span class="sub-toggle-option sub-toggle-option--right" id="subOptSub">Subscribe &amp; Save <strong>10%</strong></span>
+</div>
 
 <div class="marquee">
   <div class="marquee-track">
@@ -91,7 +102,7 @@
     </div>
     <div class="p-name">AL WASAT Classic</div>
     <div class="p-sub">Extra Virgin Olive Oil</div>
-    <div class="p-price">£13.99 <span class="p-price-label">/ 500ml</span></div>
+    <div class="p-price" data-base="13.99">£13.99 <span class="p-price-label">/ 500ml</span></div>
     <div class="p-poly">Polyphenols 380mg/kg · Acidity &lt;0.3%</div>
     <div class="p-attrs">
       <div class="p-attr">500ml</div>
@@ -112,7 +123,7 @@
     </div>
     <div class="p-name">AL WASAT Classic</div>
     <div class="p-sub">Extra Virgin Olive Oil</div>
-    <div class="p-price">£22.99 <span class="p-price-label">/ 1 Litre</span></div>
+    <div class="p-price" data-base="22.99">£22.99 <span class="p-price-label">/ 1 Litre</span></div>
     <div class="p-poly">Polyphenols 380mg/kg · Acidity &lt;0.3%</div>
     <div class="p-attrs">
       <div class="p-attr">1 Litre</div>
@@ -133,7 +144,7 @@
     </div>
     <div class="p-name">AL WASAT Organic</div>
     <div class="p-sub">Organic Extra Virgin Olive Oil</div>
-    <div class="p-price">£16.99 <span class="p-price-label">/ 500ml</span></div>
+    <div class="p-price" data-base="16.99">£16.99 <span class="p-price-label">/ 500ml</span></div>
     <div class="p-poly">Polyphenols 460mg/kg · Acidity &lt;0.2%</div>
     <div class="p-attrs">
       <div class="p-attr">500ml</div>
@@ -154,12 +165,33 @@
     </div>
     <div class="p-name">AL WASAT Organic</div>
     <div class="p-sub">Organic Extra Virgin Olive Oil</div>
-    <div class="p-price">£28.99 <span class="p-price-label">/ 1 Litre</span></div>
+    <div class="p-price" data-base="28.99">£28.99 <span class="p-price-label">/ 1 Litre</span></div>
     <div class="p-poly">Polyphenols 460mg/kg · Acidity &lt;0.2%</div>
     <div class="p-attrs">
       <div class="p-attr">1 Litre</div>
       <div class="p-attr">Cold-extracted</div>
       <div class="p-attr">Certified organic</div>
+    </div>
+    <div class="p-actions">
+      <button class="p-add-btn" onclick="addToCart(event,this)">Add to Cart</button>
+      <button class="p-details-btn" onclick="openDetails(event,this)">Details</button>
+    </div>
+  </div>
+
+  <div class="p-card" data-cat="gift 500ml" data-pid="gift-set" onclick="openDetails(event,this)">
+    <div class="p-tag gift-tag">Gift Set</div>
+    <div class="p-img-wrap">
+      <img loading="lazy" class="p-img front" src="/assets/product-500-1.png" alt="AL WASAT Gift Set front" onerror="this.style.cssText='min-height:200px;display:block'">
+      <img loading="lazy" class="p-img back" src="/assets/product-500-organic-1.png" alt="AL WASAT Gift Set detail" onerror="this.style.display='none'">
+    </div>
+    <div class="p-name">AL WASAT Gift Set</div>
+    <div class="p-sub">Classic &amp; Organic 500ml</div>
+    <div class="p-price" data-base="27.99">£27.99 <span class="p-price-label">/ bundle</span></div>
+    <div class="p-poly">Classic 500ml · Organic 500ml · Gift boxed</div>
+    <div class="p-attrs">
+      <div class="p-attr">2 × 500ml</div>
+      <div class="p-attr">Gift boxed</div>
+      <div class="p-attr">Save £2.99</div>
     </div>
     <div class="p-actions">
       <button class="p-add-btn" onclick="addToCart(event,this)">Add to Cart</button>
@@ -234,6 +266,8 @@
   </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lenis/1.1.1/lenis.min.js"></script>
 <script src="/script.js"></script>
 </body>
 </html>

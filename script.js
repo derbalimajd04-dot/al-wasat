@@ -3,7 +3,8 @@ const PRODUCT_DATA = {
   'classic-500':  { tag:'Classic', name:'AL WASAT Classic', sub:'Extra Virgin Olive Oil', price:'£13.99', unit:'/ 500ml', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Acidity',v:'< 0.8%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Harvest',v:'October – November'},{l:'Format',v:'500ml glass bottle'}] },
   'classic-1l':   { tag:'Classic', name:'AL WASAT Classic', sub:'Extra Virgin Olive Oil', price:'£22.99', unit:'/ 1 Litre', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Acidity',v:'< 0.8%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Harvest',v:'October – November'},{l:'Format',v:'1 Litre glass bottle'}] },
   'organic-500':  { tag:'Organic · Certified', name:'AL WASAT Organic', sub:'Organic Extra Virgin Olive Oil', price:'£16.99', unit:'/ 500ml', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Certification',v:'EU Organic Certified'},{l:'Acidity',v:'< 0.6%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'500ml glass bottle'}] },
-  'organic-1l':   { tag:'Organic · Certified', name:'AL WASAT Organic', sub:'Organic Extra Virgin Olive Oil', price:'£28.99', unit:'/ 1 Litre', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Certification',v:'EU Organic Certified'},{l:'Acidity',v:'< 0.6%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'1 Litre glass bottle'}] }
+  'organic-1l':   { tag:'Organic · Certified', name:'AL WASAT Organic', sub:'Organic Extra Virgin Olive Oil', price:'£28.99', unit:'/ 1 Litre', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Certification',v:'EU Organic Certified'},{l:'Acidity',v:'< 0.6%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'1 Litre glass bottle'}] },
+  'gift-set':            { tag:'Gift Set', name:'AL WASAT Gift Set', sub:'Classic & Organic 500ml', price:'£27.99', unit:'/ bundle', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Includes',v:'Classic 500ml + Organic 500ml'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Harvest',v:'October – November'},{l:'Format',v:'Two-bottle gift set, boxed'}] }
 };
 
 /* === CART (global) === */
@@ -85,6 +86,7 @@ function _cartRender() {
     </div>
   </div>`).join('');
   const totEl = document.getElementById('cartTotal'); if (totEl) totEl.textContent = '£'+tot.toFixed(2);
+  if (typeof window._afterCartRender === 'function') window._afterCartRender();
 }
 
 /* === DOMContentLoaded === */
@@ -201,6 +203,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const cartOv = document.getElementById('cartOverlay');
   if (cartOv) cartOv.addEventListener('click', closeCart);
 
+  /* === STICKY SHOP CTA === */
+  (function(){
+    if (window.location.pathname.indexOf('/checkout/') === 0) return;
+    const cta = document.createElement('div');
+    cta.className = 'sticky-shop-cta';
+    cta.innerHTML = '<a class="sticky-shop-cta-link" href="/shop/" aria-label="Shop AL WASAT Classic for £13.99">AL WASAT Classic — £13.99 · Shop Now</a>';
+    document.body.appendChild(cta);
+
+    function updateStickyCta() {
+      cta.classList.toggle('is-visible', window.scrollY > 600);
+    }
+
+    updateStickyCta();
+    window.addEventListener('scroll', updateStickyCta, { passive: true });
+  })();
+
   /* === PRODUCT DETAIL MODAL (shop only) === */
   const pdModal = document.getElementById('pdModal');
   if (pdModal) {
@@ -277,9 +295,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateLastRow() {
       const vis = [...cards].filter(c => c.style.display !== 'none');
       cards.forEach(c => c.classList.remove('last-row'));
-      vis.slice(-2).forEach(c => c.classList.add('last-row'));
+      const grid = document.getElementById('grid') || cards[0].parentElement;
+      const cols = Math.max(1, getComputedStyle(grid).gridTemplateColumns.split(' ').length);
+      const remainder = vis.length % cols;
+      const count = remainder || Math.min(cols, vis.length);
+      vis.slice(-count).forEach(c => c.classList.add('last-row'));
     }
     updateLastRow();
+    window.addEventListener('resize', updateLastRow);
 
     window['filter'] = function(cat, btn) {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -298,6 +321,86 @@ document.addEventListener('DOMContentLoaded', () => {
 /* ============================================================= */
 /* === NEW ADDITIONS — Features 1–6                          === */
 /* ============================================================= */
+
+/* ============================================================= */
+/* === LENIS SMOOTH SCROLL + GSAP PAGE TRANSITIONS           === */
+/* ============================================================= */
+
+/* === LENIS SMOOTH SCROLL === */
+(function() {
+  if (typeof Lenis === 'undefined') return;
+  var lenis = new Lenis({
+    duration: 1.2,
+    easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+    smooth: true,
+  });
+  /* Pause when body overflow is locked (cart drawer / mobile nav open) */
+  new MutationObserver(function(muts) {
+    muts.forEach(function(m) {
+      if (m.attributeName !== 'style') return;
+      if (document.body.style.overflow === 'hidden') lenis.stop();
+      else lenis.start();
+    });
+  }).observe(document.body, { attributes: true, attributeFilter: ['style'] });
+  /* Run Lenis on every animation frame */
+  (function raf(t) { lenis.raf(t); requestAnimationFrame(raf); })(performance.now());
+  window._lenis = lenis;
+
+  /* Anchor-link scrolling handled by Lenis (html scroll-behavior:auto set in CSS) */
+  document.addEventListener('click', function(e) {
+    var link = e.target.closest('a[href^="#"]');
+    if (!link) return;
+    var hash = link.getAttribute('href');
+    var target = document.querySelector(hash);
+    if (!target) return;
+    e.preventDefault();
+    lenis.scrollTo(target, { offset: -80, duration: 1.2 });
+  });
+})();
+
+/* === GSAP PAGE TRANSITIONS === */
+(function() {
+  if (typeof gsap === 'undefined') return;
+
+  /* Fade + slide up on page load */
+  document.addEventListener('DOMContentLoaded', function() {
+    gsap.from(document.body, { opacity: 0, y: 20, duration: 0.5, ease: 'power2.out', clearProps: 'all' });
+  });
+
+  /* Restore correctly when navigating via browser back / forward (bfcache) */
+  window.addEventListener('pageshow', function(e) {
+    if (!e.persisted) return;
+    gsap.fromTo(document.body,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', clearProps: 'all' }
+    );
+  });
+
+  /* Intercept internal <a> clicks — animate page out then navigate */
+  document.addEventListener('click', function(e) {
+    var link = e.target.closest('a[href]');
+    if (!link) return;
+    var href = link.getAttribute('href');
+    /* Skip: anchors, special protocols, new-tab, modifier keys */
+    if (!href || href.charAt(0) === '#') return;
+    if (/^(mailto:|tel:|javascript:)/i.test(href)) return;
+    if (link.target === '_blank') return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    /* Skip: external origins */
+    try {
+      var url = new URL(href, window.location.href);
+      if (url.hostname !== window.location.hostname) return;
+    } catch(_) { return; }
+
+    e.preventDefault();
+    var dest = link.href;
+    if (window._lenis) window._lenis.stop();
+    gsap.to(document.body, {
+      opacity: 0, y: -20, duration: 0.4, ease: 'power2.in',
+      onComplete: function() { window.location.href = dest; }
+    });
+  });
+})();
 
 /* === 5. STAT NUMBER COUNTER === */
 (function(){
@@ -325,4 +428,157 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, {threshold:0.6});
   els.forEach(function(el){ obs.observe(el); });
+})();
+
+/* ============================================================= */
+/* === SUBSCRIPTION MODE                                      === */
+/* ============================================================= */
+(function () {
+  var SUB_DISCOUNT = 0.10;
+
+  window._subMode = localStorage.getItem('alwasat_sub') === '1';
+
+  function setSubMode(on) {
+    window._subMode = on;
+    localStorage.setItem('alwasat_sub', on ? '1' : '0');
+    _updateShopPrices();
+    _cartRender(); // refresh cart totals
+  }
+
+  function _updateShopPrices() {
+    var cards = document.querySelectorAll('.p-card');
+    cards.forEach(function (card) {
+      var priceEl = card.querySelector('.p-price');
+      if (!priceEl) return;
+      var base = parseFloat(priceEl.dataset.base);
+      if (isNaN(base)) return;
+      var displayed = window._subMode ? (base * (1 - SUB_DISCOUNT)).toFixed(2) : base.toFixed(2);
+      var label = priceEl.querySelector('.p-price-label');
+      priceEl.innerHTML = '£' + displayed + (label ? ' <span class="p-price-label">' + label.textContent + '</span>' : '');
+      priceEl.dataset.base = base; // preserve original
+    });
+    // Toggle active class on the toggle option labels
+    var optOne = document.getElementById('subOptOne');
+    var optSub = document.getElementById('subOptSub');
+    if (optOne) optOne.classList.toggle('active', !window._subMode);
+    if (optSub) optSub.classList.toggle('active', window._subMode);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    // Wire toggle button
+    var btn = document.getElementById('subToggleBtn');
+    if (btn) {
+      // Restore state
+      if (window._subMode) btn.setAttribute('aria-checked', 'true');
+      btn.classList.toggle('on', window._subMode);
+      _updateShopPrices();
+
+      btn.addEventListener('click', function () {
+        var next = !(window._subMode);
+        btn.setAttribute('aria-checked', next ? 'true' : 'false');
+        btn.classList.toggle('on', next);
+        setSubMode(next);
+      });
+    }
+  });
+})();
+
+/* ============================================================= */
+/* === PROMO CODE                                             === */
+/* ============================================================= */
+(function () {
+  window._promoState = JSON.parse(localStorage.getItem('alwasat_promo') || 'null');
+
+  function savePromo(state) {
+    window._promoState = state;
+    if (state) localStorage.setItem('alwasat_promo', JSON.stringify(state));
+    else localStorage.removeItem('alwasat_promo');
+    _cartRender();
+  }
+
+  window._getPromoCode  = function () { return window._promoState ? window._promoState.code : ''; };
+  window._clearPromoCode = function () { savePromo(null); };
+
+  window._applyPromoCode = async function (code) {
+    if (!code) return null;
+    try {
+      var res  = await fetch('/.netlify/functions/validate-promo?code=' + encodeURIComponent(code));
+      var data = await res.json();
+      if (data.valid) { savePromo({ code: data.code, pct: data.pct, label: data.label }); return data; }
+      savePromo(null); return null;
+    } catch (_) { return null; }
+  };
+
+  // _afterCartRender is called at the end of _cartRender() via the hook added above
+  window._afterCartRender = function () {
+    var foot = document.getElementById('cartFooter');
+    if (!foot || foot.style.display === 'none') return;
+
+    // Ensure promo section exists inside footer
+    var promoEl = document.getElementById('cdPromoSection');
+    if (!promoEl) {
+      promoEl = document.createElement('div');
+      promoEl.id = 'cdPromoSection';
+      foot.insertBefore(promoEl, foot.firstChild);
+    }
+
+    var promo = window._promoState;
+    var sub   = window._subMode;
+
+    if (promo) {
+      promoEl.innerHTML =
+        '<div class="cd-promo-applied">' +
+          '<span class="cd-promo-code">' + promo.code + '</span>' +
+          '<span class="cd-promo-label">' + promo.label + '</span>' +
+          '<button class="cd-promo-remove" aria-label="Remove promo code" onclick="window._clearPromoCode()">&#x2715;</button>' +
+        '</div>';
+    } else {
+      promoEl.innerHTML =
+        '<div class="cd-promo-row">' +
+          '<input class="cd-promo-input" id="cdPromoInput" type="text" placeholder="Promo code" autocomplete="off" autocapitalize="characters">' +
+          '<button class="cd-promo-apply" id="cdPromoApply">Apply</button>' +
+        '</div>' +
+        '<div class="cd-promo-msg" id="cdPromoMsg"></div>';
+
+      var applyBtn = document.getElementById('cdPromoApply');
+      if (applyBtn) {
+        applyBtn.addEventListener('click', async function () {
+          var inp    = document.getElementById('cdPromoInput');
+          var msg    = document.getElementById('cdPromoMsg');
+          var code   = inp ? inp.value.trim() : '';
+          if (!code) return;
+          applyBtn.disabled = true; applyBtn.textContent = '…';
+          var result = await window._applyPromoCode(code);
+          if (!result) {
+            if (msg) { msg.textContent = 'Code not recognised.'; msg.className = 'cd-promo-msg err'; }
+            applyBtn.disabled = false; applyBtn.textContent = 'Apply';
+          }
+          // On success savePromo calls _cartRender which re-runs this hook
+        });
+      }
+    }
+
+    // Recalculate total with stacked discounts
+    var subMult   = sub   ? 0.90 : 1;
+    var promoMult = promo ? (1 - promo.pct / 100) : 1;
+    var combined  = subMult * promoMult;
+
+    var totalRow = foot.querySelector('.cd-total-row');
+    if (combined < 1) {
+      var base  = getCart().reduce(function (s, i) { return s + i.priceNum * i.qty; }, 0);
+      var totEl = document.getElementById('cartTotal');
+      if (totEl) totEl.textContent = '£' + (base * combined).toFixed(2);
+
+      if (totalRow) {
+        var badge = totalRow.querySelector('.cd-discount-badge');
+        if (!badge) { badge = document.createElement('span'); badge.className = 'cd-discount-badge'; totalRow.appendChild(badge); }
+        var parts = [];
+        if (sub)   parts.push('Sub −10%');
+        if (promo) parts.push(promo.code + ' −' + promo.pct + '%');
+        badge.textContent = parts.join(' · ');
+      }
+    } else {
+      if (totalRow) { var b2 = totalRow.querySelector('.cd-discount-badge'); if (b2) b2.remove(); }
+    }
+  };
 })();

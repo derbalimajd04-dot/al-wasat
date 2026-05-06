@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AL WASAT — Trade & Wholesale</title>
+<meta name="description" content="AL WASAT trade and wholesale programme. MOQ, pricing tiers, and delivery terms for distributors, retailers, and culinary professionals across the UK, EU, and MENA.">
+<link rel="canonical" href="https://al-wasat.co.uk/trade/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://al-wasat.co.uk/trade/">
+<meta property="og:title" content="AL WASAT — Trade & Wholesale">
+<meta property="og:description" content="Trade programme for distributors, retailers, and culinary professionals. UK, EU, and MENA.">
+<meta property="og:image" content="https://al-wasat.co.uk/assets/chapter3.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Tenor+Sans&family=EB+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<div class="grain"></div>
+<div class="cursor-dot" id="curDot"></div>
+<div class="cursor-ring" id="curRing"></div>
+
+<nav>
+  <a href="/" class="nav-logo">Al Wasat</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="/">Home</a></li>
+    <li><a href="/shop/">Collection</a></li>
+    <li><a href="/journal/">Journal</a></li>
+    <li><a href="#" class="active">Trade</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+  <button class="cart-nav-btn" aria-label="Open cart" onclick="openCart()">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    <span class="cart-count" id="cartCount"></span>
+  </button>
+  <button class="nav-ham" id="navHam" aria-label="Open navigation menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<!-- Trade hero -->
+<section class="trade-hero">
+  <div class="trade-hero-bg"></div>
+  <div class="trade-hero-inner">
+    <div>
+      <p class="kicker reveal"><span class="kicker-rule"></span>Trade Programme</p>
+      <h1 class="page-title reveal">For Distributors<br><em>&amp; Retailers</em></h1>
+    </div>
+    <div class="reveal rd1 trade-hero-right">
+      <p>We work selectively with parties who share our commitment to provenance. Our trade programme is designed for <strong>distributors, retailers, and culinary professionals</strong> who understand that olive oil is an ingredient — and want to offer their clients the best version of it.</p>
+      <p style="margin-top:1.5rem">Minimum order quantities apply. All trade orders ship with full batch documentation, certificates of analysis, and harvest records.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing tiers table -->
+<section class="trade-table-sec">
+  <div class="reveal">
+    <p class="kicker"><span class="kicker-rule"></span>Pricing Tiers</p>
+    <h2 class="sec-heading">Order <em>structure.</em></h2>
+  </div>
+  <div class="reveal rd1">
+    <table class="trade-table" aria-label="Trade pricing tiers">
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th>Minimum Order Qty</th>
+          <th>Trade Pricing</th>
+          <th>Delivery Terms</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Starter</td>
+          <td>12 units (any mix)</td>
+          <td>10% below RRP</td>
+          <td>3–5 working days · DDP UK mainland</td>
+        </tr>
+        <tr>
+          <td>Growth</td>
+          <td>36 units (any mix)</td>
+          <td>18% below RRP</td>
+          <td>2–3 working days · DDP UK mainland / DAP EU</td>
+        </tr>
+        <tr>
+          <td>Partner</td>
+          <td>60 units (any mix)</td>
+          <td>25% below RRP</td>
+          <td>Next-day available · DDP UK / DAP EU / MENA on request</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="trade-table-note">All prices quoted in GBP exclusive of VAT. EU and MENA shipments are quoted DAP — import duties and local taxes are the responsibility of the buyer. Mixed cases may combine Classic and Organic SKUs in 500ml or 1L formats. Volume contracts and bespoke pricing available for Partner tier accounts. Contact us to discuss.</p>
+  </div>
+</section>
+
+<!-- Certifications -->
+<section class="trade-certs-sec">
+  <div class="reveal">
+    <p class="kicker"><span class="kicker-rule"></span>Certifications</p>
+    <h2 class="sec-heading">Backed by <em>documentation.</em></h2>
+  </div>
+  <div class="trade-certs">
+
+    <div class="tc-badge reveal">
+      <div class="tc-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="tc-name">IOC Certified</div>
+      <div class="tc-desc">Compliant with International Olive Council standards for extra virgin classification. Acidity, peroxide, and spectrophotometric values all within grade.</div>
+    </div>
+
+    <div class="tc-badge reveal rd1">
+      <div class="tc-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/><path d="M12 6c-2.2 0-4 2.7-4 6s1.8 6 4 6 4-2.7 4-6-1.8-6-4-6z"/><path d="M2 12h4M18 12h4"/></svg>
+      </div>
+      <div class="tc-name">EU Organic Certified</div>
+      <div class="tc-desc">Our Organic range is fully EU Organic certified. Certificate of conformity available with every trade order. No synthetic pesticides or fertilisers at any stage.</div>
+    </div>
+
+    <div class="tc-badge reveal rd2">
+      <div class="tc-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+      </div>
+      <div class="tc-name">Lab Verified</div>
+      <div class="tc-desc">Every batch is independently tested for polyphenols, acidity, peroxide value, and wax content. Full certificate of analysis supplied with each shipment.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Territory availability -->
+<section class="trade-territory-sec">
+  <div class="reveal">
+    <p class="kicker"><span class="kicker-rule"></span>Territory</p>
+    <h2 class="sec-heading">Where we <em>ship.</em></h2>
+  </div>
+  <div class="trade-terr-grid">
+
+    <div class="trade-terr-item reveal">
+      <div class="trade-terr-region">UK</div>
+      <div class="trade-terr-label">United Kingdom & Ireland</div>
+      <div class="trade-terr-note">All tiers available. DDP delivery to mainland addresses. Next-day on Partner tier. Scottish Highlands and islands POA.</div>
+    </div>
+
+    <div class="trade-terr-item reveal rd1">
+      <div class="trade-terr-region">EU</div>
+      <div class="trade-terr-label">European Union</div>
+      <div class="trade-terr-note">Growth and Partner tiers. DAP — import duties and VAT responsibility of the buyer. Lead time 4–8 working days depending on destination.</div>
+    </div>
+
+    <div class="trade-terr-item reveal rd2">
+      <div class="trade-terr-region">MENA</div>
+      <div class="trade-terr-label">Middle East & North Africa</div>
+      <div class="trade-terr-note">Partner tier by arrangement. All necessary export documentation provided including phytosanitary and halal certification on request.</div>
+    </div>
+
+    <div class="trade-terr-item reveal rd3">
+      <div class="trade-terr-region">Global</div>
+      <div class="trade-terr-label">Rest of World</div>
+      <div class="trade-terr-note">Considered on a case-by-case basis for established distributors. Contact us with your territory and projected volumes to discuss further.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Trade enquiry form -->
+<section class="trade-form-sec" id="trade-contact">
+  <div class="trade-form-inner">
+    <div>
+      <p class="kicker reveal"><span class="kicker-rule"></span>Trade Enquiry</p>
+      <h2 class="sec-heading reveal">Let's <em>discuss.</em></h2>
+      <p class="sec-body reveal">We review all trade enquiries personally. Please provide as much detail as possible — territory, volume, and business type — so we can respond with relevant pricing.</p>
+    </div>
+
+    <div>
+      <div class="trade-form-success" id="tradeFormSuccess">
+        <div class="ornament"><div class="orn-line"></div><div class="orn-gem"></div><div class="orn-line"></div></div>
+        <p class="fs-title">Enquiry Received</p>
+        <p class="fs-body">Thank you. We review all trade enquiries personally<br>and will be in touch within two working days.</p>
+      </div>
+
+      <form class="form-grid reveal" id="tradeForm" name="trade-enquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="trade-enquiry">
+        <input type="text" name="bot-field" style="display:none" tabindex="-1" autocomplete="off">
+
+        <div class="form-row">
+          <div class="field">
+            <label for="t-name">Full Name</label>
+            <input id="t-name" name="name" type="text" placeholder="Your name" required>
+            <span class="field-error">Please enter your name.</span>
+          </div>
+          <div class="field">
+            <label for="t-company">Company</label>
+            <input id="t-company" name="company" type="text" placeholder="Company name" required>
+            <span class="field-error">Please enter your company name.</span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="t-email">Email Address</label>
+            <input id="t-email" name="email" type="email" placeholder="trade@yourcompany.com" required>
+            <span class="field-error">Please enter a valid email address.</span>
+          </div>
+          <div class="field">
+            <label for="t-country">Country</label>
+            <input id="t-country" name="country" type="text" placeholder="United Kingdom" required>
+            <span class="field-error">Please enter your country.</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="t-type">Type of Business</label>
+          <select id="t-type" name="business_type" required>
+            <option value="" style="background:#151210">Select…</option>
+            <option style="background:#151210">Distributor</option>
+            <option style="background:#151210">Retailer — Independent</option>
+            <option style="background:#151210">Retailer — Chain / Multiple</option>
+            <option style="background:#151210">Hospitality / Restaurant</option>
+            <option style="background:#151210">Online Retailer</option>
+            <option style="background:#151210">Food Service</option>
+            <option style="background:#151210">Other</option>
+          </select>
+          <span class="field-error">Please select a business type.</span>
+        </div>
+
+        <div class="field">
+          <label for="t-msg">Message</label>
+          <textarea id="t-msg" name="message" placeholder="Tell us about your business, territory, and estimated volumes…"></textarea>
+        </div>
+
+        <div class="submit-wrap">
+          <button class="submit-btn" type="submit"><span>Submit Trade Enquiry</span><span>&nbsp;→</span></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fl">© 2026 AL WASAT. All rights reserved.</div>
+  <div class="fc">Al Wasat</div>
+  <div class="fr">Extra Virgin Olive Oil · Tunisia</div>
+</footer>
+
+<!-- CART DRAWER -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cd-header">
+    <span class="cd-title">Your Selection</span>
+    <button class="cd-close" id="cartClose" aria-label="Close cart">✕</button>
+  </div>
+  <div class="cd-items" id="cartItems"></div>
+  <div class="cd-footer" id="cartFooter" style="display:none">
+    <div class="cd-total-row">
+      <span class="cd-total-label">Total</span>
+      <span class="cd-total-val" id="cartTotal">£0.00</span>
+    </div>
+    <a href="/checkout/" class="cd-checkout-btn">Proceed to Checkout <span>→</span></a>
+    <button class="cd-continue" onclick="closeCart()">Continue Shopping</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lenis/1.1.1/lenis.min.js"></script>
+<script src="/script.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var form = document.getElementById('tradeForm');
+  if (!form) return;
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var valid = true;
+    form.querySelectorAll('[required]').forEach(function(field) {
+      var wrap = field.closest('.field');
+      var ok = field.value.trim() !== '' && (field.type !== 'email' || field.validity.valid);
+      wrap.classList.toggle('has-error', !ok);
+      if (!ok) valid = false;
+    });
+    if (!valid) return;
+    var btn = form.querySelector('.submit-btn');
+    var label = btn.querySelector('span:first-child');
+    btn.disabled = true; label.textContent = 'Sending…';
+    var body = new URLSearchParams(new FormData(form)).toString();
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body
+    }).then(function(res) {
+      if (res.ok) {
+        form.style.display = 'none';
+        document.getElementById('tradeFormSuccess').classList.add('show');
+      } else {
+        label.textContent = 'Try again'; btn.disabled = false;
+      }
+    }).catch(function() {
+      label.textContent = 'Try again'; btn.disabled = false;
+    });
+  });
+});
+</script>
+</body>
+</html>
