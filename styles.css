@@ -838,3 +838,44 @@ html{scroll-behavior:auto}
 .cd-promo-remove{background:none;border:none;color:var(--stone);cursor:pointer;font-size:0.75rem;padding:0 0.2rem;line-height:1;transition:color 0.2s}
 .cd-promo-remove:hover{color:var(--cream)}
 .cd-discount-badge{display:block;font-family:var(--tenor);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(140,190,120,0.7);margin-top:0.2rem}
+
+/* === COOKIE BANNER === */
+.cookie-banner{position:fixed;bottom:0;left:0;right:0;width:100%;background:#161310;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;z-index:999;border-top:1px solid rgba(201,169,110,0.2)}
+.cookie-banner p{font-size:0.75rem;color:var(--stone2)}
+.cookie-accept{background:#C9A96E;color:#0A0906;padding:0.4rem 1.2rem;border:none;cursor:pointer;letter-spacing:0.05em}
+.cookie-decline{color:var(--stone2);font-size:0.75rem;margin-left:1rem}
+
+/* === NEWSLETTER === */
+.newsletter-sec{padding:8rem 5rem;background:var(--ink)}
+.nl-heading{font-family:var(--serif);font-size:clamp(2rem,3.8vw,3.2rem);font-weight:300;line-height:1.15;color:var(--cream);margin-bottom:2rem}
+.nl-form{display:flex;gap:0;max-width:480px;margin:2rem auto 0}
+.nl-input{flex:1;background:transparent;border:1px solid rgba(201,169,110,0.3);color:white;padding:0.85rem 1.25rem;font-size:0.85rem;outline:none}
+.nl-submit{background:#C9A96E;color:#0A0906;border:none;padding:0.85rem 1.5rem;cursor:pointer;letter-spacing:0.08em;font-size:0.75rem;text-transform:uppercase}
+
+/* ============================================================= */
+/* === NEWSLETTER SECTION                                     === */
+/* ============================================================= */
+.newsletter-sec{padding:7rem 5rem;text-align:center;border-top:1px solid rgba(201,169,110,0.1);background:var(--ink2)}
+.newsletter-inner{max-width:640px;margin:0 auto}
+.newsletter-sub{font-family:var(--body);font-size:1.1rem;color:var(--stone2);font-style:italic;margin-bottom:2.5rem}
+.newsletter-form{max-width:480px;margin:0 auto}
+.newsletter-row{display:flex;gap:0}
+.newsletter-input{flex:1;background:rgba(201,169,110,0.06);border:1px solid rgba(201,169,110,0.2);border-right:none;color:var(--cream);padding:0.9rem 1.2rem;font-family:var(--tenor);font-size:0.8rem;letter-spacing:0.1em;outline:none;transition:border-color 0.3s}
+.newsletter-input::placeholder{color:var(--stone)}
+.newsletter-input:focus{border-color:rgba(201,169,110,0.5)}
+.newsletter-btn{background:var(--gold);border:1px solid var(--gold);color:var(--ink);padding:0.9rem 1.6rem;font-family:var(--tenor);font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;cursor:none;transition:background 0.3s;white-space:nowrap;flex-shrink:0}
+.newsletter-btn:hover{background:var(--gold2)}
+@media(max-width:700px){.newsletter-sec{padding:5rem 1.5rem}.newsletter-row{flex-direction:column}.newsletter-input{border-right:1px solid rgba(201,169,110,0.2);border-bottom:none}.newsletter-btn{width:100%;padding:0.85rem}}
+
+/* ============================================================= */
+/* === COOKIE CONSENT BANNER                                  === */
+/* ============================================================= */
+.cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9995;background:#161310;border-top:1px solid rgba(201,169,110,0.15);padding:1.2rem 3rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1)}
+.cookie-banner.visible{transform:translateY(0)}
+.cookie-banner-text{font-size:0.78rem;letter-spacing:0.05em;color:var(--stone2);line-height:1.6;font-family:var(--tenor)}
+.cookie-banner-actions{display:flex;align-items:center;gap:1.8rem;flex-shrink:0}
+.cookie-accept{background:var(--gold);color:var(--ink);border:none;padding:0.65rem 1.4rem;font-family:var(--tenor);font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;cursor:none;transition:background 0.3s}
+.cookie-accept:hover{background:var(--gold2)}
+.cookie-decline{background:none;border:none;color:var(--stone);font-family:var(--tenor);font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;cursor:none;transition:color 0.3s;text-decoration:underline;text-underline-offset:3px}
+.cookie-decline:hover{color:var(--cream)}
+@media(max-width:640px){.cookie-banner{padding:1rem 1.5rem;flex-direction:column;align-items:flex-start;gap:1rem}.cookie-banner-actions{width:100%;justify-content:flex-start}}

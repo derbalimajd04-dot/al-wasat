@@ -582,3 +582,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 })();
+
+// === COOKIE CONSENT BANNER ===
+(function () {
+  if (localStorage.getItem('cookieConsent')) return;
+  var banner = document.createElement('div');
+  banner.className = 'cookie-banner';
+  banner.setAttribute('role', 'dialog');
+  banner.setAttribute('aria-label', 'Cookie consent');
+  banner.innerHTML =
+    '<p class="cookie-banner-text">We use cookies to improve your experience and analyse site usage.</p>' +
+    '<div class="cookie-banner-actions">' +
+    '<button class="cookie-accept" id="cookieAccept">Accept</button>' +
+    '<button class="cookie-decline" id="cookieDecline">Decline</button>' +
+    '</div>';
+  document.body.appendChild(banner);
+  requestAnimationFrame(function () { banner.classList.add('visible'); });
+  document.getElementById('cookieAccept').addEventListener('click', function () {
+    localStorage.setItem('cookieConsent', 'true');
+    banner.classList.remove('visible');
+    setTimeout(function () { banner.remove(); }, 400);
+  });
+  document.getElementById('cookieDecline').addEventListener('click', function () {
+    localStorage.setItem('cookieConsent', 'false');
+    banner.classList.remove('visible');
+    setTimeout(function () { banner.remove(); }, 400);
+  });
+})();

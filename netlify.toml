@@ -1,6 +1,11 @@
 [build]
   functions = "netlify/functions"
 
+[[redirects]]
+  from = "/webhooks/stripe"
+  to = "/.netlify/functions/order-confirm"
+  status = 200
+
 [[headers]]
   for = "/*"
   [headers.values]
