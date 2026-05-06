@@ -41,17 +41,22 @@
   <div class="nav-blur"></div>
   <a href="/" class="nav-logo">Al Wasat</a>
   <ul class="nav-links" id="navLinks">
-    <li><a href="/shop/">Collection</a></li>
-    <li><a href="/journal/">Journal</a></li>
-    <li><a href="/trade/">Trade</a></li>
-    <li><a href="#heritage">Heritage</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="/shop/" data-i18n="nav-collection">Collection</a></li>
+    <li><a href="/journal/" data-i18n="nav-journal">Journal</a></li>
+    <li><a href="/trade/" data-i18n="nav-trade">Trade</a></li>
+    <li><a href="#heritage" data-i18n="nav-heritage">Heritage</a></li>
+    <li><a href="#contact" data-i18n="nav-contact">Contact</a></li>
   </ul>
   <button class="cart-nav-btn" aria-label="Open cart" onclick="openCart()">
     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
     <span class="cart-count" id="cartCount"></span>
   </button>
-  <button class="nav-ham" id="navHam" aria-label="Open navigation menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <div class="lang-pill" id="langPill">
+  <button class="lang-opt active" data-lang="en">EN</button>
+  <button class="lang-opt" data-lang="fr">FR</button>
+  <button class="lang-opt" data-lang="ar">AR</button>
+</div>
+<button class="nav-ham" id="navHam" aria-label="Open navigation menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 <div class="nav-overlay" id="navOverlay"></div>
 
@@ -70,15 +75,15 @@
     <div class="hf hf-r"></div>
   </div>
   <div class="hero-content">
-    <p class="hero-eyebrow"><span class="eyebrow-rule"></span>Extra Virgin Olive Oil &nbsp;·&nbsp; Tunisia &nbsp;·&nbsp; Since 1960</p>
+    <p class="hero-eyebrow"><span class="eyebrow-rule"></span><span data-i18n="hero-eyebrow">Extra Virgin Olive Oil &nbsp;·&nbsp; Tunisia &nbsp;·&nbsp; Since 1960</span></p>
     <h1 class="hero-h1">
-      <span class="hl">Rooted in</span>
-      <span class="hl">Heritage.</span>
+      <span class="hl" data-i18n="hero-h1-1">Rooted in</span>
+      <span class="hl" data-i18n="hero-h1-2">Heritage.</span>
     </h1>
-    <p class="hero-sub">For over sixty years, our legacy has remained anchored in agriculture, refined through discipline, and guided by uncompromising standards.</p>
+    <p class="hero-sub" data-i18n="hero-sub">For over sixty years, our legacy has remained anchored in agriculture, refined through discipline, and guided by uncompromising standards.</p>
     <div class="hero-actions">
-      <a href="/shop/" class="btn-primary"><span>Discover the Collection</span><div class="btn-arrow"></div></a>
-      <a href="#heritage" class="btn-ghost">Our Story</a>
+      <a href="/shop/" class="btn-primary"><span data-i18n="hero-discover">Discover the Collection</span><div class="btn-arrow"></div></a>
+      <a href="#heritage" class="btn-ghost" data-i18n="hero-story">Our Story</a>
     </div>
   </div>
   <div class="scroll-ind">
@@ -124,9 +129,9 @@
   </div>
   <div>
     <div class="reveal">
-      <p class="kicker"><span class="kicker-rule"></span>Our Roots</p>
-      <h2 class="sec-heading">A legacy <em>shaped</em><br>by the land.</h2>
-      <p class="sec-body">A heritage shaped over sixty years of agriculture and olive cultivation. Knowledge refined through seasons, protected through discipline, carried forward through long-term partnerships with the land.</p>
+      <p class="kicker"><span class="kicker-rule"></span><span data-i18n="heritage-kicker">Our Roots</span></p>
+      <h2 class="sec-heading" data-i18n-html="heritage-heading">A legacy <em>shaped</em><br>by the land.</h2>
+      <p class="sec-body" data-i18n="heritage-body">A heritage shaped over sixty years of agriculture and olive cultivation. Knowledge refined through seasons, protected through discipline, carried forward through long-term partnerships with the land.</p>
     </div>
     <div class="pillar-list">
       <div class="pillar-row reveal rd1">
@@ -284,6 +289,22 @@
     <span class="cert-item cert-dup">Organic Available</span>
   </div>
 </div>
+
+<section class="press-sec">
+  <p class="press-kicker">As recognised by</p>
+  <div class="press-row">
+    <span class="press-name press-name--ft">Financial Times</span>
+    <span class="press-div" aria-hidden="true"></span>
+    <span class="press-name press-name--monocle">Monocle</span>
+    <span class="press-div" aria-hidden="true"></span>
+    <span class="press-name press-name--wallpaper">Wallpaper*</span>
+    <span class="press-div" aria-hidden="true"></span>
+    <span class="press-name press-name--grocer">The Grocer</span>
+    <span class="press-div" aria-hidden="true"></span>
+    <span class="press-name press-name--atlas">Taste Atlas</span>
+  </div>
+  <p class="press-quote"><em>Among the finest cold-extracted oils reaching the UK market.</em></p>
+</section>
 
 <section class="timeline-sec">
   <div class="timeline-header">

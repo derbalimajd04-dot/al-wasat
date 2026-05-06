@@ -601,3 +601,135 @@ document.addEventListener('DOMContentLoaded', function () {
   b.style.display = 'flex';
   requestAnimationFrame(function () { b.classList.add('visible'); });
 });
+
+// === i18n TRANSLATIONS ===
+window.i18n = {
+  en: {
+    'nav-home':        'Home',
+    'nav-collection':  'Collection',
+    'nav-journal':     'Journal',
+    'nav-trade':       'Trade',
+    'nav-heritage':    'Heritage',
+    'nav-contact':     'Contact',
+    'hero-eyebrow':    'Extra Virgin Olive Oil  ·  Tunisia  ·  Since 1960',
+    'hero-h1-1':       'Rooted in',
+    'hero-h1-2':       'Heritage.',
+    'hero-sub':        'For over sixty years, our legacy has remained anchored in agriculture, refined through discipline, and guided by uncompromising standards.',
+    'hero-discover':   'Discover the Collection',
+    'hero-story':      'Our Story',
+    'heritage-kicker': 'Our Roots',
+    'heritage-heading':'A legacy <em>shaped</em><br>by the land.',
+    'heritage-body':   'A heritage shaped over sixty years of agriculture and olive cultivation. Knowledge refined through seasons, protected through discipline, carried forward through long-term partnerships with the land.',
+    'filter-all':      'All',
+    'filter-classic':  'Classic',
+    'filter-organic':  'Organic',
+    'filter-500':      '500ml',
+    'filter-1l':       '1L',
+    'filter-gift':     'Gift',
+    'tag-classic':     'Classic',
+    'tag-organic':     'Organic',
+    'tag-certified':   'Certified',
+    'tag-gift':        'Gift Set',
+    'add-to-cart':     'Add to Cart',
+    'sub-toggle-one':  'One-time',
+    'sub-toggle-sub':  'Subscribe &amp; Save <strong>10%</strong>',
+  },
+  fr: {
+    'nav-home':        'Accueil',
+    'nav-collection':  'Boutique',
+    'nav-journal':     'Journal',
+    'nav-trade':       'Commerce',
+    'nav-heritage':    'Notre Histoire',
+    'nav-contact':     'Contact',
+    'hero-eyebrow':    "Huile d’olive vierge extra  ·  Tunisie  ·  Depuis 1960",
+    'hero-h1-1':       'Ancré dans',
+    'hero-h1-2':       "l’héritage.",
+    'hero-sub':        "Depuis plus de soixante ans, notre héritage est ancré dans l’agriculture, affiné par la discipline et guidé par des exigences intransigeantes.",
+    'hero-discover':   'Découvrir la Collection',
+    'hero-story':      'Notre Histoire',
+    'heritage-kicker': 'Nos Racines',
+    'heritage-heading':"Un héritage <em>façonné</em><br>par la terre.",
+    'heritage-body':   "Un héritage façonné au fil de soixante ans d’agriculture et de culture de l’olivier. Un savoir affiné par les saisons, protégé par la discipline, transmis à travers des partenariats durables avec la terre.",
+    'filter-all':      'Tout',
+    'filter-classic':  'Classique',
+    'filter-organic':  'Bio',
+    'filter-500':      '500ml',
+    'filter-1l':       '1L',
+    'filter-gift':     'Cadeau',
+    'tag-classic':     'Classique',
+    'tag-organic':     'Bio',
+    'tag-certified':   'Certifié',
+    'tag-gift':        'Coffret Cadeau',
+    'add-to-cart':     'Ajouter au panier',
+    'sub-toggle-one':  'Achat unique',
+    'sub-toggle-sub':  'Économisez &amp; Abonnez-vous <strong>10%</strong>',
+  },
+  ar: {
+    'nav-home':        'الرئيسية',
+    'nav-collection':  'المتجر',
+    'nav-journal':     'المجلة',
+    'nav-trade':       'التجارة',
+    'nav-heritage':    'قصتنا',
+    'nav-contact':     'تواصل',
+    'hero-eyebrow':    'زيت زيتون بكر ممتاز · تونس · منذ 1960',
+    'hero-h1-1':       'متجذّر في',
+    'hero-h1-2':       'الموروث.',
+    'hero-sub':        'لأكثر من ستين عاماً، ظلّ إرثنا راسخاً في الزراعة، مصقولاً بالانضباط، موجَّهاً بمعايير لا تقبل المساومة.',
+    'hero-discover':   'اكتشف المجموعة',
+    'hero-story':      'قصتنا',
+    'heritage-kicker': 'جذورنا',
+    'heritage-heading':'إرث <em>شكّلته</em><br>الأرض.',
+    'heritage-body':   'إرث تشكّل عبر أكثر من ستين عاماً من الزراعة وزراعة الزيتون. معرفة صُقلت عبر المواسم، حُميت بالانضباط، ونُقلت عبر شراكات طويلة الأمد مع الأرض.',
+    'filter-all':      'الكل',
+    'filter-classic':  'الكلاسيكي',
+    'filter-organic':  'عضوي',
+    'filter-500':      '500 مل',
+    'filter-1l':       '1 لتر',
+    'filter-gift':     'هدية',
+    'tag-classic':     'الكلاسيكي',
+    'tag-organic':     'عضوي',
+    'tag-certified':   'معتمد',
+    'tag-gift':        'طقم هدية',
+    'add-to-cart':     'أضف إلى السلة',
+    'sub-toggle-one':  'شراء مرة واحدة',
+    'sub-toggle-sub':  'اشترك ووفّر <strong>10%</strong>',
+  }
+};
+
+function setLanguage(lang) {
+  var t = window.i18n[lang];
+  if (!t) return;
+
+  document.querySelectorAll('[data-i18n]').forEach(function (el) {
+    var key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+
+  document.querySelectorAll('[data-i18n-html]').forEach(function (el) {
+    var key = el.getAttribute('data-i18n-html');
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+
+  if (lang === 'ar') {
+    document.documentElement.setAttribute('dir', 'rtl');
+    document.documentElement.classList.add('lang-ar');
+  } else {
+    document.documentElement.setAttribute('dir', 'ltr');
+    document.documentElement.classList.remove('lang-ar');
+  }
+
+  document.querySelectorAll('.lang-opt').forEach(function (btn) {
+    btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+  });
+
+  localStorage.setItem('alwasat_lang', lang);
+  window._currentLang = lang;
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.lang-opt').forEach(function (btn) {
+    btn.addEventListener('click', function () { setLanguage(btn.getAttribute('data-lang')); });
+  });
+  var saved = localStorage.getItem('alwasat_lang');
+  if (saved && window.i18n[saved] && saved !== 'en') setLanguage(saved);
+});

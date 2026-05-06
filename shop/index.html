@@ -27,17 +27,22 @@
 <nav>
   <a href="/" class="nav-logo">Al Wasat</a>
   <ul class="nav-links" id="navLinks">
-    <li><a href="/">Home</a></li>
-    <li><a href="#" class="active">Collection</a></li>
-    <li><a href="/journal/">Journal</a></li>
-    <li><a href="/trade/">Trade</a></li>
-    <li><a href="/#contact">Contact</a></li>
+    <li><a href="/" data-i18n="nav-home">Home</a></li>
+    <li><a href="#" class="active" data-i18n="nav-collection">Collection</a></li>
+    <li><a href="/journal/" data-i18n="nav-journal">Journal</a></li>
+    <li><a href="/trade/" data-i18n="nav-trade">Trade</a></li>
+    <li><a href="/#contact" data-i18n="nav-contact">Contact</a></li>
   </ul>
   <button class="cart-nav-btn" aria-label="Open cart" onclick="openCart()">
     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
     <span class="cart-count" id="cartCount"></span>
   </button>
-  <button class="nav-ham" id="navHam" aria-label="Open navigation menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <div class="lang-pill" id="langPill">
+  <button class="lang-opt active" data-lang="en">EN</button>
+  <button class="lang-opt" data-lang="fr">FR</button>
+  <button class="lang-opt" data-lang="ar">AR</button>
+</div>
+<button class="nav-ham" id="navHam" aria-label="Open navigation menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 <div class="nav-overlay" id="navOverlay"></div>
 
@@ -51,12 +56,12 @@
     <div class="reveal rd1">
       <p class="page-desc">Each bottle represents a closed chain — from grove to extraction to your table. Cold-extracted, harvest-documented, and lab-verified. Available in Classic and Certified Organic.</p>
       <div class="filters">
-        <button class="filter-btn active" onclick="filter('all',this)"><span>All</span></button>
-        <button class="filter-btn" onclick="filter('classic',this)"><span>Classic</span></button>
-        <button class="filter-btn" onclick="filter('organic',this)"><span>Organic</span></button>
-        <button class="filter-btn" onclick="filter('500ml',this)"><span>500ml</span></button>
-        <button class="filter-btn" onclick="filter('1l',this)"><span>1L</span></button>
-        <button class="filter-btn" onclick="filter('gift',this)"><span>Gift</span></button>
+        <button class="filter-btn active" onclick="filter('all',this)"><span data-i18n="filter-all">All</span></button>
+        <button class="filter-btn" onclick="filter('classic',this)"><span data-i18n="filter-classic">Classic</span></button>
+        <button class="filter-btn" onclick="filter('organic',this)"><span data-i18n="filter-organic">Organic</span></button>
+        <button class="filter-btn" onclick="filter('500ml',this)"><span data-i18n="filter-500">500ml</span></button>
+        <button class="filter-btn" onclick="filter('1l',this)"><span data-i18n="filter-1l">1L</span></button>
+        <button class="filter-btn" onclick="filter('gift',this)"><span data-i18n="filter-gift">Gift</span></button>
       </div>
     </div>
   </div>
@@ -64,11 +69,11 @@
 
 <!-- Subscription toggle -->
 <div class="sub-toggle-wrap reveal">
-  <span class="sub-toggle-option" id="subOptOne">One-time</span>
+  <span class="sub-toggle-option" id="subOptOne" data-i18n="sub-toggle-one">One-time</span>
   <button class="sub-toggle-btn" id="subToggleBtn" role="switch" aria-checked="false" aria-label="Toggle subscribe and save">
     <span class="sub-toggle-thumb"></span>
   </button>
-  <span class="sub-toggle-option sub-toggle-option--right" id="subOptSub">Subscribe &amp; Save <strong>10%</strong></span>
+  <span class="sub-toggle-option sub-toggle-option--right" id="subOptSub" data-i18n-html="sub-toggle-sub">Subscribe &amp; Save <strong>10%</strong></span>
 </div>
 
 <div class="marquee">
@@ -95,7 +100,7 @@
 <div class="product-grid" id="grid">
 
   <div class="p-card" data-cat="classic 500ml" data-pid="classic-500" onclick="openDetails(event,this)">
-    <div class="p-tag">Classic</div>
+    <div class="p-tag" data-i18n="tag-classic">Classic</div>
     <div class="p-img-wrap">
       <img loading="lazy" class="p-img front" src="/assets/product-500-1.png" alt="AL WASAT Classic 500ml front" onerror="this.style.cssText='min-height:200px;display:block'">
       <img loading="lazy" class="p-img back" src="/assets/product-500-2.png" alt="AL WASAT Classic 500ml detail" onerror="this.style.display='none'">
@@ -110,13 +115,13 @@
       <div class="p-attr">Harvest dated</div>
     </div>
     <div class="p-actions">
-      <button class="p-add-btn" onclick="addToCart(event,this)">Add to Cart</button>
+      <button class="p-add-btn" onclick="addToCart(event,this)" data-i18n="add-to-cart">Add to Cart</button>
       <button class="p-details-btn" onclick="openDetails(event,this)">Details</button>
     </div>
   </div>
 
   <div class="p-card" data-cat="classic 1l" data-pid="classic-1l" onclick="openDetails(event,this)">
-    <div class="p-tag">Classic</div>
+    <div class="p-tag" data-i18n="tag-classic">Classic</div>
     <div class="p-img-wrap">
       <img loading="lazy" class="p-img front" src="/assets/product-1l-classic-1.png" alt="AL WASAT Classic 1L front" onerror="this.style.cssText='min-height:200px;display:block'">
       <img loading="lazy" class="p-img back" src="/assets/product-1l-classic-12.png" alt="AL WASAT Classic 1L detail" onerror="this.style.display='none'">
@@ -131,13 +136,13 @@
       <div class="p-attr">Harvest dated</div>
     </div>
     <div class="p-actions">
-      <button class="p-add-btn" onclick="addToCart(event,this)">Add to Cart</button>
+      <button class="p-add-btn" onclick="addToCart(event,this)" data-i18n="add-to-cart">Add to Cart</button>
       <button class="p-details-btn" onclick="openDetails(event,this)">Details</button>
     </div>
   </div>
 
   <div class="p-card" data-cat="organic 500ml" data-pid="organic-500" onclick="openDetails(event,this)">
-    <div class="p-tag">Organic <span class="organic-pill">Certified</span></div>
+    <div class="p-tag"><span data-i18n="tag-organic">Organic</span> <span class="organic-pill" data-i18n="tag-certified">Certified</span></div>
     <div class="p-img-wrap">
       <img loading="lazy" class="p-img front" src="/assets/product-500-organic-1.png" alt="AL WASAT Organic 500ml front" onerror="this.style.cssText='min-height:200px;display:block'">
       <img loading="lazy" class="p-img back" src="/assets/product-500-organic-12.png" alt="AL WASAT Organic 500ml detail" onerror="this.style.display='none'">
@@ -152,13 +157,13 @@
       <div class="p-attr">Certified organic</div>
     </div>
     <div class="p-actions">
-      <button class="p-add-btn" onclick="addToCart(event,this)">Add to Cart</button>
+      <button class="p-add-btn" onclick="addToCart(event,this)" data-i18n="add-to-cart">Add to Cart</button>
       <button class="p-details-btn" onclick="openDetails(event,this)">Details</button>
     </div>
   </div>
 
   <div class="p-card" data-cat="organic 1l" data-pid="organic-1l" onclick="openDetails(event,this)">
-    <div class="p-tag">Organic <span class="organic-pill">Certified</span></div>
+    <div class="p-tag"><span data-i18n="tag-organic">Organic</span> <span class="organic-pill" data-i18n="tag-certified">Certified</span></div>
     <div class="p-img-wrap">
       <img loading="lazy" class="p-img front" src="/assets/product-1l-organic-1.png" alt="AL WASAT Organic 1L front" onerror="this.style.cssText='min-height:200px;display:block'">
       <img loading="lazy" class="p-img back" src="/assets/product-1l-organic-12.png" alt="AL WASAT Organic 1L detail" onerror="this.style.display='none'">
@@ -173,13 +178,13 @@
       <div class="p-attr">Certified organic</div>
     </div>
     <div class="p-actions">
-      <button class="p-add-btn" onclick="addToCart(event,this)">Add to Cart</button>
+      <button class="p-add-btn" onclick="addToCart(event,this)" data-i18n="add-to-cart">Add to Cart</button>
       <button class="p-details-btn" onclick="openDetails(event,this)">Details</button>
     </div>
   </div>
 
   <div class="p-card" data-cat="gift 500ml" data-pid="gift-set" onclick="openDetails(event,this)">
-    <div class="p-tag gift-tag">Gift Set</div>
+    <div class="p-tag gift-tag" data-i18n="tag-gift">Gift Set</div>
     <div class="p-img-wrap">
       <img loading="lazy" class="p-img front" src="/assets/product-500-1.png" alt="AL WASAT Gift Set front" onerror="this.style.cssText='min-height:200px;display:block'">
       <img loading="lazy" class="p-img back" src="/assets/product-500-organic-1.png" alt="AL WASAT Gift Set detail" onerror="this.style.display='none'">
@@ -194,7 +199,7 @@
       <div class="p-attr">Save £2.99</div>
     </div>
     <div class="p-actions">
-      <button class="p-add-btn" onclick="addToCart(event,this)">Add to Cart</button>
+      <button class="p-add-btn" onclick="addToCart(event,this)" data-i18n="add-to-cart">Add to Cart</button>
       <button class="p-details-btn" onclick="openDetails(event,this)">Details</button>
     </div>
   </div>
