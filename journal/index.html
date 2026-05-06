@@ -168,5 +168,13 @@ document.addEventListener('DOMContentLoaded', function() {
   cards.forEach(function(c) { obs.observe(c); });
 });
 </script>
+
+<div class="cookie-banner" id="cookieBanner" style="display:none">
+  <p>We use cookies to improve your experience.</p>
+  <div>
+    <button class="cookie-accept" onclick="acceptCookie()">Accept</button>
+    <a class="cookie-decline" onclick="declineCookie()">Decline</a>
+  </div>
+</div>
 </body>
 </html>
