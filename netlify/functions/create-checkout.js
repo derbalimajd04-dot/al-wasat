@@ -13,27 +13,33 @@ function rateLimit(ip) {
   return true;
 }
 
-const PRODUCTS = {
-  'classic-500': { name: 'AL WASAT Classic — 500ml',                   amount: 1399 },
-  'classic-1l':  { name: 'AL WASAT Classic — 1 Litre',                 amount: 2299 },
-  'organic-500': { name: 'AL WASAT Organic — 500ml',                   amount: 1699 },
-  'organic-1l':  { name: 'AL WASAT Organic — 1 Litre',                 amount: 2899 },
-  'gift-set':    { name: 'AL WASAT Gift Set — Classic & Organic 500ml', amount: 2799 },
+// Maps cart product IDs to Stripe env var names.
+// Recurring prices already include the 10% subscribe-and-save discount.
+const PRICE_MAP = {
+  'classic-500': { one: 'STRIPE_PRICE_CLASSIC_500', sub: 'STRIPE_RECURRING_CLASSIC_500' },
+  'classic-1l':  { one: 'STRIPE_PRICE_CLASSIC_1L',  sub: 'STRIPE_RECURRING_CLASSIC_1L'  },
+  'organic-500': { one: 'STRIPE_PRICE_ORGANIC_500',  sub: 'STRIPE_RECURRING_ORGANIC_500' },
+  'organic-1l':  { one: 'STRIPE_PRICE_ORGANIC_1L',   sub: 'STRIPE_RECURRING_ORGANIC_1L'  },
+  'gift-set':         { one: 'STRIPE_PRICE_COLLECTION',        sub: null                                   },
+  'tasting-250ml':    { one: 'STRIPE_PRICE_TASTING_250ML',    sub: null                                   },
+  'bulk-3l':          { one: 'STRIPE_PRICE_BULK_3L',           sub: null                                   },
+  'harvest-2025':     { one: 'STRIPE_PRICE_HARVEST_2025',      sub: null                                   },
+  'gift-box':         { one: 'STRIPE_PRICE_GIFT_BOX',          sub: null                                   },
+  'subscription-box': { one: 'STRIPE_PRICE_SUBSCRIPTION_BOX',  sub: 'STRIPE_RECURRING_SUBSCRIPTION_BOX'   },
+  'merch-set':        { one: 'STRIPE_PRICE_MERCH_SET',         sub: null                                   },
+  'gift-card':        { one: 'STRIPE_PRICE_GIFT_CARD',         sub: null                                   },
 };
-
-// Promo codes: code -> percent off (mirrored in validate-promo.js)
-const PROMO_CODES = {
-  'WELCOME10': 10,
-  'ALWASAT15': 15,
-};
-
-const SUB_DISCOUNT_PCT = 10;
 
 const ALLOWED_ORIGINS = [
   'https://al-wasat.co.uk',
   'https://www.al-wasat.co.uk',
   'http://localhost:8888',
 ];
+
+// Instantiated once per warm function instance; null when env var is absent.
+const stripe = process.env.STRIPE_SECRET_KEY ? Stripe(process.env.STRIPE_SECRET_KEY) : null;
+
+class ValidationError extends Error {}
 
 exports.handler = async (event) => {
   const origin = event.headers.origin || '';
@@ -59,59 +65,52 @@ exports.handler = async (event) => {
     return { statusCode: 429, headers: { 'Access-Control-Allow-Origin': corsOrigin }, body: JSON.stringify({ error: 'Too many requests' }) };
   }
 
+  if (!stripe) {
+    return {
+      statusCode: 500,
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': corsOrigin },
+      body: JSON.stringify({ error: 'Payment service is not configured. Please contact support.' }),
+    };
+  }
+
+  let parsed;
+  try { parsed = JSON.parse(event.body || '{}'); } catch {
+    return { statusCode: 400, headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': corsOrigin }, body: JSON.stringify({ error: 'Invalid request body' }) };
+  }
+
   try {
-    const { items, subscription = false, promoCode = '' } = JSON.parse(event.body);
+    // Accept either mode:'subscription'|'payment' or legacy subscription:true|false
+    const { items, mode, subscription } = parsed;
+    const isSubscription = mode === 'subscription' || subscription === true;
 
     if (!Array.isArray(items) || !items.length || items.length > 20) {
       return { statusCode: 400, headers: { 'Access-Control-Allow-Origin': corsOrigin }, body: JSON.stringify({ error: 'Invalid cart' }) };
     }
 
-    // Resolve discounts server-side
-    const promoDiscount = PROMO_CODES[(promoCode || '').toUpperCase().trim()] || 0;
-    const subDiscount   = subscription ? SUB_DISCOUNT_PCT : 0;
-    const multiplier    = (1 - subDiscount / 100) * (1 - promoDiscount / 100);
-
     const lineItems = items.map(item => {
-      const product = PRODUCTS[item.pid];
-      if (!product) throw new Error(`Unknown product: ${item.pid}`);
+      const priceKeys = PRICE_MAP[item.pid];
+      if (!priceKeys) throw new ValidationError(`Unknown product: ${item.pid}`);
       const qty = parseInt(item.qty, 10);
-      if (!Number.isInteger(qty) || qty < 1 || qty > 99) throw new Error(`Invalid quantity for: ${item.pid}`);
+      if (!Number.isInteger(qty) || qty < 1 || qty > 99) throw new ValidationError(`Invalid quantity for: ${item.pid}`);
 
-      const unit_amount = Math.round(product.amount * multiplier);
+      const envKey = isSubscription ? priceKeys.sub : priceKeys.one;
+      if (!envKey) throw new ValidationError(`Subscription not available for: ${item.pid}`);
+      const priceId = process.env[envKey];
+      if (!priceId) throw new Error(`Price env var not set: ${envKey}`);
 
-      if (subscription) {
-        return {
-          price_data: {
-            currency: 'gbp',
-            product_data: { name: `${product.name} (Subscribe & Save ${subDiscount}%)` },
-            unit_amount,
-            recurring: { interval: 'month' },
-          },
-          quantity: qty,
-        };
-      }
-
-      return {
-        price_data: {
-          currency: 'gbp',
-          product_data: { name: product.name },
-          unit_amount,
-        },
-        quantity: qty,
-      };
+      return { price: priceId, quantity: qty };
     });
-
-    const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
     const sessionParams = {
       payment_method_types: ['card'],
       line_items: lineItems,
-      mode: subscription ? 'subscription' : 'payment',
+      mode: isSubscription ? 'subscription' : 'payment',
+      allow_promotion_codes: true,
       success_url: `${corsOrigin}/checkout/?success=true&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${corsOrigin}/checkout/`,
     };
 
-    if (!subscription) {
+    if (!isSubscription) {
       sessionParams.shipping_address_collection = {
         allowed_countries: ['GB', 'FR', 'DE', 'NL', 'BE', 'ES', 'IT'],
       };
@@ -125,10 +124,18 @@ exports.handler = async (event) => {
       body: JSON.stringify({ url: session.url }),
     };
   } catch (err) {
+    if (err instanceof ValidationError) {
+      return {
+        statusCode: 400,
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': corsOrigin },
+        body: JSON.stringify({ error: err.message }),
+      };
+    }
+    console.error('create-checkout error:', err.message);
     return {
       statusCode: 500,
-      headers: { 'Access-Control-Allow-Origin': corsOrigin },
-      body: JSON.stringify({ error: err.message }),
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': corsOrigin },
+      body: JSON.stringify({ error: 'Payment unavailable. Please try again or contact us.' }),
     };
   }
 };

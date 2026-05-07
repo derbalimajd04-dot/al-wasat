@@ -6,19 +6,29 @@
 <title>AL WASAT — The Collection</title>
 <meta name="description" content="AL WASAT Extra Virgin Olive Oil — Shop the Collection. Classic and Certified Organic, cold-extracted, harvest-documented Tunisian olive oil in 500ml and 1L.">
 <link rel="canonical" href="https://al-wasat.co.uk/shop/">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://al-wasat.co.uk/shop/">
 <meta property="og:title" content="AL WASAT — The Collection">
 <meta property="og:description" content="Shop AL WASAT premium Tunisian extra virgin olive oil. Classic and Certified Organic, cold-extracted and harvest-documented. Available in 500ml and 1L.">
 <meta property="og:image" content="https://al-wasat.co.uk/assets/product-500-1.png">
+<meta property="og:site_name" content="AL WASAT">
+<meta property="og:locale" content="en_GB">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@alwasat">
+<meta name="twitter:title" content="AL WASAT — The Collection">
+<meta name="twitter:description" content="Shop AL WASAT premium Tunisian extra virgin olive oil. Classic and Certified Organic, cold-extracted and harvest-documented. Available in 500ml and 1L.">
+<meta name="twitter:image" content="https://al-wasat.co.uk/assets/product-500-1.png">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="manifest" href="/manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Tenor+Sans&family=EB+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","name":"AL WASAT Olive Oil Collection","url":"https://al-wasat.co.uk/shop/","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"Product","name":"AL WASAT Classic 500ml","description":"Cold-extracted extra virgin olive oil. Polyphenols 380mg/kg, acidity <0.3%.","image":"https://al-wasat.co.uk/assets/product-500-1.png","brand":{"@type":"Brand","name":"AL WASAT"},"offers":{"@type":"Offer","price":"13.99","priceCurrency":"GBP","availability":"https://schema.org/InStock","url":"https://al-wasat.co.uk/shop/"}}},{"@type":"ListItem","position":2,"item":{"@type":"Product","name":"AL WASAT Classic 1L","description":"Cold-extracted extra virgin olive oil. Polyphenols 380mg/kg, acidity <0.3%.","image":"https://al-wasat.co.uk/assets/product-1l-classic-1.png","brand":{"@type":"Brand","name":"AL WASAT"},"offers":{"@type":"Offer","price":"22.99","priceCurrency":"GBP","availability":"https://schema.org/InStock","url":"https://al-wasat.co.uk/shop/"}}},{"@type":"ListItem","position":3,"item":{"@type":"Product","name":"AL WASAT Organic 500ml","description":"Certified organic cold-extracted extra virgin olive oil. Polyphenols 460mg/kg, acidity <0.2%.","image":"https://al-wasat.co.uk/assets/product-500-organic-1.png","brand":{"@type":"Brand","name":"AL WASAT"},"offers":{"@type":"Offer","price":"16.99","priceCurrency":"GBP","availability":"https://schema.org/InStock","url":"https://al-wasat.co.uk/shop/"}}},{"@type":"ListItem","position":4,"item":{"@type":"Product","name":"AL WASAT Organic 1L","description":"Certified organic cold-extracted extra virgin olive oil. Polyphenols 460mg/kg, acidity <0.2%.","image":"https://al-wasat.co.uk/assets/product-1l-organic-1.png","brand":{"@type":"Brand","name":"AL WASAT"},"offers":{"@type":"Offer","price":"28.99","priceCurrency":"GBP","availability":"https://schema.org/InStock","url":"https://al-wasat.co.uk/shop/"}}},{"@type":"ListItem","position":5,"item":{"@type":"Product","name":"AL WASAT Gift Set","description":"Classic 500ml and Organic 500ml gift boxed. Cold-extracted, harvest-documented Tunisian olive oil.","image":"https://al-wasat.co.uk/assets/product-500-1.png","brand":{"@type":"Brand","name":"AL WASAT"},"offers":{"@type":"Offer","price":"27.99","priceCurrency":"GBP","availability":"https://schema.org/InStock","url":"https://al-wasat.co.uk/shop/"}}}]}</script>
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to content</a>
 
 <div class="grain"></div>
 <div class="cursor-dot" id="curDot"></div>
@@ -37,16 +47,16 @@
     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
     <span class="cart-count" id="cartCount"></span>
   </button>
-  <div class="lang-pill" id="langPill">
-  <button class="lang-opt active" data-lang="en">EN</button>
-  <button class="lang-opt" data-lang="fr">FR</button>
-  <button class="lang-opt" data-lang="ar">AR</button>
+  <div class="lang-pill" id="langPill" role="group" aria-label="Language">
+  <button class="lang-opt active" data-lang="en" aria-label="English">EN</button>
+  <button class="lang-opt" data-lang="fr" aria-label="French">FR</button>
+  <button class="lang-opt" data-lang="ar" aria-label="Arabic">AR</button>
 </div>
 <button class="nav-ham" id="navHam" aria-label="Open navigation menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 <div class="nav-overlay" id="navOverlay"></div>
 
-<section class="page-hero">
+<section class="page-hero" id="main">
   <div class="page-hero-bg"></div>
   <div class="page-hero-inner">
     <div>
@@ -102,8 +112,8 @@
   <div class="p-card" data-cat="classic 500ml" data-pid="classic-500" onclick="openDetails(event,this)">
     <div class="p-tag" data-i18n="tag-classic">Classic</div>
     <div class="p-img-wrap">
-      <img loading="lazy" class="p-img front" src="/assets/product-500-1.png" alt="AL WASAT Classic 500ml front" onerror="this.style.cssText='min-height:200px;display:block'">
-      <img loading="lazy" class="p-img back" src="/assets/product-500-2.png" alt="AL WASAT Classic 500ml detail" onerror="this.style.display='none'">
+      <img loading="lazy" width="400" height="500" class="p-img front" src="/assets/product-500-1.png" alt="AL WASAT Classic 500ml front" onerror="this.style.cssText='min-height:200px;display:block'">
+      <img loading="lazy" width="400" height="500" class="p-img back" src="/assets/product-500-2.png" alt="AL WASAT Classic 500ml detail" onerror="this.style.display='none'">
     </div>
     <div class="p-name">AL WASAT Classic</div>
     <div class="p-sub">Extra Virgin Olive Oil</div>
@@ -123,8 +133,8 @@
   <div class="p-card" data-cat="classic 1l" data-pid="classic-1l" onclick="openDetails(event,this)">
     <div class="p-tag" data-i18n="tag-classic">Classic</div>
     <div class="p-img-wrap">
-      <img loading="lazy" class="p-img front" src="/assets/product-1l-classic-1.png" alt="AL WASAT Classic 1L front" onerror="this.style.cssText='min-height:200px;display:block'">
-      <img loading="lazy" class="p-img back" src="/assets/product-1l-classic-12.png" alt="AL WASAT Classic 1L detail" onerror="this.style.display='none'">
+      <img loading="lazy" width="400" height="500" class="p-img front" src="/assets/product-1l-classic-1.png" alt="AL WASAT Classic 1L front" onerror="this.style.cssText='min-height:200px;display:block'">
+      <img loading="lazy" width="400" height="500" class="p-img back" src="/assets/product-1l-classic-12.png" alt="AL WASAT Classic 1L detail" onerror="this.style.display='none'">
     </div>
     <div class="p-name">AL WASAT Classic</div>
     <div class="p-sub">Extra Virgin Olive Oil</div>
@@ -144,8 +154,8 @@
   <div class="p-card" data-cat="organic 500ml" data-pid="organic-500" onclick="openDetails(event,this)">
     <div class="p-tag"><span data-i18n="tag-organic">Organic</span> <span class="organic-pill" data-i18n="tag-certified">Certified</span></div>
     <div class="p-img-wrap">
-      <img loading="lazy" class="p-img front" src="/assets/product-500-organic-1.png" alt="AL WASAT Organic 500ml front" onerror="this.style.cssText='min-height:200px;display:block'">
-      <img loading="lazy" class="p-img back" src="/assets/product-500-organic-12.png" alt="AL WASAT Organic 500ml detail" onerror="this.style.display='none'">
+      <img loading="lazy" width="400" height="500" class="p-img front" src="/assets/product-500-organic-1.png" alt="AL WASAT Organic 500ml front" onerror="this.style.cssText='min-height:200px;display:block'">
+      <img loading="lazy" width="400" height="500" class="p-img back" src="/assets/product-500-organic-12.png" alt="AL WASAT Organic 500ml detail" onerror="this.style.display='none'">
     </div>
     <div class="p-name">AL WASAT Organic</div>
     <div class="p-sub">Organic Extra Virgin Olive Oil</div>
@@ -165,8 +175,8 @@
   <div class="p-card" data-cat="organic 1l" data-pid="organic-1l" onclick="openDetails(event,this)">
     <div class="p-tag"><span data-i18n="tag-organic">Organic</span> <span class="organic-pill" data-i18n="tag-certified">Certified</span></div>
     <div class="p-img-wrap">
-      <img loading="lazy" class="p-img front" src="/assets/product-1l-organic-1.png" alt="AL WASAT Organic 1L front" onerror="this.style.cssText='min-height:200px;display:block'">
-      <img loading="lazy" class="p-img back" src="/assets/product-1l-organic-12.png" alt="AL WASAT Organic 1L detail" onerror="this.style.display='none'">
+      <img loading="lazy" width="400" height="500" class="p-img front" src="/assets/product-1l-organic-1.png" alt="AL WASAT Organic 1L front" onerror="this.style.cssText='min-height:200px;display:block'">
+      <img loading="lazy" width="400" height="500" class="p-img back" src="/assets/product-1l-organic-12.png" alt="AL WASAT Organic 1L detail" onerror="this.style.display='none'">
     </div>
     <div class="p-name">AL WASAT Organic</div>
     <div class="p-sub">Organic Extra Virgin Olive Oil</div>
@@ -186,8 +196,8 @@
   <div class="p-card" data-cat="gift 500ml" data-pid="gift-set" onclick="openDetails(event,this)">
     <div class="p-tag gift-tag" data-i18n="tag-gift">Gift Set</div>
     <div class="p-img-wrap">
-      <img loading="lazy" class="p-img front" src="/assets/product-500-1.png" alt="AL WASAT Gift Set front" onerror="this.style.cssText='min-height:200px;display:block'">
-      <img loading="lazy" class="p-img back" src="/assets/product-500-organic-1.png" alt="AL WASAT Gift Set detail" onerror="this.style.display='none'">
+      <img loading="lazy" width="400" height="500" class="p-img front" src="/assets/product-500-1.png" alt="AL WASAT Gift Set front" onerror="this.style.cssText='min-height:200px;display:block'">
+      <img loading="lazy" width="400" height="500" class="p-img back" src="/assets/product-500-organic-1.png" alt="AL WASAT Gift Set detail" onerror="this.style.display='none'">
     </div>
     <div class="p-name">AL WASAT Gift Set</div>
     <div class="p-sub">Classic &amp; Organic 500ml</div>
@@ -197,6 +207,153 @@
       <div class="p-attr">2 × 500ml</div>
       <div class="p-attr">Gift boxed</div>
       <div class="p-attr">Save £2.99</div>
+    </div>
+    <div class="p-actions">
+      <button class="p-add-btn" onclick="addToCart(event,this)" data-i18n="add-to-cart">Add to Cart</button>
+      <button class="p-details-btn" onclick="openDetails(event,this)">Details</button>
+    </div>
+  </div>
+
+  <div class="p-card" data-cat="tasting 250ml" data-pid="tasting-250ml" onclick="openDetails(event,this)">
+    <div class="p-tag">Tasting</div>
+    <div class="p-img-wrap">
+      <img loading="lazy" width="400" height="500" class="p-img front" src="/assets/product-tasting-250ml.png" alt="AL WASAT Classic 250ml Tasting front" onerror="this.style.cssText='min-height:200px;display:block'">
+      <img loading="lazy" width="400" height="500" class="p-img back" src="/assets/product-tasting-250ml-2.png" alt="AL WASAT Classic 250ml Tasting detail" onerror="this.style.display='none'">
+    </div>
+    <div class="p-name">AL WASAT Classic — 250ml Tasting</div>
+    <div class="p-sub">Cold-pressed · Single origin · Tunisia</div>
+    <div class="p-price" data-base="9.99">£9.99 <span class="p-price-label">/ 250ml</span></div>
+    <div class="p-poly">Polyphenols 520mg/kg · Acidity &lt;0.3%</div>
+    <div class="p-attrs">
+      <div class="p-attr">250ml</div>
+      <div class="p-attr">Cold-extracted</div>
+      <div class="p-attr">Ideal introduction</div>
+    </div>
+    <div class="p-actions">
+      <button class="p-add-btn" onclick="addToCart(event,this)" data-i18n="add-to-cart">Add to Cart</button>
+      <button class="p-details-btn" onclick="openDetails(event,this)">Details</button>
+    </div>
+  </div>
+
+  <div class="p-card" data-cat="bulk 3l" data-pid="bulk-3l" onclick="openDetails(event,this)">
+    <div class="p-tag">Bulk</div>
+    <div class="p-img-wrap">
+      <img loading="lazy" width="400" height="500" class="p-img front" src="/assets/product-bulk-3l-tin.png" alt="AL WASAT Bulk 3L Tin front" onerror="this.style.cssText='min-height:200px;display:block'">
+      <img loading="lazy" width="400" height="500" class="p-img back" src="/assets/product-bulk-3l-tin-2.png" alt="AL WASAT Bulk 3L Tin detail" onerror="this.style.display='none'">
+    </div>
+    <div class="p-name">AL WASAT Bulk — 3L Tin</div>
+    <div class="p-sub">Trade &amp; Hospitality Format</div>
+    <div class="p-price" data-base="49.99">£49.99 <span class="p-price-label">/ 3L tin</span></div>
+    <div class="p-poly">Polyphenols 490mg/kg · Acidity &lt;0.5%</div>
+    <div class="p-attrs">
+      <div class="p-attr">3 Litre tin</div>
+      <div class="p-attr">Cold-extracted</div>
+      <div class="p-attr">Best value</div>
+    </div>
+    <div class="p-actions">
+      <button class="p-add-btn" onclick="addToCart(event,this)" data-i18n="add-to-cart">Add to Cart</button>
+      <button class="p-details-btn" onclick="openDetails(event,this)">Details</button>
+    </div>
+  </div>
+
+  <div class="p-card" data-cat="limited 500ml" data-pid="harvest-2025" onclick="openDetails(event,this)">
+    <div class="p-tag new-tag">Limited 2025</div>
+    <div class="p-img-wrap">
+      <img loading="lazy" width="400" height="500" class="p-img front" src="/assets/product-limited-harvest-2025.png" alt="AL WASAT Limited Harvest 2025 front" onerror="this.style.cssText='min-height:200px;display:block'">
+      <img loading="lazy" width="400" height="500" class="p-img back" src="/assets/product-limited-harvest-2025.png" alt="AL WASAT Limited Harvest 2025" onerror="this.style.display='none'">
+    </div>
+    <div class="p-name">Limited Harvest 2025</div>
+    <div class="p-sub">Single-Estate Reserve 500ml</div>
+    <div class="p-price" data-base="34.99">£34.99 <span class="p-price-label">/ 500ml</span></div>
+    <div class="p-poly">Polyphenols 620mg/kg · Acidity &lt;0.15%</div>
+    <div class="p-attrs">
+      <div class="p-attr">500ml</div>
+      <div class="p-attr">Single-estate</div>
+      <div class="p-attr">Limited edition</div>
+    </div>
+    <div class="p-actions">
+      <button class="p-add-btn" onclick="addToCart(event,this)" data-i18n="add-to-cart">Add to Cart</button>
+      <button class="p-details-btn" onclick="openDetails(event,this)">Details</button>
+    </div>
+  </div>
+
+  <div class="p-card" data-cat="gift 500ml" data-pid="gift-box" onclick="openDetails(event,this)">
+    <div class="p-tag gift-tag" data-i18n="tag-gift">Gift Box</div>
+    <div class="p-img-wrap">
+      <img loading="lazy" width="400" height="500" class="p-img front" src="/assets/product-gift-box-set.png" alt="AL WASAT Gift Box Set front" onerror="this.style.cssText='min-height:200px;display:block'">
+      <img loading="lazy" width="400" height="500" class="p-img back" src="/assets/product-gift-box-set-2.png" alt="AL WASAT Gift Box Set detail" onerror="this.style.display='none'">
+    </div>
+    <div class="p-name">AL WASAT Gift Box Set</div>
+    <div class="p-sub">Two 250ml bottles · Luxury gift box</div>
+    <div class="p-price" data-base="24.99">£24.99 <span class="p-price-label">/ set</span></div>
+    <div class="p-poly">3 × 250ml · Classic · Organic · Limited</div>
+    <div class="p-attrs">
+      <div class="p-attr">3 × 250ml</div>
+      <div class="p-attr">Gift boxed</div>
+      <div class="p-attr">Free delivery</div>
+    </div>
+    <div class="p-actions">
+      <button class="p-add-btn" onclick="addToCart(event,this)" data-i18n="add-to-cart">Add to Cart</button>
+      <button class="p-details-btn" onclick="openDetails(event,this)">Details</button>
+    </div>
+  </div>
+
+  <div class="p-card" data-cat="subscription" data-pid="subscription-box" onclick="openDetails(event,this)">
+    <div class="p-tag">Subscribe</div>
+    <div class="p-img-wrap">
+      <img loading="lazy" width="400" height="500" class="p-img front" src="/assets/product-subscription-box.png" alt="Quarterly Subscription Box front" onerror="this.style.cssText='min-height:200px;display:block'">
+      <img loading="lazy" width="400" height="500" class="p-img back" src="/assets/product-subscription-box-2.png" alt="Quarterly Subscription Box detail" onerror="this.style.display='none'">
+    </div>
+    <div class="p-name">Quarterly Subscription Box</div>
+    <div class="p-sub">Seasonal harvest selections, delivered</div>
+    <div class="p-price" data-base="39.99">£39.99 <span class="p-price-label">/ quarter</span></div>
+    <div class="p-poly">Single harvest or blend · Curated each season</div>
+    <div class="p-attrs">
+      <div class="p-attr">Quarterly delivery</div>
+      <div class="p-attr">Cancel anytime</div>
+      <div class="p-attr">Members-only access</div>
+    </div>
+    <div class="p-actions">
+      <button class="p-add-btn" onclick="addToCart(event,this)" data-i18n="add-to-cart">Add to Cart</button>
+      <button class="p-details-btn" onclick="openDetails(event,this)">Details</button>
+    </div>
+  </div>
+
+  <div class="p-card" data-cat="merchandise" data-pid="merch-set" onclick="openDetails(event,this)">
+    <div class="p-tag">Merch</div>
+    <div class="p-img-wrap">
+      <img loading="lazy" width="400" height="500" class="p-img front" src="/assets/product-merchandise-set.png" alt="AL WASAT Merchandise Set front" onerror="this.style.cssText='min-height:200px;display:block'">
+      <img loading="lazy" width="400" height="500" class="p-img back" src="/assets/product-merchandise-set.png" alt="AL WASAT Merchandise Set" onerror="this.style.display='none'">
+    </div>
+    <div class="p-name">AL WASAT Merch Set</div>
+    <div class="p-sub">Tote · Apron · Pourer · Booklet</div>
+    <div class="p-price" data-base="29.99">£29.99 <span class="p-price-label">/ set</span></div>
+    <div class="p-poly">Branded accessories · Ships with any order</div>
+    <div class="p-attrs">
+      <div class="p-attr">4-piece set</div>
+      <div class="p-attr">Branded</div>
+      <div class="p-attr">Gift-ready</div>
+    </div>
+    <div class="p-actions">
+      <button class="p-add-btn" onclick="addToCart(event,this)" data-i18n="add-to-cart">Add to Cart</button>
+      <button class="p-details-btn" onclick="openDetails(event,this)">Details</button>
+    </div>
+  </div>
+
+  <div class="p-card" data-cat="gift" data-pid="gift-card" onclick="openDetails(event,this)">
+    <div class="p-tag gift-tag" data-i18n="tag-gift">Gift Card</div>
+    <div class="p-img-wrap">
+      <img loading="lazy" width="400" height="500" class="p-img front" src="/assets/product-gift-card.png" alt="AL WASAT Digital Gift Card front" onerror="this.style.cssText='min-height:200px;display:block'">
+      <img loading="lazy" width="400" height="500" class="p-img back" src="/assets/product-gift-card-2.png" alt="AL WASAT Digital Gift Card detail" onerror="this.style.display='none'">
+    </div>
+    <div class="p-name">AL WASAT Digital Gift Card</div>
+    <div class="p-sub">Instant delivery by email</div>
+    <div class="p-price" data-base="15.00">£15.00 <span class="p-price-label">/ card</span></div>
+    <div class="p-poly">Delivered by email · Valid 12 months</div>
+    <div class="p-attrs">
+      <div class="p-attr">Instant delivery</div>
+      <div class="p-attr">Any product</div>
+      <div class="p-attr">12-month validity</div>
     </div>
     <div class="p-actions">
       <button class="p-add-btn" onclick="addToCart(event,this)" data-i18n="add-to-cart">Add to Cart</button>
@@ -271,8 +428,8 @@
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lenis/1.1.1/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lenis/1.1.1/lenis.min.js" integrity="sha384-ZSs6LKr2GoUPDyHrN+rCQgyHL1yUyok5xMniSrgeRG7rUvA6vTmxronM1eZOfjgz" crossorigin="anonymous"></script>
 <script src="/script.js"></script>
 
 <div class="cookie-banner" id="cookieBanner" style="display:none">

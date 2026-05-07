@@ -1,8 +1,17 @@
 {
   "name": "al-wasat",
   "version": "1.0.0",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "dev": "netlify dev"
+  },
   "dependencies": {
     "resend": "^4.0.0",
     "stripe": "^17.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.12",
+    "lightningcss-cli": "^1.32.0",
+    "sharp": "^0.34.5"
   }
 }

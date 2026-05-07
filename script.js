@@ -4,7 +4,14 @@ const PRODUCT_DATA = {
   'classic-1l':   { tag:'Classic', name:'AL WASAT Classic', sub:'Extra Virgin Olive Oil', price:'£22.99', unit:'/ 1 Litre', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Acidity',v:'< 0.8%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Harvest',v:'October – November'},{l:'Format',v:'1 Litre glass bottle'}] },
   'organic-500':  { tag:'Organic · Certified', name:'AL WASAT Organic', sub:'Organic Extra Virgin Olive Oil', price:'£16.99', unit:'/ 500ml', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Certification',v:'EU Organic Certified'},{l:'Acidity',v:'< 0.6%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'500ml glass bottle'}] },
   'organic-1l':   { tag:'Organic · Certified', name:'AL WASAT Organic', sub:'Organic Extra Virgin Olive Oil', price:'£28.99', unit:'/ 1 Litre', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Certification',v:'EU Organic Certified'},{l:'Acidity',v:'< 0.6%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'1 Litre glass bottle'}] },
-  'gift-set':            { tag:'Gift Set', name:'AL WASAT Gift Set', sub:'Classic & Organic 500ml', price:'£27.99', unit:'/ bundle', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Includes',v:'Classic 500ml + Organic 500ml'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Harvest',v:'October – November'},{l:'Format',v:'Two-bottle gift set, boxed'}] }
+  'gift-set':         { tag:'Gift Set',     name:'AL WASAT Gift Set',        sub:'Classic & Organic 500ml',           price:'£27.99', unit:'/ bundle', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Includes',v:'Classic 500ml + Organic 500ml'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Harvest',v:'October – November'},{l:'Format',v:'Two-bottle gift set, boxed'}] },
+  'tasting-250ml':    { tag:'Tasting',      name:'AL WASAT Classic — 250ml Tasting', sub:'Cold-pressed · Single origin · Tunisia', price:'£9.99',  unit:'/ 250ml',  specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Polyphenols',v:'520 mg/kg'},{l:'Acidity',v:'< 0.3%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'250ml glass bottle'}] },
+  'bulk-3l':          { tag:'Bulk',         name:'AL WASAT Bulk — 3L Tin',           sub:'Trade & Hospitality Format',            price:'£49.99', unit:'/ 3L tin', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Polyphenols',v:'490 mg/kg'},{l:'Acidity',v:'< 0.5%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'3 Litre tin'}] },
+  'harvest-2025':     { tag:'Limited 2025', name:'Limited Harvest 2025',      sub:'Single-Estate Reserve 500ml',       price:'£34.99', unit:'/ 500ml',  specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Estate',v:'Single-origin, named grove'},{l:'Polyphenols',v:'620 mg/kg'},{l:'Acidity',v:'< 0.15%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'500ml glass bottle, limited edition'}] },
+  'gift-box':         { tag:'Gift Box',     name:'AL WASAT Gift Box Set',     sub:'Two 250ml bottles · Luxury gift box',   price:'£24.99', unit:'/ set',    specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Includes',v:'2 × 250ml bottles, gift-boxed'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Delivery',v:'Free UK delivery included'},{l:'Format',v:'Luxury gift box'}] },
+  'subscription-box': { tag:'Subscribe',    name:'Quarterly Subscription Box', sub:'Seasonal harvest selections, delivered', price:'£39.99', unit:'/ quarter', specs:[{l:'Frequency',v:'Quarterly delivery'},{l:'Contents',v:'Single harvest or blend, curated each season'},{l:'Flexibility',v:'Cancel anytime, no commitments'},{l:'Perks',v:'Members-only access to limited batches'},{l:'Format',v:'Subscription box, gift-wrapped'}] },
+  'merch-set':        { tag:'Merch',        name:'AL WASAT Merch Set',        sub:'Tote · Apron · Pourer · Booklet',  price:'£29.99', unit:'/ set',    specs:[{l:'Contents',v:'Tote bag, cotton apron, stainless pourer, harvest booklet'},{l:'Material',v:'Organic cotton, food-grade steel'},{l:'Branding',v:'AL WASAT embossed & printed'},{l:'Format',v:'4-piece set, gift-ready packaging'}] },
+  'gift-card':        { tag:'Gift Card',    name:'AL WASAT Digital Gift Card', sub:'Instant delivery by email',        price:'£15.00', unit:'/ card',   specs:[{l:'Delivery',v:'Instant — sent by email'},{l:'Validity',v:'12 months from purchase'},{l:'Redeemable',v:'Any product on al-wasat.co.uk'},{l:'Format',v:'Digital code, printable PDF included'}] },
 };
 
 /* === CART (global) === */
@@ -581,6 +588,45 @@ document.addEventListener('DOMContentLoaded', () => {
       if (totalRow) { var b2 = totalRow.querySelector('.cd-discount-badge'); if (b2) b2.remove(); }
     }
   };
+})();
+
+// === NEWSLETTER ===
+(function () {
+  var form = document.querySelector('.newsletter-form');
+  if (!form) return;
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var emailInput = form.querySelector('input[type="email"]');
+    var btn = form.querySelector('.newsletter-btn');
+    var email = emailInput ? emailInput.value.trim() : '';
+    if (!email) return;
+    btn.disabled = true;
+    btn.innerHTML = '<span>Joining…</span>';
+    try {
+      var res = await fetch('/.netlify/functions/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email }),
+      });
+      var data = await res.json();
+      if (res.ok && data.ok) {
+        form.innerHTML = '<p style="font-family:var(--tenor);font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);text-align:center;padding:1rem 0">You\'re on the list.</p>';
+      } else {
+        throw new Error(data.error || 'Error');
+      }
+    } catch (_) {
+      btn.disabled = false;
+      btn.innerHTML = '<span>Join</span><span> →</span>';
+      var errEl = form.querySelector('.nl-err');
+      if (!errEl) {
+        errEl = document.createElement('p');
+        errEl.className = 'nl-err';
+        errEl.style.cssText = 'font-size:0.7rem;color:rgba(192,96,64,0.85);text-align:center;margin-top:0.75rem;font-family:var(--tenor);letter-spacing:0.08em';
+        form.appendChild(errEl);
+      }
+      errEl.textContent = 'Something went wrong. Please try again.';
+    }
+  });
 })();
 
 // === COOKIE CONSENT BANNER ===

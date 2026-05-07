@@ -6,12 +6,14 @@
 <title>AL WASAT — Checkout</title>
 <meta name="robots" content="noindex">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="manifest" href="/manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Tenor+Sans&family=EB+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to content</a>
 
 <div class="grain"></div>
 <div class="cursor-dot" id="curDot"></div>
@@ -26,17 +28,17 @@
     <li><a href="/trade/" data-i18n="nav-trade">Trade</a></li>
     <li><a href="/#contact" data-i18n="nav-contact">Contact</a></li>
   </ul>
-  <div class="lang-pill" id="langPill">
-  <button class="lang-opt active" data-lang="en">EN</button>
-  <button class="lang-opt" data-lang="fr">FR</button>
-  <button class="lang-opt" data-lang="ar">AR</button>
+  <div class="lang-pill" id="langPill" role="group" aria-label="Language">
+  <button class="lang-opt active" data-lang="en" aria-label="English">EN</button>
+  <button class="lang-opt" data-lang="fr" aria-label="French">FR</button>
+  <button class="lang-opt" data-lang="ar" aria-label="Arabic">AR</button>
 </div>
 <button class="nav-ham" id="navHam" aria-label="Open navigation menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 <div class="nav-overlay" id="navOverlay"></div>
 
 <!-- Checkout -->
-<div id="checkoutWrap" class="checkout-wrap">
+<div id="checkoutWrap" class="checkout-wrap" role="main">
   <div class="checkout-inner">
 
     <div class="checkout-header">
@@ -67,6 +69,7 @@
           </button>
           <p class="co-pay-methods">Visa · Mastercard · Amex · Apple Pay · Google Pay</p>
         </div>
+        <div class="co-error" id="coError" role="alert" style="display:none"></div>
       </div>
 
     </div>
@@ -89,8 +92,8 @@
   <div class="fr">Extra Virgin Olive Oil · Tunisia</div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lenis/1.1.1/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lenis/1.1.1/lenis.min.js" integrity="sha384-ZSs6LKr2GoUPDyHrN+rCQgyHL1yUyok5xMniSrgeRG7rUvA6vTmxronM1eZOfjgz" crossorigin="anonymous"></script>
 <script src="/script.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -161,7 +164,9 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       btn.disabled = false;
       btn.innerHTML = '<span>Pay Securely with Stripe</span><span>&nbsp;→</span>';
-      alert('Payment unavailable. Please try again or contact us.');
+      const errEl = document.getElementById('coError');
+      errEl.textContent = 'Payment unavailable. Please try again or contact us.';
+      errEl.style.display = 'block';
     }
   });
 });

@@ -1,4 +1,4 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const Stripe = require('stripe');
 const { Resend } = require('resend');
 
 exports.handler = async (event) => {
@@ -6,10 +6,17 @@ exports.handler = async (event) => {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
+  if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_WEBHOOK_SECRET) {
+    console.error('order-confirm: missing required env vars');
+    return { statusCode: 500, body: 'Service not configured' };
+  }
+
   const sig = event.headers['stripe-signature'];
   if (!sig) {
     return { statusCode: 400, body: 'Missing stripe-signature header' };
   }
+
+  const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
   let stripeEvent;
   try {
@@ -88,7 +95,7 @@ exports.handler = async (event) => {
   try {
     var resend = new Resend(process.env.RESEND_API_KEY);
     await resend.emails.send({
-      from: 'AL WASAT <orders@al-wasat.co.uk>',
+      from: process.env.RESEND_FROM_EMAIL || 'AL WASAT <orders@al-wasat.co.uk>',
       to: customerEmail,
       subject: 'Your AL WASAT Order is Confirmed',
       text: emailText,

@@ -6,19 +6,29 @@
 <title>AL WASAT — The Journal</title>
 <meta name="description" content="AL WASAT Journal — Editorial perspectives on olive oil, cold extraction, harvest documentation, and the craft behind premium Tunisian extra virgin olive oil.">
 <link rel="canonical" href="https://al-wasat.co.uk/journal/">
-<meta property="og:type" content="website">
+<link rel="sitemap" type="application/xml" href="/sitemap.xml">
+<meta property="og:type" content="blog">
 <meta property="og:url" content="https://al-wasat.co.uk/journal/">
 <meta property="og:title" content="AL WASAT — The Journal">
 <meta property="og:description" content="Editorial perspectives on cold extraction, harvest documentation, and the craft behind premium Tunisian olive oil.">
 <meta property="og:image" content="https://al-wasat.co.uk/assets/chapter2.png">
+<meta property="og:site_name" content="AL WASAT">
+<meta property="og:locale" content="en_GB">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@alwasat">
+<meta name="twitter:title" content="AL WASAT — The Journal">
+<meta name="twitter:description" content="Editorial perspectives on cold extraction, harvest documentation, and the craft behind premium Tunisian olive oil.">
+<meta name="twitter:image" content="https://al-wasat.co.uk/assets/chapter2.png">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="manifest" href="/manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Tenor+Sans&family=EB+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Blog","name":"AL WASAT Journal","url":"https://al-wasat.co.uk/journal/","description":"Editorial perspectives on olive oil, cold extraction, harvest documentation, and the craft behind premium Tunisian extra virgin olive oil.","publisher":{"@type":"Organization","name":"AL WASAT","url":"https://al-wasat.co.uk"},"blogPost":[{"@type":"BlogPosting","headline":"What Cold Extraction Actually Means","description":"The science behind temperature-controlled pressing, and why 27°C is not an arbitrary number.","url":"https://al-wasat.co.uk/journal/article-1.html","image":"https://al-wasat.co.uk/assets/chapter2.png","articleSection":"Craft","publisher":{"@type":"Organization","name":"AL WASAT"}},{"@type":"BlogPosting","headline":"The 2024 Harvest Report","description":"Exceptional polyphenol levels, the weather in Sfax, and why we harvested early this season.","url":"https://al-wasat.co.uk/journal/article-2.html","image":"https://al-wasat.co.uk/assets/chapter2.png","articleSection":"Harvest","publisher":{"@type":"Organization","name":"AL WASAT"}},{"@type":"BlogPosting","headline":"How to Taste Olive Oil Like a Professional","description":"The three-step tasting method, what bitterness and pungency signal, and how AL WASAT scores.","url":"https://al-wasat.co.uk/journal/article-3.html","image":"https://al-wasat.co.uk/assets/chapter3.png","articleSection":"Education","publisher":{"@type":"Organization","name":"AL WASAT"}}]}</script>
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to content</a>
 
 <div class="grain"></div>
 <div class="cursor-dot" id="curDot"></div>
@@ -37,16 +47,16 @@
     <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
     <span class="cart-count" id="cartCount"></span>
   </button>
-  <div class="lang-pill" id="langPill">
-  <button class="lang-opt active" data-lang="en">EN</button>
-  <button class="lang-opt" data-lang="fr">FR</button>
-  <button class="lang-opt" data-lang="ar">AR</button>
+  <div class="lang-pill" id="langPill" role="group" aria-label="Language">
+  <button class="lang-opt active" data-lang="en" aria-label="English">EN</button>
+  <button class="lang-opt" data-lang="fr" aria-label="French">FR</button>
+  <button class="lang-opt" data-lang="ar" aria-label="Arabic">AR</button>
 </div>
 <button class="nav-ham" id="navHam" aria-label="Open navigation menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 <div class="nav-overlay" id="navOverlay"></div>
 
-<section class="journal-hero">
+<section class="journal-hero" id="main">
   <div class="journal-hero-bg"></div>
   <div class="journal-hero-inner">
     <p class="kicker reveal" style="justify-content:center"><span class="kicker-rule"></span>Editorial</p>
@@ -154,8 +164,8 @@
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lenis/1.1.1/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lenis/1.1.1/lenis.min.js" integrity="sha384-ZSs6LKr2GoUPDyHrN+rCQgyHL1yUyok5xMniSrgeRG7rUvA6vTmxronM1eZOfjgz" crossorigin="anonymous"></script>
 <script src="/script.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {

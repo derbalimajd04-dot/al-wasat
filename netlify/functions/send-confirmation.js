@@ -7,6 +7,11 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: 'Missing session_id' };
   }
 
+  if (!process.env.STRIPE_SECRET_KEY || !process.env.RESEND_API_KEY) {
+    console.error('send-confirmation: missing required env vars');
+    return { statusCode: 500, body: 'Service not configured' };
+  }
+
   try {
     const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
     const session = await stripe.checkout.sessions.retrieve(sessionId, {
@@ -80,7 +85,7 @@ exports.handler = async (event) => {
 
     const resend = new Resend(process.env.RESEND_API_KEY);
     await resend.emails.send({
-      from: 'AL WASAT <orders@al-wasat.co.uk>',
+      from: process.env.RESEND_FROM_EMAIL || 'AL WASAT <orders@al-wasat.co.uk>',
       to: email,
       subject: 'Your AL WASAT order is confirmed',
       html,

@@ -1,0 +1,17 @@
+{
+  "name": "AL WASAT",
+  "short_name": "AL WASAT",
+  "description": "Premium Tunisian extra virgin olive oil. Cold-extracted, harvest-documented, and lab-verified.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#0A0906",
+  "theme_color": "#C9A96E",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

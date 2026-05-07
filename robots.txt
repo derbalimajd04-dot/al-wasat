@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Disallow: /checkout/
+Disallow: /.netlify/
+
+Sitemap: https://al-wasat.co.uk/sitemap.xml
