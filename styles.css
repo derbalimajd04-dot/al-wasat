@@ -362,7 +362,7 @@ footer{padding:2.5rem 5rem;display:grid;grid-template-columns:1fr auto 1fr;align
   .ass-item{border-bottom:1px solid rgba(201,169,110,0.08)}
   .bottom-cta{padding:6rem 2rem}
   .p-img-wrap{height:280px}
-  .filter-btn{flex:1;text-align:center}
+  .filter-btn{flex:1;text-align:center;min-height:44px}
   /* Shared */
   footer{grid-template-columns:1fr;gap:0.75rem;text-align:center;padding:2.5rem 2rem}
   .fr{text-align:center}
@@ -517,11 +517,34 @@ footer{padding:2.5rem 5rem;display:grid;grid-template-columns:1fr auto 1fr;align
   .cart-nav-btn,.filter-btn{min-height:44px}
   .nav-links a{min-height:44px;display:flex;align-items:center}
 }
+/* === SHOP — mobile creative layout (≤767px) === */
 @media(max-width:767px){
-  .product-grid{grid-template-columns:repeat(2,1fr);gap:1.25rem}
+  /* Filter strip: single scrollable row, no wrapping */
+  .filters{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:0.5rem;padding-bottom:2px}
+  .filters::-webkit-scrollbar{display:none}
+  .filter-btn{flex:0 0 auto;white-space:nowrap;margin:0;padding:0.7rem 1.2rem}
+
+  /* Product grid → horizontal snap-scroll carousel */
+  .product-grid{display:flex;flex-direction:row;overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scrollbar-width:none;gap:1rem;padding:1.5rem 1.25rem;grid-template-columns:none}
+  .product-grid::-webkit-scrollbar{display:none}
+
+  /* Each card: snappable, ~75vw wide */
+  .p-card{min-width:75vw;max-width:75vw;flex-shrink:0;scroll-snap-align:start;padding:1.5rem 1.25rem 1.75rem}
+
+  /* Tighter card internals */
+  .p-img-wrap{height:190px;margin-bottom:1rem}
+  .p-tag{margin-bottom:0.75rem}
+  .p-name{font-size:1.1rem}
+  .p-sub{font-size:0.78rem;margin-bottom:0.65rem}
+  .p-price{font-size:1.35rem;margin-bottom:0.65rem}
+  .p-poly{display:none}
+  .p-attrs{margin-bottom:0.9rem}
 }
+
+/* === SHOP — small mobile (≤479px): wider cards === */
 @media(max-width:479px){
-  .product-grid{grid-template-columns:1fr;gap:1rem}
+  .p-card{min-width:84vw;max-width:84vw}
+  .p-img-wrap{height:170px}
 }
 
 /* === HERO — hide video on mobile, show static image === */
