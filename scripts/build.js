@@ -67,7 +67,9 @@ async function main() {
 
   const staticItems = [
     'index.html', '404.html', 'sitemap.xml', 'robots.txt',
-    'favicon.svg', 'manifest.json', 'CNAME',
+    'favicon.svg', 'favicon.ico', 'favicon-16x16.png', 'favicon-32x32.png',
+    'apple-touch-icon.png', 'android-chrome-192x192.png', 'android-chrome-512x512.png',
+    'manifest.json', 'site.webmanifest', 'CNAME',
     'assets', 'checkout', 'journal', 'shop', 'trade',
   ];
   for (const item of staticItems) {
