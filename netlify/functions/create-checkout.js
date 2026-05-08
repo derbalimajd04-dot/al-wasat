@@ -33,8 +33,14 @@ const PRICE_MAP = {
 const ALLOWED_ORIGINS = [
   'https://al-wasat.co.uk',
   'https://www.al-wasat.co.uk',
-  'http://localhost:8888',
 ];
+
+function isAllowedOrigin(origin) {
+  if (ALLOWED_ORIGINS.includes(origin)) return true;
+  // Allow any localhost port for local development
+  if (/^http:\/\/localhost(:\d+)?$/.test(origin)) return true;
+  return false;
+}
 
 // Instantiated once per warm function instance; null when env var is absent.
 const stripe = process.env.STRIPE_SECRET_KEY ? Stripe(process.env.STRIPE_SECRET_KEY) : null;
@@ -43,7 +49,7 @@ class ValidationError extends Error {}
 
 exports.handler = async (event) => {
   const origin = event.headers.origin || '';
-  const corsOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  const corsOrigin = isAllowedOrigin(origin) ? origin : ALLOWED_ORIGINS[0];
 
   if (event.httpMethod === 'OPTIONS') {
     return {
@@ -58,7 +64,7 @@ exports.handler = async (event) => {
   }
 
   if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method Not Allowed' };
-  if (!ALLOWED_ORIGINS.includes(origin)) return { statusCode: 403, body: 'Forbidden' };
+  if (!isAllowedOrigin(origin)) return { statusCode: 403, body: 'Forbidden' };
 
   const ip = event.headers['x-nf-client-connection-ip'] || event.headers['x-forwarded-for'] || 'unknown';
   if (!rateLimit(ip)) {

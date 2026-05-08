@@ -154,7 +154,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Stripe redirect
   const btn = document.getElementById('stripeBtn');
+  const errEl = document.getElementById('coError');
+
+  function showCheckoutError(msg) {
+    btn.disabled = false;
+    btn.innerHTML = '<span>Pay Securely with Stripe</span><span>&nbsp;→</span>';
+    errEl.textContent = msg;
+    errEl.style.display = 'block';
+    errEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
   btn.addEventListener('click', async () => {
+    errEl.style.display = 'none';
     btn.disabled = true;
     btn.innerHTML = '<span>Redirecting…</span>';
     try {
@@ -167,18 +178,23 @@ document.addEventListener('DOMContentLoaded', () => {
           promoCode: promo ? promo.code : '',
         })
       });
-      const data = await res.json();
+      let data;
+      try {
+        data = await res.json();
+      } catch {
+        console.error('create-checkout: non-JSON response, status', res.status);
+        showCheckoutError('Payment unavailable (server error ' + res.status + '). Please try again or contact us.');
+        return;
+      }
+      console.log('create-checkout response:', res.status, data);
       if (data.url) {
         window.location.href = data.url;
       } else {
-        throw new Error(data.error || 'No URL returned');
+        showCheckoutError(data.error || 'Payment unavailable. Please try again or contact us.');
       }
     } catch (err) {
-      btn.disabled = false;
-      btn.innerHTML = '<span>Pay Securely with Stripe</span><span>&nbsp;→</span>';
-      const errEl = document.getElementById('coError');
-      errEl.textContent = 'Payment unavailable. Please try again or contact us.';
-      errEl.style.display = 'block';
+      console.error('create-checkout fetch error:', err.message);
+      showCheckoutError('Could not reach payment service. Check your connection and try again.');
     }
   });
 });
