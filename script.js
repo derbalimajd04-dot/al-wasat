@@ -169,8 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* === CONTACT FORM (home only) === */
   const contactForm = document.getElementById('contactForm');
   if (contactForm) {
-    // Replace YOUR_FORM_ID with your Formspree endpoint ID (formspree.io)
-    const FORM_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+    const FORM_ENDPOINT = '/.netlify/functions/contact';
     contactForm.addEventListener('submit', async function(e) {
       e.preventDefault();
       let valid = true;
@@ -181,15 +180,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!ok) valid = false;
       });
       if (!valid) return;
-      if (this._honeypot && this._honeypot.value !== '') return;
+      const honeypot = this.querySelector('[name="_honeypot"]');
+      if (honeypot && honeypot.value !== '') return;
       const btn = this.querySelector('.submit-btn');
       const label = btn.querySelector('span:first-child');
       btn.disabled = true; label.textContent = 'Sending…';
       try {
+        const fd = new FormData(this);
+        const body = {};
+        fd.forEach((v, k) => { body[k] = v; });
         const res = await fetch(FORM_ENDPOINT, {
           method: 'POST',
-          headers: { 'Accept': 'application/json' },
-          body: new FormData(this)
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
         });
         if (res.ok) {
           this.style.display = 'none';

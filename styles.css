@@ -920,6 +920,11 @@ html{scroll-behavior:auto}
 .cd-promo-remove:hover{color:var(--cream)}
 .cd-discount-badge{display:block;font-family:var(--tenor);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(140,190,120,0.7);margin-top:0.2rem}
 
+/* === WHATSAPP BUTTON === */
+.wa-btn{position:fixed;bottom:2rem;right:2rem;z-index:998;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,0.4);transition:transform 0.2s ease,box-shadow 0.2s ease;text-decoration:none}
+.wa-btn:hover{transform:scale(1.08);box-shadow:0 6px 24px rgba(37,211,102,0.35)}
+.wa-btn svg{width:28px;height:28px;fill:#fff}
+
 /* === COOKIE BANNER === */
 .cookie-banner{position:fixed;bottom:0;left:0;right:0;width:100%;background:#161310;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;z-index:999;border-top:1px solid rgba(201,169,110,0.2)}
 .cookie-banner p{font-size:0.75rem;color:var(--stone2)}
