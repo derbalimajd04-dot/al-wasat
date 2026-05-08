@@ -13,22 +13,28 @@ function rateLimit(ip) {
   return true;
 }
 
-// Maps cart product IDs to Stripe env var names.
-// Recurring prices already include the 10% subscribe-and-save discount.
+// Values starting with 'price_' are used directly as Stripe Price IDs.
+// All other values are treated as environment variable names.
 const PRICE_MAP = {
   'classic-500': { one: 'STRIPE_PRICE_CLASSIC_500', sub: 'STRIPE_RECURRING_CLASSIC_500' },
   'classic-1l':  { one: 'STRIPE_PRICE_CLASSIC_1L',  sub: 'STRIPE_RECURRING_CLASSIC_1L'  },
   'organic-500': { one: 'STRIPE_PRICE_ORGANIC_500',  sub: 'STRIPE_RECURRING_ORGANIC_500' },
   'organic-1l':  { one: 'STRIPE_PRICE_ORGANIC_1L',   sub: 'STRIPE_RECURRING_ORGANIC_1L'  },
-  'gift-set':         { one: 'STRIPE_PRICE_COLLECTION',        sub: null                                   },
-  'tasting-250ml':    { one: 'STRIPE_PRICE_TASTING_250ML',    sub: null                                   },
-  'bulk-3l':          { one: 'STRIPE_PRICE_BULK_3L',           sub: null                                   },
-  'harvest-2025':     { one: 'STRIPE_PRICE_HARVEST_2025',      sub: null                                   },
-  'gift-box':         { one: 'STRIPE_PRICE_GIFT_BOX',          sub: null                                   },
-  'subscription-box': { one: 'STRIPE_PRICE_SUBSCRIPTION_BOX',  sub: 'STRIPE_RECURRING_SUBSCRIPTION_BOX'   },
-  'merch-set':        { one: 'STRIPE_PRICE_MERCH_SET',         sub: null                                   },
-  'gift-card':        { one: 'STRIPE_PRICE_GIFT_CARD',         sub: null                                   },
+  'gift-set':         { one: 'STRIPE_PRICE_COLLECTION',           sub: null },
+  'harvest-2025':     { one: 'STRIPE_PRICE_HARVEST_2025',         sub: null },
+  'merch-set':        { one: 'STRIPE_PRICE_MERCH_SET',            sub: null },
+  'tasting-250ml':    { one: 'price_1TUupgDOCtKpIrONFNHczbmM',   sub: null },
+  'bulk-3l':          { one: 'price_1TUuq3DOCtKpIrONBGkzqNog',   sub: null },
+  'gift-box':         { one: 'price_1TUuqLDOCtKpIrONNh3Aszjo',   sub: null },
+  'subscription-box': { one: 'price_1TUvHNDOCtKpIrONgjYV9Uyf',   sub: 'price_1TUvHNDOCtKpIrONgjYV9Uyf' },
+  'gift-card':        { one: 'price_1TUvICDOCtKpIrONoomiQFPE',   sub: null },
 };
+
+function resolvePrice(key) {
+  if (!key) return null;
+  if (key.startsWith('price_')) return key;
+  return process.env[key] || null;
+}
 
 const ALLOWED_ORIGINS = [
   'https://al-wasat.co.uk',
@@ -99,10 +105,10 @@ exports.handler = async (event) => {
       const qty = parseInt(item.qty, 10);
       if (!Number.isInteger(qty) || qty < 1 || qty > 99) throw new ValidationError(`Invalid quantity for: ${item.pid}`);
 
-      const envKey = isSubscription ? priceKeys.sub : priceKeys.one;
-      if (!envKey) throw new ValidationError(`Subscription not available for: ${item.pid}`);
-      const priceId = process.env[envKey];
-      if (!priceId) throw new Error(`Price env var not set: ${envKey}`);
+      const priceKey = isSubscription ? priceKeys.sub : priceKeys.one;
+      if (!priceKey) throw new ValidationError(`Subscription not available for: ${item.pid}`);
+      const priceId = resolvePrice(priceKey);
+      if (!priceId) throw new Error(`Price not configured for: ${item.pid}`);
 
       return { price: priceId, quantity: qty };
     });
