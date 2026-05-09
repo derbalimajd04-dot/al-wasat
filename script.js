@@ -613,7 +613,9 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       var data = await res.json();
       if (res.ok && data.ok) {
-        form.innerHTML = '<p style="font-family:var(--tenor);font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);text-align:center;padding:1rem 0">You\'re on the list.</p>';
+        form.style.display = 'none';
+        var successEl = document.getElementById('newsletterSuccess');
+        if (successEl) successEl.style.display = 'block';
       } else {
         throw new Error(data.error || 'Error');
       }
@@ -651,15 +653,9 @@ document.addEventListener('DOMContentLoaded', function () {
   requestAnimationFrame(function () { b.classList.add('visible'); });
 });
 
-// === i18n TRANSLATIONS ===
-window.i18n = {
-  en: {
-    'nav-home':        'Home',
-    'nav-collection':  'Collection',
-    'nav-journal':     'Journal',
-    'nav-trade':       'Trade',
-    'nav-heritage':    'Heritage',
-    'nav-contact':     'Contact',
+/* === LANGUAGE SWITCHING (translations loaded from /assets/translations.js) ===
+   Legacy i18n object removed. applyLanguage/initLanguage defined below.
+   REMOVED EN: Home, Collection, Journal, Trade, Heritage, Contact,
     'hero-eyebrow':    'Extra Virgin Olive Oil  ·  Tunisia  ·  Since 1960',
     'hero-h1-1':       'Rooted in',
     'hero-h1-2':       'Heritage.',
@@ -741,44 +737,62 @@ window.i18n = {
     'tag-gift':        'طقم هدية',
     'add-to-cart':     'أضف إلى السلة',
     'sub-toggle-one':  'شراء مرة واحدة',
-    'sub-toggle-sub':  'اشترك ووفّر <strong>10%</strong>',
-  }
-};
+*/
 
-function setLanguage(lang) {
-  var t = window.i18n[lang];
-  if (!t) return;
-
-  document.querySelectorAll('[data-i18n]').forEach(function (el) {
+function applyLanguage(lang) {
+  if (!window.I18N || !window.I18N[lang]) return;
+  var t = window.I18N[lang];
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
     var key = el.getAttribute('data-i18n');
     if (t[key] !== undefined) el.textContent = t[key];
   });
-
-  document.querySelectorAll('[data-i18n-html]').forEach(function (el) {
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
     var key = el.getAttribute('data-i18n-html');
     if (t[key] !== undefined) el.innerHTML = t[key];
   });
-
+  var html = document.documentElement;
   if (lang === 'ar') {
-    document.documentElement.setAttribute('dir', 'rtl');
-    document.documentElement.classList.add('lang-ar');
+    html.setAttribute('dir', 'rtl');
+    html.setAttribute('lang', 'ar');
+    document.body.classList.add('lang-ar');
+    document.body.classList.remove('lang-en', 'lang-fr');
   } else {
-    document.documentElement.setAttribute('dir', 'ltr');
-    document.documentElement.classList.remove('lang-ar');
+    html.setAttribute('dir', 'ltr');
+    html.setAttribute('lang', lang);
+    document.body.classList.remove('lang-ar');
+    document.body.classList.add('lang-' + lang);
+    document.body.classList.remove(lang === 'en' ? 'lang-fr' : 'lang-en');
   }
-
-  document.querySelectorAll('.lang-opt').forEach(function (btn) {
+  document.querySelectorAll('.lang-opt').forEach(function(btn) {
     btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
   });
-
   localStorage.setItem('alwasat_lang', lang);
   window._currentLang = lang;
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('.lang-opt').forEach(function (btn) {
-    btn.addEventListener('click', function () { setLanguage(btn.getAttribute('data-lang')); });
+function initLanguage() {
+  document.querySelectorAll('.lang-opt').forEach(function(btn) {
+    btn.addEventListener('click', function() { applyLanguage(btn.getAttribute('data-lang')); });
   });
-  var saved = localStorage.getItem('alwasat_lang');
-  if (saved && window.i18n[saved] && saved !== 'en') setLanguage(saved);
-});
+  var saved = localStorage.getItem('alwasat_lang') || 'en';
+  if (saved !== 'en') {
+    applyLanguage(saved);
+  } else {
+    document.querySelectorAll('.lang-opt').forEach(function(btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === 'en');
+    });
+  }
+}
+
+(function() {
+  var s = document.createElement('script');
+  s.src = '/assets/translations.js';
+  s.onload = function() {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initLanguage);
+    } else {
+      initLanguage();
+    }
+  };
+  document.head.appendChild(s);
+})();

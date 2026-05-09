@@ -1031,3 +1031,32 @@ html{scroll-behavior:auto}
   .press-div{display:none}
   .press-name{white-space:normal;text-align:center}
 }
+
+/* === REVIEWS === */
+.reviews-sec{padding:6rem 2rem;max-width:1200px;margin:0 auto;text-align:center}
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem;text-align:left}
+.review-card{background:#161310;border:1px solid rgba(201,169,110,0.1);padding:2rem;display:flex;flex-direction:column;gap:1rem}
+.review-stars{color:#C9A96E;font-size:1rem;letter-spacing:0.15em}
+.review-text{font-family:'EB Garamond',serif;font-size:1.05rem;line-height:1.8;color:#BEB49A;font-style:italic;flex:1}
+.review-meta{display:flex;flex-direction:column;gap:0.2rem}
+.review-name{font-family:'Tenor Sans',sans-serif;font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:#F5F0E8}
+.review-loc{font-family:'Tenor Sans',sans-serif;font-size:0.72rem;letter-spacing:0.08em;color:#8B7355}
+.review-verified{font-family:'Tenor Sans',sans-serif;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:#C9A96E;opacity:0.7}
+@media(max-width:767px){.reviews-grid{grid-template-columns:1fr}}
+@media(min-width:768px) and (max-width:1023px){.reviews-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* === FOOTER LEGAL LINKS === */
+.footer-legal{width:100%;text-align:center;padding-top:1rem;margin-top:1rem;border-top:1px solid rgba(201,169,110,0.08);display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}
+.footer-legal a{font-family:'Tenor Sans',sans-serif;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:#5A4E44;text-decoration:none;transition:color 0.2s}
+.footer-legal a:hover{color:#C9A96E}
+
+/* === RTL (Arabic) body-class rules === */
+.lang-ar{direction:rtl;text-align:right}
+.lang-ar nav{flex-direction:row-reverse}
+.lang-ar .nav-links{flex-direction:row-reverse}
+.lang-ar .nav-logo{margin-right:0;margin-left:auto}
+.lang-ar .kicker-rule{margin-right:0;margin-left:0.75rem}
+.lang-ar footer{direction:rtl}
+.lang-ar .footer-legal{flex-direction:row-reverse}
+.lang-ar .form-grid input,.lang-ar .form-grid textarea,.lang-ar .form-grid select{text-align:right;direction:rtl}
+.lang-ar .cd-items,.lang-ar .cd-footer{direction:rtl;text-align:right}

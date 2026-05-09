@@ -69,7 +69,7 @@ exports.handler = async (event) => {
 
     <!-- Body copy -->
     <tr><td style="padding:32px 48px;font-size:13px;color:#6B5D50;line-height:1.9;border-top:1px solid rgba(201,169,110,0.08);margin-top:24px">
-      <p style="margin:0">You'll receive a separate dispatch notification with your tracking details. If you have any questions, reply to this email or contact us at <a href="mailto:orders@al-wasat.co.uk" style="color:#C9A96E;text-decoration:none">orders@al-wasat.co.uk</a>.</p>
+      <p style="margin:0">You'll receive a separate dispatch notification with your tracking details. If you have any questions, reply to this email or contact us at <a href="mailto:jamel.derbali@gmail.com" style="color:#C9A96E;text-decoration:none">jamel.derbali@gmail.com</a>.</p>
     </td></tr>
 
     <!-- Footer -->
