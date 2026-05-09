@@ -312,7 +312,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var label = btn.querySelector('span:first-child');
     btn.disabled = true; label.textContent = 'Sending…';
     var body = new URLSearchParams(new FormData(form)).toString();
-    fetch('/', {
+    fetch('/trade/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: body
