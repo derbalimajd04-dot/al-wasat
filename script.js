@@ -121,10 +121,10 @@ document.addEventListener('DOMContentLoaded', () => {
     })();
   }
 
-  /* === NAV SCROLL STATE (home transparent nav) === */
+  /* NAV SCROLL STATE — driven by Lenis callback when Lenis loads; native fallback kept for pages without Lenis */
   const nav = document.getElementById('nav');
   if (nav) {
-    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+    window.addEventListener('scroll', () => { if (!window._lenis) nav.classList.toggle('scrolled', window.scrollY > 60); }, { passive: true });
   }
 
   /* === MOBILE HAMBURGER === */
@@ -158,13 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('load', () => setTimeout(() => preloader.classList.add('out'), 2100));
   }
 
-  /* === HERO PARALLAX (home only) === */
-  const heroWrap = document.querySelector('.hero-video-wrap');
-  if (heroWrap) {
-    window.addEventListener('scroll', () => {
-      heroWrap.style.transform = `translateY(${window.scrollY * 0.025}px)`;
-    });
-  }
+  /* HERO PARALLAX — driven by Lenis callback above */
 
   /* === CONTACT FORM (home only) === */
   const contactForm = document.getElementById('contactForm');
@@ -222,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(cta);
 
     function updateStickyCta() {
-      cta.classList.toggle('is-visible', window.scrollY > 600);
+      if (!window._lenis) cta.classList.toggle('is-visible', window.scrollY > 600);
     }
 
     updateStickyCta();
@@ -355,6 +349,17 @@ document.addEventListener('DOMContentLoaded', () => {
   /* Run Lenis on every animation frame */
   (function raf(t) { lenis.raf(t); requestAnimationFrame(raf); })(performance.now());
   window._lenis = lenis;
+
+  /* Drive scroll-position effects through Lenis so they stay in sync with the RAF loop */
+  lenis.on('scroll', function(e) {
+    var scroll = e.scroll;
+    var navEl = document.querySelector('nav');
+    if (navEl) navEl.classList.toggle('scrolled', scroll > 60);
+    var heroWrap = document.querySelector('.hero-video-wrap');
+    if (heroWrap) heroWrap.style.transform = 'translateY(' + (scroll * 0.025) + 'px)';
+    var stickyCta = document.getElementById('stickyCta');
+    if (stickyCta) stickyCta.classList.toggle('is-visible', scroll > 600);
+  });
 
   /* Anchor-link scrolling handled by Lenis (html scroll-behavior:auto set in CSS) */
   document.addEventListener('click', function(e) {
