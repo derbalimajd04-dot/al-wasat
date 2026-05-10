@@ -16,11 +16,11 @@ function rateLimit(ip) {
 // Values starting with 'price_' are used directly as Stripe Price IDs.
 // All other values are treated as environment variable names.
 const PRICE_MAP = {
-  'classic-500': { one: 'STRIPE_PRICE_CLASSIC_500', sub: 'STRIPE_RECURRING_CLASSIC_500' },
-  'classic-1l':  { one: 'STRIPE_PRICE_CLASSIC_1L',  sub: 'STRIPE_RECURRING_CLASSIC_1L'  },
-  'organic-500': { one: 'STRIPE_PRICE_ORGANIC_500',  sub: 'STRIPE_RECURRING_ORGANIC_500' },
-  'organic-1l':  { one: 'STRIPE_PRICE_ORGANIC_1L',   sub: 'STRIPE_RECURRING_ORGANIC_1L'  },
-  'gift-set':         { one: 'STRIPE_PRICE_COLLECTION',           sub: null },
+  'classic-500': { one: 'price_1TU2tyDOCtKpIrONwvWQs9Ju', sub: 'price_1TU2tzDOCtKpIrON7eQ8mgWa' },
+  'classic-1l':  { one: 'price_1TU2u0DOCtKpIrONtq93xsgq', sub: 'price_1TU2u0DOCtKpIrON3Pwh0kIA' },
+  'organic-500': { one: 'price_1TU2u1DOCtKpIrONkYvxWwcG', sub: 'price_1TU2u2DOCtKpIrON3Zk7BNr7' },
+  'organic-1l':  { one: 'price_1TU2u3DOCtKpIrONiwbbkn5C', sub: 'price_1TU2u4DOCtKpIrONdZLurXGN' },
+  'gift-set':         { one: 'price_1TU2u5DOCtKpIrONvTdUdbOv',   sub: null },
   'harvest-2025':     { one: 'STRIPE_PRICE_HARVEST_2025',         sub: null },
   'merch-set':        { one: 'STRIPE_PRICE_MERCH_SET',            sub: null },
   'tasting-250ml':    { one: 'price_1TUupgDOCtKpIrONFNHczbmM',   sub: null },
