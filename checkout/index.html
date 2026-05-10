@@ -193,7 +193,6 @@ document.addEventListener('DOMContentLoaded', () => {
         showCheckoutError('Payment unavailable (server error ' + res.status + '). Please try again or contact us.');
         return;
       }
-      console.log('create-checkout response:', res.status, data);
       if (data.url) {
         window.location.href = data.url;
       } else {

@@ -26,7 +26,7 @@ const PRICE_MAP = {
   'tasting-250ml':    { one: 'price_1TUupgDOCtKpIrONFNHczbmM',   sub: null },
   'bulk-3l':          { one: 'price_1TUuq3DOCtKpIrONBGkzqNog',   sub: null },
   'gift-box':         { one: 'price_1TUuqLDOCtKpIrONNh3Aszjo',   sub: null },
-  'subscription-box': { one: 'price_1TUvHNDOCtKpIrONgjYV9Uyf',   sub: 'price_1TUvHNDOCtKpIrONgjYV9Uyf' },
+  'subscription-box': { one: 'price_1TUvHNDOCtKpIrONgjYV9Uyf',   sub: null },
   'gift-card':        { one: 'price_1TUvICDOCtKpIrONoomiQFPE',   sub: null },
 };
 

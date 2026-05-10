@@ -1,8 +1,31 @@
 const { Resend } = require('resend');
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const _rl = new Map();
+function rateLimit(ip) {
+  const now = Date.now();
+  const window = 60_000;
+  const max = 5;
+  const hits = (_rl.get(ip) || []).filter(t => now - t < window);
+  if (hits.length >= max) return false;
+  hits.push(now);
+  _rl.set(ip, hits);
+  return true;
+}
+
+function esc(str) {
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
 exports.handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
+  }
+
+  const ip = event.headers['x-nf-client-connection-ip'] || event.headers['x-forwarded-for'] || 'unknown';
+  if (!rateLimit(ip)) {
+    return { statusCode: 429, body: 'Too many requests' };
   }
 
   let body;
@@ -17,6 +40,9 @@ exports.handler = async (event) => {
   if (_honeypot) return { statusCode: 200, body: 'OK' };
   if (!name || !email || !enquiry) {
     return { statusCode: 400, body: 'Missing required fields' };
+  }
+  if (!EMAIL_RE.test(email)) {
+    return { statusCode: 400, body: 'Invalid email address' };
   }
 
   if (!process.env.RESEND_API_KEY) {
@@ -37,11 +63,11 @@ exports.handler = async (event) => {
     </td></tr>
     <tr><td style="padding:32px 48px">
       <table width="100%" cellpadding="0" cellspacing="0">
-        <tr><td style="padding:8px 0;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C9A96E;width:120px">Name</td><td style="padding:8px 0;font-size:14px;color:#F5F0E8">${name}</td></tr>
-        ${organisation ? `<tr><td style="padding:8px 0;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C9A96E">Organisation</td><td style="padding:8px 0;font-size:14px;color:#F5F0E8">${organisation}</td></tr>` : ''}
-        <tr><td style="padding:8px 0;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C9A96E">Email</td><td style="padding:8px 0;font-size:14px;color:#F5F0E8"><a href="mailto:${email}" style="color:#C9A96E;text-decoration:none">${email}</a></td></tr>
-        <tr><td style="padding:8px 0;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C9A96E">Enquiry</td><td style="padding:8px 0;font-size:14px;color:#F5F0E8">${enquiry}</td></tr>
-        ${message ? `<tr><td colspan="2" style="padding:24px 0 0"><p style="margin:0;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C9A96E">Message</p><p style="margin:8px 0 0;font-size:14px;color:#BEB49A;line-height:1.8">${message.replace(/\n/g, '<br>')}</p></td></tr>` : ''}
+        <tr><td style="padding:8px 0;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C9A96E;width:120px">Name</td><td style="padding:8px 0;font-size:14px;color:#F5F0E8">${esc(name)}</td></tr>
+        ${organisation ? `<tr><td style="padding:8px 0;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C9A96E">Organisation</td><td style="padding:8px 0;font-size:14px;color:#F5F0E8">${esc(organisation)}</td></tr>` : ''}
+        <tr><td style="padding:8px 0;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C9A96E">Email</td><td style="padding:8px 0;font-size:14px;color:#F5F0E8"><a href="mailto:${esc(email)}" style="color:#C9A96E;text-decoration:none">${esc(email)}</a></td></tr>
+        <tr><td style="padding:8px 0;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C9A96E">Enquiry</td><td style="padding:8px 0;font-size:14px;color:#F5F0E8">${esc(enquiry)}</td></tr>
+        ${message ? `<tr><td colspan="2" style="padding:24px 0 0"><p style="margin:0;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#C9A96E">Message</p><p style="margin:8px 0 0;font-size:14px;color:#BEB49A;line-height:1.8">${esc(message).replace(/\n/g, '<br>')}</p></td></tr>` : ''}
       </table>
     </td></tr>
     <tr><td style="padding:24px 48px;text-align:center;border-top:1px solid rgba(201,169,110,0.08)">
@@ -59,7 +85,7 @@ exports.handler = async (event) => {
       from: process.env.RESEND_FROM_EMAIL || 'AL WASAT <orders@al-wasat.co.uk>',
       to: 'jamel.derbali@gmail.com',
       replyTo: email,
-      subject: `AL WASAT Enquiry — ${enquiry} from ${name}`,
+      subject: `AL WASAT Enquiry — ${esc(enquiry)} from ${esc(name)}`,
       html,
     });
     return { statusCode: 200, body: 'OK' };
