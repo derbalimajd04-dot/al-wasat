@@ -41,6 +41,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://al-wasat.co.uk/about/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://al-wasat.co.uk/trade/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
