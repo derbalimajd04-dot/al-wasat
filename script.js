@@ -206,21 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const cartOv = document.getElementById('cartOverlay');
   if (cartOv) cartOv.addEventListener('click', closeCart);
 
-  /* === STICKY SHOP CTA === */
-  (function(){
-    if (window.location.pathname.indexOf('/checkout/') === 0) return;
-    const cta = document.createElement('div');
-    cta.className = 'sticky-shop-cta';
-    cta.innerHTML = '<a class="sticky-shop-cta-link" href="/shop/" aria-label="Shop AL WASAT Classic for £13.99">AL WASAT Classic — £13.99 · Shop Now</a>';
-    document.body.appendChild(cta);
-
-    function updateStickyCta() {
-      if (!window._lenis) cta.classList.toggle('is-visible', window.scrollY > 600);
-    }
-
-    updateStickyCta();
-    window.addEventListener('scroll', updateStickyCta, { passive: true });
-  })();
 
   /* === PRODUCT DETAIL MODAL (shop only) === */
   const pdModal = document.getElementById('pdModal');
@@ -356,8 +341,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (navEl) navEl.classList.toggle('scrolled', scroll > 60);
     var heroWrap = document.querySelector('.hero-video-wrap');
     if (heroWrap) heroWrap.style.transform = 'translateY(' + (scroll * 0.025) + 'px)';
-    var stickyCta = document.getElementById('stickyCta');
-    if (stickyCta) stickyCta.classList.toggle('is-visible', scroll > 600);
   });
 
   /* Anchor-link scrolling handled by Lenis (html scroll-behavior:auto set in CSS) */

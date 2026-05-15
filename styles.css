@@ -666,11 +666,6 @@ body.has-banner nav{top:34px !important}
 .p-price + .p-poly{margin-top:-1rem}
 
 
-/* === 6. STICKY SHOP CTA === */
-.sticky-shop-cta{position:fixed;left:0;right:0;bottom:0;z-index:650;display:flex;justify-content:center;pointer-events:none;opacity:0;transform:translateY(110%);transition:transform 0.55s cubic-bezier(0.16,1,0.3,1),opacity 0.35s ease}
-.sticky-shop-cta.is-visible{opacity:1;transform:translateY(0);pointer-events:auto}
-.sticky-shop-cta-link{display:flex;align-items:center;justify-content:center;width:100%;min-height:58px;padding:1rem 2rem;background:rgba(10,9,6,0.96);-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);border-top:1px solid rgba(201,169,110,0.28);box-shadow:0 -18px 50px rgba(0,0,0,0.34);font-family:var(--tenor);font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;color:var(--gold);transition:background 0.35s,color 0.35s,letter-spacing 0.35s}
-.sticky-shop-cta-link:hover{background:#151210;color:var(--gold2);letter-spacing:0.2em}
 
 /* === RESPONSIVE — new additions === */
 @media(max-width:768px){
@@ -683,7 +678,6 @@ body.has-banner nav{top:34px !important}
   .cert-track{flex-wrap:nowrap;width:max-content;justify-content:flex-start;gap:1.5rem;padding:1.5rem 0;animation:mq 22s linear infinite}
   /* Harvest banner: condensed text */
   .harvest-text{font-size:0.6rem;letter-spacing:0.1em}
-  .sticky-shop-cta-link{min-height:54px;padding:0.9rem 1.25rem;font-size:0.62rem;letter-spacing:0.12em;line-height:1.45;text-align:center}
 }
 @media(max-width:500px){
   .harvest-banner{height:36px}
