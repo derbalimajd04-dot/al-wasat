@@ -25,7 +25,7 @@
 <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Tenor+Sans&family=EB+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="/styles.css">
 </head>
-<body>
+<body class="checkout-page">
 <a href="#main" class="skip-link">Skip to content</a>
 
 <div class="grain"></div>
@@ -81,6 +81,11 @@
             <span>Pay Securely with Stripe</span><span>&nbsp;→</span>
           </button>
           <p class="co-pay-methods">Visa · Mastercard · Amex · Apple Pay · Google Pay</p>
+        </div>
+        <div class="co-trust-list" aria-label="Checkout assurances">
+          <div><span>Delivery</span><strong>5-7 working days</strong></div>
+          <div><span>Payment</span><strong>Secure Stripe checkout</strong></div>
+          <div><span>Origin</span><strong>Single-origin Tunisian olive oil</strong></div>
         </div>
         <div class="co-error" id="coError" role="alert" style="display:none"></div>
       </div>
@@ -138,27 +143,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const cart = getCart();
   if (!cart.length) { window.location.href = '/shop/'; return; }
 
-  // Populate order summary with discount preview
-  const sub        = localStorage.getItem('alwasat_sub') === '1';
-  const promoRaw   = localStorage.getItem('alwasat_promo');
-  const promo      = promoRaw ? JSON.parse(promoRaw) : null;
-  const subMult    = sub   ? 0.90 : 1;
-  const promoMult  = promo ? (1 - promo.pct / 100) : 1;
-  const multiplier = subMult * promoMult;
-
   const base  = cart.reduce((s, i) => s + i.priceNum * i.qty, 0);
-  const total = base * multiplier;
 
   document.getElementById('coItems').innerHTML = cart.map(i =>
     `<div class="co-item">
       <div>
         <div class="co-item-name">${i.name}</div>
-        <div class="co-item-sub">${i.unit.replace('/ ','')} &times; ${i.qty}${sub ? ' · Subscribe &amp; Save' : ''}</div>
+        <div class="co-item-sub">${i.unit.replace('/ ','')} &times; ${i.qty}</div>
       </div>
-      <div class="co-item-price">£${(i.priceNum * i.qty * multiplier).toFixed(2)}</div>
+      <div class="co-item-price">£${(i.priceNum * i.qty).toFixed(2)}</div>
     </div>`
   ).join('');
-  document.getElementById('coTotal').textContent = '£' + total.toFixed(2);
+  document.getElementById('coTotal').textContent = '£' + base.toFixed(2);
 
   // Stripe redirect
   const btn = document.getElementById('stripeBtn');
@@ -182,8 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           items: getCart(),
-          subscription: sub,
-          promoCode: promo ? promo.code : '',
+          subscription: false,
         })
       });
       let data;

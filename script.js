@@ -783,3 +783,51 @@ function initLanguage() {
   };
   document.head.appendChild(s);
 })();
+
+/* === CHECKOUT PRICING SAFEGUARD ===
+   Keep cart/checkout totals aligned with Stripe. Promotional codes are still
+   allowed in Stripe Checkout, but local discount previews are intentionally
+   disabled to avoid showing a lower total than the payment page. */
+(function () {
+  function resetLocalDiscountState() {
+    localStorage.removeItem('alwasat_sub');
+    localStorage.removeItem('alwasat_promo');
+    window._subMode = false;
+    window._promoState = null;
+
+    document.querySelectorAll('.p-price[data-base]').forEach(function (priceEl) {
+      var base = parseFloat(priceEl.dataset.base);
+      if (isNaN(base)) return;
+      var label = priceEl.querySelector('.p-price-label');
+      priceEl.innerHTML = '£' + base.toFixed(2) + (label ? ' <span class="p-price-label">' + label.textContent + '</span>' : '');
+      priceEl.dataset.base = base;
+    });
+  }
+
+  window._afterCartRender = function () {
+    var foot = document.getElementById('cartFooter');
+    if (!foot || foot.style.display === 'none') return;
+    var promoEl = document.getElementById('cdPromoSection');
+    if (!promoEl) {
+      promoEl = document.createElement('div');
+      promoEl.id = 'cdPromoSection';
+      foot.insertBefore(promoEl, foot.firstChild);
+    }
+    promoEl.innerHTML = '<p class="cd-stripe-note">Promo codes can be applied securely on the Stripe payment page.</p>';
+    var totalRow = foot.querySelector('.cd-total-row');
+    if (totalRow) {
+      var badge = totalRow.querySelector('.cd-discount-badge');
+      if (badge) badge.remove();
+    }
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      resetLocalDiscountState();
+      if (typeof _cartRender === 'function') _cartRender();
+    });
+  } else {
+    resetLocalDiscountState();
+    if (typeof _cartRender === 'function') _cartRender();
+  }
+})();
