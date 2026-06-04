@@ -1033,7 +1033,7 @@ html{scroll-behavior:auto}
 @media(min-width:768px) and (max-width:1023px){.reviews-grid{grid-template-columns:repeat(2,1fr)}}
 
 /* === FOOTER LEGAL LINKS === */
-.footer-legal{width:100%;text-align:center;padding-top:1rem;margin-top:1rem;border-top:1px solid rgba(201,169,110,0.08);display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}
+.footer-legal{grid-column:1/-1;width:100%;text-align:center;padding-top:1rem;margin-top:1rem;border-top:1px solid rgba(201,169,110,0.08);display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}
 .footer-legal a{font-family:'Tenor Sans',sans-serif;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:#5A4E44;text-decoration:none;transition:color 0.2s}
 .footer-legal a:hover{color:#C9A96E}
 
@@ -1053,7 +1053,7 @@ html{scroll-behavior:auto}
 /* ============================================================= */
 
 /* Homepage: product shortcut before the long brand story */
-.home-shop-sec{display:grid;grid-template-columns:0.78fr 1.22fr;gap:4rem;align-items:end;padding:6rem 5rem;background:var(--ink2);border-top:1px solid rgba(201,169,110,0.08);border-bottom:1px solid rgba(201,169,110,0.08)}
+.home-shop-sec{display:grid;grid-template-columns:0.78fr 1.22fr;gap:4rem;align-items:center;padding:6rem 5rem;background:var(--ink2);border-top:1px solid rgba(201,169,110,0.08);border-bottom:1px solid rgba(201,169,110,0.08)}
 .home-shop-head .sec-heading{margin-bottom:1.5rem}
 .home-shop-link{display:inline-flex;align-items:center;gap:0.7rem;font-family:var(--tenor);font-size:0.66rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,169,110,0.35);padding-bottom:0.35rem;transition:gap 0.3s,color 0.3s}
 .home-shop-link:hover{gap:1.1rem;color:var(--gold2)}
@@ -1068,7 +1068,7 @@ html{scroll-behavior:auto}
 .home-product-price{font-family:var(--serif);font-size:1.15rem;color:var(--gold);margin-top:0.25rem}
 
 /* Checkout: concise trust cues */
-.co-trust-list{display:grid;grid-template-columns:1fr;gap:0;border:1px solid rgba(201,169,110,0.12);margin-top:1.25rem;background:rgba(201,169,110,0.025)}
+.co-trust-list{display:grid;grid-template-columns:1fr;gap:0;border:1px solid rgba(201,169,110,0.12);margin-top:0;background:rgba(201,169,110,0.025)}
 .co-trust-list div{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.9rem 1rem;border-bottom:1px solid rgba(201,169,110,0.08)}
 .co-trust-list div:last-child{border-bottom:none}
 .co-trust-list span{font-family:var(--tenor);font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--stone)}
