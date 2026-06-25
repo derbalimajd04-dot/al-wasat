@@ -1148,3 +1148,63 @@ html{scroll-behavior:auto}
   .shop-page .p-add-btn{font-size:0.54rem;letter-spacing:0.1em}
   .home-shop-grid{gap:0.5rem}
 }
+
+/* ============================================================= */
+/* === MOBILE UX REFINEMENTS                                  === */
+/* ============================================================= */
+
+.cart-toast{position:fixed;left:1rem;right:1rem;bottom:1rem;z-index:9996;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.85rem 1rem;background:rgba(21,18,16,0.96);border:1px solid rgba(201,169,110,0.22);box-shadow:0 18px 45px rgba(0,0,0,0.42);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);transform:translateY(calc(100% + 1.5rem));opacity:0;pointer-events:none;transition:transform 0.32s cubic-bezier(0.16,1,0.3,1),opacity 0.22s}
+.cart-toast.show{transform:translateY(0);opacity:1;pointer-events:auto}
+.cart-toast span{font-family:var(--body);font-size:0.9rem;font-style:italic;color:var(--cream2);line-height:1.35;min-width:0}
+.cart-toast button{flex-shrink:0;background:var(--gold);border:1px solid var(--gold);color:var(--ink);font-family:var(--tenor);font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;padding:0.65rem 0.85rem;cursor:pointer}
+.cd-delivery-note{font-family:var(--body);font-size:0.8rem;font-style:italic;color:var(--stone2);line-height:1.45;padding:0.2rem 0 0.45rem}
+
+@media(max-width:767px){
+  body{overscroll-behavior-y:contain}
+  .reveal{transition-duration:0.55s}
+  .grain{opacity:0.018}
+
+  .shop-page .marquee{display:none}
+  .shop-page .p-card{cursor:auto}
+  .shop-page .p-img-wrap,.shop-page .p-name{cursor:pointer}
+  .shop-page .p-img-wrap::after{content:'View';position:absolute;right:0.55rem;bottom:0.55rem;padding:0.28rem 0.45rem;background:rgba(10,9,6,0.62);border:1px solid rgba(201,169,110,0.18);font-family:var(--tenor);font-size:0.48rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(201,169,110,0.7)}
+  .shop-page .p-add-btn.added{background:transparent;color:var(--gold);border-color:rgba(201,169,110,0.55)}
+  .shop-page .bottom-cta{padding:4rem 1rem}
+
+  .cart-drawer{width:100%;max-width:100%;border-left:none}
+  .cd-header{padding:1.25rem 1rem}
+  .cd-title{font-size:0.66rem;letter-spacing:0.2em}
+  .cd-items{padding:0 1rem 1rem}
+  .cd-item{gap:0.75rem;padding:1.25rem 0}
+  .cd-item-name{font-size:0.76rem;line-height:1.4}
+  .cd-item-meta{font-size:0.72rem}
+  .cd-item-right{gap:0.75rem}
+  .cd-qty-btn,.cd-remove{width:34px;height:34px}
+  .cd-footer{padding:1rem 1rem calc(1rem + env(safe-area-inset-bottom));position:sticky;bottom:0;background:rgba(21,18,16,0.98);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 -18px 45px rgba(0,0,0,0.32)}
+  .cd-checkout-btn{min-height:50px}
+  .cd-continue{min-height:40px}
+  .cart-drawer.open ~ .cart-toast{display:none}
+
+  .checkout-page .checkout-wrap{padding:6rem 1rem 2rem}
+  .checkout-page .checkout-header{margin-bottom:2.25rem}
+  .checkout-page .checkout-grid{gap:1.25rem}
+  .checkout-page .co-summary{padding:1.5rem 1rem}
+  .checkout-page .co-form-wrap{gap:1rem}
+  .checkout-page .co-pay-box{position:sticky;bottom:0;z-index:30;margin:0 -1rem;padding:1rem;background:rgba(10,9,6,0.96);border-color:rgba(201,169,110,0.2);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 -18px 45px rgba(0,0,0,0.34)}
+  .checkout-page .co-stripe-btn{min-height:52px}
+  .checkout-page .co-trust-list div{align-items:flex-start;flex-direction:column;gap:0.25rem}
+  .checkout-page .co-trust-list strong{text-align:left}
+
+  .trade-page .trade-hero{padding:6.5rem 1rem 3rem}
+  .trade-page .trade-hero-right{font-size:0.98rem;line-height:1.8}
+  .trade-page .trade-table-sec,.trade-page .trade-certs-sec,.trade-page .trade-territory-sec,.trade-page .trade-form-sec{padding:3.5rem 1rem}
+  .trade-page .trade-table-note{font-size:0.9rem;line-height:1.65}
+  .trade-table-cta{width:100%;justify-content:center;min-height:48px}
+}
+
+@media(max-width:390px){
+  .nav-logo{font-size:0.74rem;letter-spacing:0.27em}
+  .cart-toast{left:0.65rem;right:0.65rem;bottom:0.65rem}
+  .cart-toast button{padding:0.62rem 0.7rem;letter-spacing:0.12em}
+  .trade-table td{grid-template-columns:5.4rem 1fr!important;gap:0.7rem}
+}

@@ -49,6 +49,26 @@ function cartQty(pid, delta) {
 
 function cartRemove(pid) { saveCart(getCart().filter(i => i.pid !== pid)); }
 
+function isMobileViewport() {
+  return window.matchMedia && window.matchMedia('(max-width: 767px)').matches;
+}
+
+function showCartToast(message) {
+  let toast = document.getElementById('cartToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'cartToast';
+    toast.className = 'cart-toast';
+    toast.innerHTML = '<span></span><button type="button" onclick="openCart()">View Cart</button>';
+    document.body.appendChild(toast);
+  }
+  const label = toast.querySelector('span');
+  if (label) label.textContent = message;
+  toast.classList.add('show');
+  clearTimeout(window._cartToastTimer);
+  window._cartToastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+}
+
 function openCart() {
   const dr = document.getElementById('cartDrawer'), ov = document.getElementById('cartOverlay');
   if (!dr) return;
@@ -217,6 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', e => { if (e.key === 'Escape') { closePdm(); closeCart(); } });
     window['openDetails'] = function(e, btn) {
       e.preventDefault(); e.stopPropagation();
+      if (isMobileViewport() && !e.target.closest('.p-img-wrap,.p-name,.p-details-btn')) return;
       const pid = btn.closest('.p-card').dataset.pid;
       const d = PRODUCT_DATA[pid];
       if (!d) return;
@@ -235,12 +256,18 @@ document.addEventListener('DOMContentLoaded', () => {
   /* === ADD TO CART (shop only) === */
   window['addToCart'] = function(e, btn) {
     e.preventDefault(); e.stopPropagation();
-    const pid = btn.closest('.p-card').dataset.pid;
+    const card = btn.closest('.p-card');
+    const pid = card.dataset.pid;
     addToCartById(pid);
     const orig = btn.textContent;
     btn.textContent = 'Added ✓'; btn.classList.add('added');
     setTimeout(() => { btn.textContent = orig; btn.classList.remove('added'); }, 1600);
-    openCart();
+    if (isMobileViewport()) {
+      const product = PRODUCT_DATA[pid];
+      showCartToast((product ? product.name : 'Product') + ' added');
+    } else {
+      openCart();
+    }
   };
 
   /* === SHOP NOW (shop only) — add to cart + go to checkout === */
@@ -317,6 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
 /* === LENIS SMOOTH SCROLL === */
 (function() {
   if (typeof Lenis === 'undefined') return;
+  if (window.matchMedia && window.matchMedia('(max-width: 767px)').matches) return;
   var lenis = new Lenis({
     duration: 1.2,
     easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
@@ -814,6 +842,14 @@ function initLanguage() {
       foot.insertBefore(promoEl, foot.firstChild);
     }
     promoEl.innerHTML = '<p class="cd-stripe-note">Promo codes can be applied securely on the Stripe payment page.</p>';
+    var deliveryNote = document.getElementById('cdDeliveryNote');
+    if (!deliveryNote) {
+      deliveryNote = document.createElement('p');
+      deliveryNote.id = 'cdDeliveryNote';
+      deliveryNote.className = 'cd-delivery-note';
+      foot.insertBefore(deliveryNote, promoEl.nextSibling);
+    }
+    deliveryNote.textContent = 'Delivery: 5-7 working days. Secure checkout by Stripe.';
     var totalRow = foot.querySelector('.cd-total-row');
     if (totalRow) {
       var badge = totalRow.querySelector('.cd-discount-badge');
