@@ -130,32 +130,8 @@ function _cartRender() {
 /* === DOMContentLoaded === */
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* === CURSOR === */
-  /* `cursor:none` is applied by CSS only under html.custom-cursor, and that
-     class is added here — after the cursor elements are confirmed present.
-     If this script never runs, the native cursor is left alone. */
-  const dot = document.getElementById('curDot');
-  const ring = document.getElementById('curRing');
-  const finePointer = !window.matchMedia || window.matchMedia('(pointer:fine)').matches;
-  if (dot && ring && finePointer) {
-    document.documentElement.classList.add('custom-cursor');
-    let mx = -100, my = -100, rx = -100, ry = -100;
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      dot.style.left = mx + 'px'; dot.style.top = my + 'px';
-    });
-    document.addEventListener('mouseover', e => {
-      if (e.target.closest('a,.p-card,button')) ring.classList.add('hover');
-    });
-    document.addEventListener('mouseout', e => {
-      if (!e.relatedTarget || !e.relatedTarget.closest('a,.p-card,button')) ring.classList.remove('hover');
-    });
-    (function lagRing() {
-      rx += (mx - rx) * 0.1; ry += (my - ry) * 0.1;
-      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-      requestAnimationFrame(lagRing);
-    })();
-  }
+  /* Custom cursor removed — it added visual noise, hid the native affordance,
+     and broke outright whenever this script failed to load. */
 
   /* NAV SCROLL STATE — driven by Lenis callback when Lenis loads; native fallback kept for pages without Lenis */
   const nav = document.getElementById('nav');
@@ -179,6 +155,40 @@ document.addEventListener('DOMContentLoaded', () => {
     overlay.addEventListener('click', () => toggleNav(false));
     navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleNav(false)));
   }
+
+/* === LANGUAGE PILL PLACEMENT ===
+     In the top bar the pill competes with the logo, cart and hamburger at
+     small widths. Below 1024px it moves inside the nav drawer, where the
+     three options get full 44px targets. Moves back on resize. */
+  (function () {
+    var pill = document.getElementById('langPill');
+    var links = document.getElementById('navLinks');
+    var navEl = document.getElementById('nav') || document.querySelector('nav');
+    if (!pill || !links || !navEl) return;
+    var home = pill.parentNode, next = pill.nextSibling;
+    var mq = window.matchMedia('(max-width:1024px)');
+    function place() {
+      if (mq.matches) {
+        if (pill.parentNode !== links) links.appendChild(pill);
+      } else if (pill.parentNode !== home) {
+        home.insertBefore(pill, next);
+      }
+    }
+    place();
+    if (mq.addEventListener) mq.addEventListener('change', place);
+    else if (mq.addListener) mq.addListener(place);
+    /* Resize fallback: some environments (and older Safari) do not deliver
+       the matchMedia change event reliably. Debounced so it stays cheap. */
+    var t;
+    window.addEventListener('resize', function () {
+      clearTimeout(t);
+      t = setTimeout(place, 150);
+    }, { passive: true });
+  })();
+
+  /* Floating-element collisions (WhatsApp button vs cookie banner and cart
+     toast) are handled entirely in CSS with :has() — no observer to fall out
+     of sync, and the state is always recomputable from the DOM. */
 
   /* === SCROLL REVEAL === */
   /* Reveal targets sit at opacity:0 (under html.js). If IntersectionObserver
@@ -267,6 +277,23 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  /* === UNRESOLVED PROOF LINKS ===
+   Trust badges and press mentions carry a `data-verify` href. Until a real
+   certificate / article URL is filled in, the href is a "#TODO..." stub.
+   Strip those so the claim renders as plain, non-clickable text: a visitor
+   must never be offered a proof link that leads nowhere. */
+  document.querySelectorAll('a[data-verify]').forEach(function (a) {
+    var href = a.getAttribute('href') || '';
+    if (href.indexOf('#TODO') === 0) {
+      a.removeAttribute('href');
+      a.removeAttribute('rel');
+      if (a.classList.contains('trust-link')) a.remove();
+    } else {
+      a.setAttribute('target', '_blank');
+      a.setAttribute('rel', 'noopener noreferrer');
+    }
+  });
 
   /* === CART INIT === */
   _cartBadge();
@@ -378,7 +405,13 @@ document.addEventListener('DOMContentLoaded', () => {
       vis.slice(-count).forEach(c => c.classList.add('last-row'));
     }
     updateLastRow();
-    window.addEventListener('resize', updateLastRow);
+    /* Debounced: updateLastRow reads getComputedStyle, which forces layout.
+       Running it on every resize event caused sustained jank while dragging. */
+    var lastRowTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(lastRowTimer);
+      lastRowTimer = setTimeout(updateLastRow, 150);
+    }, { passive: true });
 
     window['filter'] = function(cat, btn) {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -447,53 +480,12 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 })();
 
-/* === GSAP PAGE TRANSITIONS === */
-(function() {
-  if (typeof gsap === 'undefined') return;
-  /* These transitions fade the whole document and delay navigation by 400ms.
-     Skip the entire mechanism under reduced motion — links then navigate
-     natively and instantly. */
-  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  /* Fade + slide up on page load */
-  document.addEventListener('DOMContentLoaded', function() {
-    gsap.from(document.body, { opacity: 0, y: 20, duration: 0.5, ease: 'power2.out', clearProps: 'all' });
-  });
-
-  /* Restore correctly when navigating via browser back / forward (bfcache) */
-  window.addEventListener('pageshow', function(e) {
-    if (!e.persisted) return;
-    gsap.fromTo(document.body,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', clearProps: 'all' }
-    );
-  });
-
-  /* Intercept internal <a> clicks — animate page out then navigate */
-  document.addEventListener('click', function(e) {
-    var link = e.target.closest('a[href]');
-    if (!link) return;
-    var href = link.getAttribute('href');
-    /* Skip: anchors, special protocols, new-tab, modifier keys */
-    if (!href || href.charAt(0) === '#') return;
-    if (/^(mailto:|tel:|javascript:)/i.test(href)) return;
-    if (link.target === '_blank') return;
-    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-    /* Skip: external origins */
-    try {
-      var url = new URL(href, window.location.href);
-      if (url.hostname !== window.location.hostname) return;
-    } catch(_) { return; }
-
-    e.preventDefault();
-    var dest = link.href;
-    if (window._lenis) window._lenis.stop();
-    gsap.to(document.body, {
-      opacity: 0, y: -20, duration: 0.4, ease: 'power2.in',
-      onComplete: function() { window.location.href = dest; }
-    });
-  });
-})();
+/* GSAP page transitions removed.
+   They faded document.body on every load and delayed each internal
+   navigation by 400ms. Because the tween is driven by requestAnimationFrame,
+   a throttled or backgrounded tab could freeze it part-way and leave the
+   whole page stuck semi-transparent (observed at opacity 0.77). GSAP had no
+   other job on this site, so the CDN dependency is dropped entirely. */
 
 /* === 5. STAT NUMBER COUNTER === */
 (function(){
