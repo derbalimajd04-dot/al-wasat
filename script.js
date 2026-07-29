@@ -414,8 +414,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
 
     window['filter'] = function(cat, btn) {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.filter-btn').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');   /* state, not just colour */
+      });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
       cards.forEach(c => {
         const match = cat === 'all' || c.dataset.cat.includes(cat);
         c.style.display = match ? '' : 'none';
