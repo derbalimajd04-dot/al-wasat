@@ -1266,3 +1266,222 @@ html{scroll-behavior:auto}
   .pdp-spec,.pdp-spec:nth-child(2n),.pdp-spec:nth-last-child(-n+2),.pdp-spec-grid>div,.pdp-spec-grid>div:nth-child(2n),.pdp-spec-grid>div:nth-last-child(-n+2){border-right:none;border-bottom:1px solid rgba(201,169,110,0.08)}
   .pdp-spec:last-child,.pdp-spec-grid>div:last-child{border-bottom:none}
 }
+
+/* ================================================================ */
+/* === ACCESSIBILITY & RESILIENCE — critical fixes                === */
+/* ================================================================ */
+
+/* --- 1. NO-JS FALLBACK ---------------------------------------- */
+/* Scroll-reveal elements start hidden ONLY when JS is available to
+   reveal them again. Without JS the page renders fully visible. */
+.reveal{opacity:1;transform:none}
+.js .reveal{opacity:0;transform:translateY(38px)}
+.js .reveal.in{opacity:1;transform:none}
+.p-card,.j-card{opacity:1;transform:none}
+.js .p-card,.js .j-card{opacity:0;transform:translateY(30px)}
+.js .p-card.in,.js .j-card.in{opacity:1;transform:none}
+/* Preloader only covers the page when JS can dismiss it */
+#preloader{display:none}
+.js #preloader{display:flex}
+
+/* --- 2. CUSTOM CURSOR FALLBACK -------------------------------- */
+/* `cursor:none` now applies only once JS has confirmed a fine pointer
+   AND booted successfully. If script.js fails, the native cursor stays. */
+html{cursor:auto}
+@media(min-width:1024px){html{cursor:auto}}
+button,.filter-btn,.nav-ham,.cd-close,.cd-qty-btn,.cd-remove,.cd-continue,
+.pdm-close,.pdm-add-btn,.p-add-btn,.p-details-btn,.submit-btn,.newsletter-btn,
+.harvest-close,.lang-opt,.cookie-accept,.cookie-decline,.sub-toggle-btn,
+.cd-promo-apply,.cd-promo-remove{cursor:pointer}
+html.custom-cursor,
+html.custom-cursor button,html.custom-cursor a,html.custom-cursor .filter-btn,
+html.custom-cursor .nav-ham,html.custom-cursor .cd-close,html.custom-cursor .cd-qty-btn,
+html.custom-cursor .cd-remove,html.custom-cursor .cd-continue,html.custom-cursor .pdm-close,
+html.custom-cursor .pdm-add-btn,html.custom-cursor .p-add-btn,html.custom-cursor .p-details-btn,
+html.custom-cursor .submit-btn,html.custom-cursor .newsletter-btn,html.custom-cursor .harvest-close,
+html.custom-cursor .lang-opt,html.custom-cursor .cookie-accept,html.custom-cursor .cookie-decline,
+html.custom-cursor .p-card{cursor:none}
+
+/* --- 3. VISIBLE FOCUS -------------------------------------------- */
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:1px}
+.field input:focus-visible,.field textarea:focus-visible,.field select:focus-visible,
+.newsletter-input:focus-visible,.cd-promo-input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+/* Keep the custom cursor hidden while keyboard navigating */
+html.custom-cursor *:focus-visible{cursor:auto}
+.nav-links a:focus-visible,.footer-legal a:focus-visible{outline-offset:5px}
+.p-card:focus-visible{outline:2px solid var(--gold);outline-offset:-6px}
+.skip-link:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+/* --- 4. TOUCH TARGETS ------------------------------------------- */
+/* Pointer devices keep the compact 26-36px controls (WCAG 2.5.8 = 24px).
+   Touch devices get the full 44px Apple HIG / 48dp Material target. */
+@media(hover:none){
+  .cd-qty-btn,.cd-remove,.cd-close,.pdm-close{width:44px;height:44px;font-size:1.05rem}
+  .cd-qty-row{gap:0.85rem}
+  .cd-item-right{gap:0.85rem}
+  .harvest-close{min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;right:0.35rem}
+  .lang-opt{min-height:44px;min-width:44px;display:flex;align-items:center;justify-content:center}
+  .cd-continue,.cd-promo-remove,.cookie-decline{min-height:44px}
+  .cd-promo-apply,.cookie-accept{min-height:44px}
+}
+
+/* --- 5. DYNAMIC VIEWPORT UNITS ---------------------------------- */
+/* 100vh overflows on mobile browsers with a retracting URL bar. */
+@supports (height:100dvh){
+  body{min-height:100dvh}
+  .hero{height:100dvh}
+  .article-hero{height:75dvh}
+  .tl-panel{height:52dvh}
+  .pdm{max-height:85dvh}
+  .checkout-wrap,.order-success{min-height:calc(100dvh - 100px)}
+}
+@supports (height:100dvh){
+  @media(max-width:500px){.article-hero{height:60dvh}}
+}
+
+/* --- 6. REDUCED MOTION ------------------------------------------ */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important;
+    scroll-behavior:auto !important;
+  }
+  /* Anything that animates INTO view must land in its final state,
+     otherwise killing the animation leaves it permanently invisible. */
+  .reveal,.js .reveal,.p-card,.js .p-card,.j-card,.js .j-card{opacity:1 !important;transform:none !important}
+  .hl,.hero-eyebrow,.hero-sub,.hero-actions,.scroll-ind,
+  .pre-logo,.pre-tagline,.form-success.show,.trade-form-success.show{opacity:1 !important;transform:none !important}
+  .hero-video{opacity:0.45 !important;transform:none !important}
+  .pre-bar{width:100% !important}
+  .hf-t,.hf-b{width:100% !important}
+  .hf-l,.hf-r{height:100% !important}
+  /* Infinite loops are the most disorienting — stop them outright */
+  .marquee-track,.cert-track,.tl-scroll-hint,.scroll-fill{animation:none !important}
+  .marquee-track{transform:none !important}
+  .scroll-fill{display:none}
+  .tl-scroll-hint{opacity:0.38}
+  /* Long decorative hover transitions */
+  .img-frame img,.j-card-img-wrap img{transition:none !important;transform:scale(1) !important}
+  /* Autoplaying background video */
+  .hero-video,.shop-video{animation:none !important}
+}
+
+/* --- 7. CONTRAST REPAIR (WCAG AA) ------------------------------- */
+/* --stone was 3.81:1 on --ink and is used for body copy throughout. */
+:root{--stone:#8C8172}
+.press-name{color:rgba(245,240,232,0.55)}
+.press-name:hover{color:rgba(245,240,232,0.95)}
+.cert-div{color:rgba(201,169,110,0.55)}
+.p-poly{color:rgba(201,169,110,0.72)}
+.j-arrow{color:rgba(201,169,110,0.72)}
+.tl-scroll-hint{color:rgba(201,169,110,0.55)}
+.lang-opt{color:rgba(245,240,232,0.62)}
+@keyframes tl-bob{0%,100%{opacity:0.55;letter-spacing:0.2em}50%{opacity:0.85;letter-spacing:0.28em}}
+
+/* --- 8. LONG DECORATIVE TRANSITIONS ----------------------------- */
+.img-frame img,.j-card-img-wrap img{transition:transform 1.2s cubic-bezier(0.16,1,0.3,1)}
+
+/* ================================================================ */
+/* === ARABIC / RTL — supersedes the earlier ad-hoc .lang-ar rules  */
+/* === The `lang-ar` class is set on <html> (pre-paint) AND <body>. */
+/* ================================================================ */
+
+/* --- Typography -------------------------------------------------- */
+/* The old `.lang-ar body` selector could never match (body inside body),
+   so the Arabic face was never actually applied. */
+.lang-ar,
+.lang-ar body,
+body.lang-ar{font-family:'Noto Sans Arabic','Noto Naskh Arabic',Tahoma,Arial,sans-serif}
+
+/* Arabic is a cursive script: letter-spacing severs the joins between
+   glyphs and makes words unreadable. Uppercase is a no-op. Italic is a
+   synthetic oblique with no typographic tradition in Arabic. Strip all
+   three wherever they were applied for the Latin design. */
+.lang-ar :is(h1,h2,h3,h4,p,span,a,li,td,th,button,label,input,textarea,select,div,blockquote,strong,em){
+  letter-spacing:normal;
+  font-style:normal;
+}
+.lang-ar :is(.kicker,.nav-links a,.btn-primary,.btn-ghost,.bcta-btn,.p-cta,.p-tag,.stat-l,
+.cert-item,.q-attr,.ps-title,.ptitle,.cd-title,.cd-total-label,.cd-checkout-btn,.cd-continue,
+.co-head,.co-section-title,.co-total-label,.filter-btn,.p-add-btn,.p-details-btn,.pdm-add-btn,
+.submit-btn,.newsletter-btn,.press-kicker,.j-cat,.j-arrow,.article-cat,.article-back,.article-next,
+.tc-name,.trade-terr-label,.tl-label,.fl,.fc,.fr,.footer-legal a,.harvest-text,.pdp-kicker,
+.ass-title,.cd-item-name,.co-item-name,.float-tag-label,.hero-eyebrow,.scroll-label,.mq-item){
+  letter-spacing:normal;
+  text-transform:none;
+  font-style:normal;
+}
+/* Serif display faces have no Arabic coverage — fall back cleanly */
+.lang-ar :is(.hero-h1,.sec-heading,.page-title,.q-text,.journal-hero-title,.article-hero-title,
+.checkout-title,.os-title,.bcta-title,.nl-heading,.pdp-title,.stat-n,.tl-year,.ps-num,.pnum,
+.float-tag-num,.p-name,.p-price,.pdm-name,.pdm-price,.fs-title,.trade-terr-region,.j-title,
+.cd-item-price,.cd-total-val,.co-item-price,.co-total-val,.nav-logo,.pre-logo){
+  font-family:'Noto Sans Arabic','Noto Naskh Arabic',Tahoma,Arial,sans-serif;
+  font-style:normal;
+  letter-spacing:normal;
+}
+/* Arabic ascenders/descenders need more room than the Latin scale allows */
+.lang-ar :is(.hero-h1,.sec-heading,.page-title,.journal-hero-title,.article-hero-title){line-height:1.35}
+.lang-ar :is(.q-text,.sec-body,.hero-sub,.article-p,.article-lead){line-height:1.9}
+.lang-ar .article-lead::first-letter{font-size:inherit;float:none;margin:0;line-height:inherit;color:inherit;text-shadow:none}
+
+/* --- Direction --------------------------------------------------- */
+.lang-ar{direction:rtl}
+.lang-ar .nav-links{direction:rtl}
+.lang-ar :is(.hero-content,.article-body,.sec-heading,.sec-body,.kicker,.page-hero-inner,
+.trade-hero-inner,.checkout-header,.pdp-info,.co-form-wrap,.contact-detail,.form-grid){text-align:right}
+.lang-ar :is(.kicker,.hero-eyebrow,.pillar-row,.hero-actions,.p-tag,.p-attrs,.ass-item,
+.cd-item,.co-item,.cd-header,.cd-total-row,.article-nav-foot,.submit-wrap,.pdp-actions){flex-direction:row-reverse}
+.lang-ar .hero-eyebrow{justify-content:flex-end}
+.lang-ar :is(.eyebrow-rule,.btn-arrow,.p-arrow){transform:scaleX(-1)}
+.lang-ar .pillar-row{text-align:right}
+.lang-ar .lang-opt+.lang-opt{border-left:none;border-right:1px solid rgba(201,169,110,0.18)}
+
+/* Centred sections must stay centred, not flip to right */
+.lang-ar :is(.quote-sec,.process-sec,.bottom-cta,.newsletter-sec,.press-sec,.timeline-header,
+.journal-hero,.reviews-sec,.cd-empty,.form-success,.trade-form-success,.os-inner) :is(.sec-heading,.kicker,.sec-body){text-align:center}
+.lang-ar .process-head .kicker,.lang-ar .timeline-header .kicker{justify-content:center}
+
+/* --- Cart drawer: slide in from the LEFT ------------------------- */
+/* The old rule set left:0 but kept translateX(100%), pushing the drawer
+   off the wrong edge and leaving it partly on-screen when closed. */
+.lang-ar .cart-drawer{left:0;right:auto;border-left:none;border-right:1px solid rgba(201,169,110,0.12);transform:translateX(-100%)}
+.lang-ar .cart-drawer.open{transform:translateX(0)}
+.lang-ar .cd-item-right{align-items:flex-start}
+.lang-ar :is(.cd-checkout-btn,.co-stripe-btn,.cd-promo-row){direction:rtl}
+.lang-ar .cd-promo-input{text-align:right}
+
+/* --- Mobile nav: slide in from the LEFT -------------------------- */
+@media(max-width:900px){
+  .lang-ar .nav-links{right:auto;left:0;transform:translateX(-110%);border-left:none;border-right:1px solid rgba(201,169,110,0.12)}
+  .lang-ar .nav-links.open{transform:translateX(0)}
+}
+
+/* --- Elements that must NOT flip --------------------------------- */
+/* Prices, phone numbers, and the marquee are direction-neutral. */
+.lang-ar :is(.p-price,.pdm-price,.pdp-price,.cd-item-price,.cd-total-val,.co-item-price,
+.co-total-val,.cart-count,.stat-n,.tl-year,.float-tag-num){direction:ltr;unicode-bidi:isolate}
+.lang-ar .marquee-track,.lang-ar .cert-track{direction:ltr}
+.lang-ar .timeline-track{direction:ltr}
+.lang-ar .trade-table{direction:rtl}
+.lang-ar .trade-table :is(th,td){text-align:right}
+
+/* --- Fixed-position UI ------------------------------------------- */
+.lang-ar .scroll-ind{right:auto;left:5rem}
+.lang-ar .harvest-close{right:auto;left:1.25rem}
+.lang-ar .pdm-close{right:auto;left:1.5rem}
+.lang-ar .float-tag{right:auto;left:-2.5rem}
+.lang-ar .heritage-flip .float-tag{left:auto;right:-2.5rem}
+.lang-ar .article-h2{padding-left:0;padding-right:1.5rem;border-left:none;border-right:2px solid var(--gold)}
+.lang-ar .q-mark{left:auto;right:4rem}
+.lang-ar .wa-btn{right:auto;left:1.5rem}
+@media(max-width:900px){
+  .lang-ar .scroll-ind{left:2rem}
+  .lang-ar .float-tag,.lang-ar .heritage-flip .float-tag{left:auto;right:auto}
+}
+@media(max-width:500px){.lang-ar .scroll-ind{left:1.25rem}}
+
+/* --- Language pill state ---------------------------------------- */
+.lang-opt[aria-pressed="true"]{color:var(--gold);background:rgba(201,169,110,0.12)}
+.lang-pill:focus-within{border-color:rgba(201,169,110,0.5)}

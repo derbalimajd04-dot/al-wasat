@@ -53,6 +53,17 @@ function isMobileViewport() {
   return window.matchMedia && window.matchMedia('(max-width: 767px)').matches;
 }
 
+/* Translate a runtime string. Falls back to English, then to the literal
+   passed in, so JS-generated copy is never blank if the dictionary is absent. */
+function awT(key, fallback) {
+  var langs = window.I18N;
+  var d = langs && langs[window._currentLang || 'en'];
+  var v = d && d[key];
+  if (v === undefined && langs && langs.en) v = langs.en[key];
+  return v === undefined ? fallback : v;
+}
+window.awT = awT;
+
 function showCartToast(message) {
   let toast = document.getElementById('cartToast');
   if (!toast) {
@@ -91,7 +102,8 @@ function _cartRender() {
   const el = document.getElementById('cartItems'); if (!el) return;
   const c = getCart(), foot = document.getElementById('cartFooter');
   if (!c.length) {
-    el.innerHTML = '<div class="cd-empty"><p>Your cart is empty.</p><a href="/shop/" class="cd-empty-link">Browse Collection →</a></div>';
+    el.innerHTML = '<div class="cd-empty"><p>' + awT('cart-empty', 'Your cart is empty.') +
+      '</p><a href="/shop/" class="cd-empty-link">' + awT('cart-empty-link', 'Browse Collection') + ' →</a></div>';
     if (foot) foot.style.display = 'none'; return;
   }
   if (foot) foot.style.display = '';
@@ -119,9 +131,14 @@ function _cartRender() {
 document.addEventListener('DOMContentLoaded', () => {
 
   /* === CURSOR === */
+  /* `cursor:none` is applied by CSS only under html.custom-cursor, and that
+     class is added here — after the cursor elements are confirmed present.
+     If this script never runs, the native cursor is left alone. */
   const dot = document.getElementById('curDot');
   const ring = document.getElementById('curRing');
-  if (dot && ring) {
+  const finePointer = !window.matchMedia || window.matchMedia('(pointer:fine)').matches;
+  if (dot && ring && finePointer) {
+    document.documentElement.classList.add('custom-cursor');
     let mx = -100, my = -100, rx = -100, ry = -100;
     document.addEventListener('mousemove', e => {
       mx = e.clientX; my = e.clientY;
@@ -164,17 +181,49 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* === SCROLL REVEAL === */
-  const revealObs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('in'); revealObs.unobserve(e.target); }
-    });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+  /* Reveal targets sit at opacity:0 (under html.js). If IntersectionObserver
+     is unavailable, or the user prefers reduced motion, show everything at
+     once rather than leaving the page blank. */
+  const prefersReduce = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const revealAll = () =>
+    document.querySelectorAll('.reveal,.p-card,.j-card').forEach(el => el.classList.add('in'));
+
+  if (prefersReduce || typeof IntersectionObserver === 'undefined') {
+    revealAll();
+  } else {
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); revealObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+    /* Safety net: anything still hidden after 4s is shown regardless. */
+    setTimeout(revealAll, 4000);
+  }
 
   /* === PRELOADER (home only) === */
+  /* `load` waits on every asset — the hero video, the CDN scripts, webfonts.
+     One stalled request used to leave the preloader up permanently, hiding
+     the entire site. Dismissal is now whichever comes first: `load`, or a
+     hard 3s ceiling from DOM-ready. Reduced-motion skips it entirely. */
   const preloader = document.getElementById('preloader');
   if (preloader) {
-    window.addEventListener('load', () => setTimeout(() => preloader.classList.add('out'), 2100));
+    const reduceMotion = window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let dismissed = false;
+    const dismissPreloader = () => {
+      if (dismissed) return;
+      dismissed = true;
+      preloader.classList.add('out');
+      setTimeout(() => { preloader.style.display = 'none'; }, 1000);
+    };
+    if (reduceMotion) {
+      dismissPreloader();
+    } else {
+      window.addEventListener('load', () => setTimeout(dismissPreloader, 2100));
+      setTimeout(dismissPreloader, 3000);   /* failsafe ceiling */
+    }
   }
 
   /* HERO PARALLAX — driven by Lenis callback above */
@@ -197,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (honeypot && honeypot.value !== '') return;
       const btn = this.querySelector('.submit-btn');
       const label = btn.querySelector('span:first-child');
-      btn.disabled = true; label.textContent = 'Sending…';
+      btn.disabled = true; label.textContent = awT('form-sending', 'Sending…');
       try {
         const fd = new FormData(this);
         const body = {};
@@ -211,10 +260,10 @@ document.addEventListener('DOMContentLoaded', () => {
           this.style.display = 'none';
           document.getElementById('formSuccess').classList.add('show');
         } else {
-          label.textContent = 'Try again'; btn.disabled = false;
+          label.textContent = awT('form-retry', 'Try again'); btn.disabled = false;
         }
       } catch {
-        label.textContent = 'Try again'; btn.disabled = false;
+        label.textContent = awT('form-retry', 'Try again'); btn.disabled = false;
       }
     });
   }
@@ -267,11 +316,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const pid = card.dataset.pid;
     addToCartById(pid);
     const orig = btn.textContent;
-    btn.textContent = 'Added ✓'; btn.classList.add('added');
+    btn.textContent = awT('added-to-cart', 'Added ✓'); btn.classList.add('added');
     setTimeout(() => { btn.textContent = orig; btn.classList.remove('added'); }, 1600);
     if (isMobileViewport()) {
       const product = PRODUCT_DATA[pid];
-      showCartToast((product ? product.name : 'Product') + ' added');
+      showCartToast((product ? product.name : 'Product') + ' ' + awT('cart-added-toast', 'added'));
     } else {
       openCart();
     }
@@ -303,16 +352,21 @@ document.addEventListener('DOMContentLoaded', () => {
   /* === PRODUCT CARDS + FILTER (shop only) === */
   const cards = document.querySelectorAll('.p-card');
   if (cards.length > 0) {
-    const cardObs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const i = Array.from(cards).indexOf(e.target);
-          setTimeout(() => e.target.classList.add('in'), i * 120);
-          cardObs.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    cards.forEach(c => cardObs.observe(c));
+    if (prefersReduce || typeof IntersectionObserver === 'undefined') {
+      cards.forEach(c => c.classList.add('in'));
+    } else {
+      const cardObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            const i = Array.from(cards).indexOf(e.target);
+            setTimeout(() => e.target.classList.add('in'), i * 120);
+            cardObs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      cards.forEach(c => cardObs.observe(c));
+      setTimeout(() => cards.forEach(c => c.classList.add('in')), 4000);
+    }
 
     function updateLastRow() {
       const vis = [...cards].filter(c => c.style.display !== 'none');
@@ -352,6 +406,9 @@ document.addEventListener('DOMContentLoaded', () => {
 (function() {
   if (typeof Lenis === 'undefined') return;
   if (window.matchMedia && window.matchMedia('(max-width: 767px)').matches) return;
+  /* Smooth-scroll hijacking is a vestibular trigger — leave native scrolling
+     in place when the user has asked for reduced motion. */
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   var lenis = new Lenis({
     duration: 1.2,
     easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
@@ -393,6 +450,10 @@ document.addEventListener('DOMContentLoaded', () => {
 /* === GSAP PAGE TRANSITIONS === */
 (function() {
   if (typeof gsap === 'undefined') return;
+  /* These transitions fade the whole document and delay navigation by 400ms.
+     Skip the entire mechanism under reduced motion — links then navigate
+     natively and instantly. */
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   /* Fade + slide up on page load */
   document.addEventListener('DOMContentLoaded', function() {
@@ -675,146 +736,149 @@ document.addEventListener('DOMContentLoaded', function () {
   requestAnimationFrame(function () { b.classList.add('visible'); });
 });
 
-/* === LANGUAGE SWITCHING (translations loaded from /assets/translations.js) ===
-   Legacy i18n object removed. applyLanguage/initLanguage defined below.
-   REMOVED EN: Home, Collection, Journal, Trade, Heritage, Contact,
-    'hero-eyebrow':    'Extra Virgin Olive Oil  ·  Tunisia  ·  Since 1960',
-    'hero-h1-1':       'Rooted in',
-    'hero-h1-2':       'Heritage.',
-    'hero-sub':        'For over sixty years, our legacy has remained anchored in agriculture, refined through discipline, and guided by uncompromising standards.',
-    'hero-discover':   'Discover the Collection',
-    'hero-story':      'Our Story',
-    'heritage-kicker': 'Our Roots',
-    'heritage-heading':'A legacy <em>shaped</em><br>by the land.',
-    'heritage-body':   'A heritage shaped over sixty years of agriculture and olive cultivation. Knowledge refined through seasons, protected through discipline, carried forward through long-term partnerships with the land.',
-    'filter-all':      'All',
-    'filter-classic':  'Classic',
-    'filter-organic':  'Organic',
-    'filter-500':      '500ml',
-    'filter-1l':       '1L',
-    'filter-gift':     'Gift',
-    'tag-classic':     'Classic',
-    'tag-organic':     'Organic',
-    'tag-certified':   'Certified',
-    'tag-gift':        'Gift Set',
-    'add-to-cart':     'Add to Cart',
-    'sub-toggle-one':  'One-time',
-    'sub-toggle-sub':  'Subscribe &amp; Save <strong>10%</strong>',
-  },
-  fr: {
-    'nav-home':        'Accueil',
-    'nav-collection':  'Boutique',
-    'nav-journal':     'Journal',
-    'nav-trade':       'Commerce',
-    'nav-heritage':    'Notre Histoire',
-    'nav-contact':     'Contact',
-    'hero-eyebrow':    "Huile d’olive vierge extra  ·  Tunisie  ·  Depuis 1960",
-    'hero-h1-1':       'Ancré dans',
-    'hero-h1-2':       "l’héritage.",
-    'hero-sub':        "Depuis plus de soixante ans, notre héritage est ancré dans l’agriculture, affiné par la discipline et guidé par des exigences intransigeantes.",
-    'hero-discover':   'Découvrir la Collection',
-    'hero-story':      'Notre Histoire',
-    'heritage-kicker': 'Nos Racines',
-    'heritage-heading':"Un héritage <em>façonné</em><br>par la terre.",
-    'heritage-body':   "Un héritage façonné au fil de soixante ans d’agriculture et de culture de l’olivier. Un savoir affiné par les saisons, protégé par la discipline, transmis à travers des partenariats durables avec la terre.",
-    'filter-all':      'Tout',
-    'filter-classic':  'Classique',
-    'filter-organic':  'Bio',
-    'filter-500':      '500ml',
-    'filter-1l':       '1L',
-    'filter-gift':     'Cadeau',
-    'tag-classic':     'Classique',
-    'tag-organic':     'Bio',
-    'tag-certified':   'Certifié',
-    'tag-gift':        'Coffret Cadeau',
-    'add-to-cart':     'Ajouter au panier',
-    'sub-toggle-one':  'Achat unique',
-    'sub-toggle-sub':  'Économisez &amp; Abonnez-vous <strong>10%</strong>',
-  },
-  ar: {
-    'nav-home':        'الرئيسية',
-    'nav-collection':  'المتجر',
-    'nav-journal':     'المجلة',
-    'nav-trade':       'التجارة',
-    'nav-heritage':    'قصتنا',
-    'nav-contact':     'تواصل',
-    'hero-eyebrow':    'زيت زيتون بكر ممتاز · تونس · منذ 1960',
-    'hero-h1-1':       'متجذّر في',
-    'hero-h1-2':       'الموروث.',
-    'hero-sub':        'لأكثر من ستين عاماً، ظلّ إرثنا راسخاً في الزراعة، مصقولاً بالانضباط، موجَّهاً بمعايير لا تقبل المساومة.',
-    'hero-discover':   'اكتشف المجموعة',
-    'hero-story':      'قصتنا',
-    'heritage-kicker': 'جذورنا',
-    'heritage-heading':'إرث <em>شكّلته</em><br>الأرض.',
-    'heritage-body':   'إرث تشكّل عبر أكثر من ستين عاماً من الزراعة وزراعة الزيتون. معرفة صُقلت عبر المواسم، حُميت بالانضباط، ونُقلت عبر شراكات طويلة الأمد مع الأرض.',
-    'filter-all':      'الكل',
-    'filter-classic':  'الكلاسيكي',
-    'filter-organic':  'عضوي',
-    'filter-500':      '500 مل',
-    'filter-1l':       '1 لتر',
-    'filter-gift':     'هدية',
-    'tag-classic':     'الكلاسيكي',
-    'tag-organic':     'عضوي',
-    'tag-certified':   'معتمد',
-    'tag-gift':        'طقم هدية',
-    'add-to-cart':     'أضف إلى السلة',
-    'sub-toggle-one':  'شراء مرة واحدة',
-*/
+/* ================================================================= */
+/* === LANGUAGE SWITCHING                                        === */
+/* Dictionary lives in /assets/translations.js (window.I18N).        */
+/*                                                                    */
+/* Markup contract:                                                   */
+/*   data-i18n="key"            -> sets textContent                   */
+/*   data-i18n-html="key"       -> sets innerHTML (keys with markup)   */
+/*   data-i18n-attr="a:key,..." -> sets attributes (placeholder, etc.) */
+/* ================================================================= */
 
-function applyLanguage(lang) {
-  if (!window.I18N || !window.I18N[lang]) return;
-  var t = window.I18N[lang];
-  document.querySelectorAll('[data-i18n]').forEach(function(el) {
-    var key = el.getAttribute('data-i18n');
-    if (t[key] !== undefined) el.textContent = t[key];
-  });
-  document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
-    var key = el.getAttribute('data-i18n-html');
-    if (t[key] !== undefined) el.innerHTML = t[key];
-  });
+var AW_LANGS = ['en', 'fr', 'ar'];
+var AW_LANG_KEY = 'alwasat_lang';
+
+function awGetSavedLang() {
+  try {
+    var v = localStorage.getItem(AW_LANG_KEY);
+    return AW_LANGS.indexOf(v) !== -1 ? v : 'en';
+  } catch (e) { return 'en'; }
+}
+
+/* The Arabic face is fetched on demand — EN/FR visitors never pay for it.
+   The pre-paint boot script in <head> does the same when AR is the stored
+   language, so switching mid-session and loading straight into AR both work. */
+function awEnsureArabicFont() {
+  if (document.getElementById('aw-ar-font')) return;
+  var k = document.createElement('link');
+  k.id = 'aw-ar-font';
+  k.rel = 'stylesheet';
+  k.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600&display=swap';
+  document.head.appendChild(k);
+}
+
+/* Reflect language on <html> and <body> and update the pill.
+   Runs even when the dictionary failed to load, so direction, fonts and
+   the active button never get stuck out of sync with the stored choice. */
+function awSetLangState(lang) {
   var html = document.documentElement;
-  if (lang === 'ar') {
-    html.setAttribute('dir', 'rtl');
-    html.setAttribute('lang', 'ar');
-    document.body.classList.add('lang-ar');
-    document.body.classList.remove('lang-en', 'lang-fr');
-  } else {
-    html.setAttribute('dir', 'ltr');
-    html.setAttribute('lang', lang);
-    document.body.classList.remove('lang-ar');
-    document.body.classList.add('lang-' + lang);
-    document.body.classList.remove(lang === 'en' ? 'lang-fr' : 'lang-en');
-  }
-  document.querySelectorAll('.lang-opt').forEach(function(btn) {
-    btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+  var body = document.body;
+  var isRtl = lang === 'ar';
+
+  if (isRtl) awEnsureArabicFont();
+
+  html.setAttribute('lang', lang);
+  html.setAttribute('dir', isRtl ? 'rtl' : 'ltr');
+
+  AW_LANGS.forEach(function (l) {
+    html.classList.toggle('lang-' + l, l === lang);
+    if (body) body.classList.toggle('lang-' + l, l === lang);
   });
-  localStorage.setItem('alwasat_lang', lang);
+
+  document.querySelectorAll('.lang-opt').forEach(function (btn) {
+    var on = btn.getAttribute('data-lang') === lang;
+    btn.classList.toggle('active', on);
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+
   window._currentLang = lang;
 }
 
-function initLanguage() {
-  document.querySelectorAll('.lang-opt').forEach(function(btn) {
-    btn.addEventListener('click', function() { applyLanguage(btn.getAttribute('data-lang')); });
-  });
-  var saved = localStorage.getItem('alwasat_lang') || 'en';
-  if (saved !== 'en') {
-    applyLanguage(saved);
-  } else {
-    document.querySelectorAll('.lang-opt').forEach(function(btn) {
-      btn.classList.toggle('active', btn.getAttribute('data-lang') === 'en');
-    });
+function applyLanguage(lang, opts) {
+  if (AW_LANGS.indexOf(lang) === -1) lang = 'en';
+
+  awSetLangState(lang);
+
+  if (!(opts && opts.skipPersist)) {
+    try { localStorage.setItem(AW_LANG_KEY, lang); } catch (e) {}
   }
+
+  var t = window.I18N && window.I18N[lang];
+  if (!t) return;                       /* state is still correct without copy */
+  var fallback = (window.I18N && window.I18N.en) || {};
+
+  function lookup(key) {
+    return t[key] !== undefined ? t[key] : fallback[key];
+  }
+
+  document.querySelectorAll('[data-i18n]').forEach(function (el) {
+    var v = lookup(el.getAttribute('data-i18n'));
+    if (v !== undefined) el.textContent = v;
+  });
+
+  document.querySelectorAll('[data-i18n-html]').forEach(function (el) {
+    var v = lookup(el.getAttribute('data-i18n-html'));
+    if (v !== undefined) el.innerHTML = v;
+  });
+
+  document.querySelectorAll('[data-i18n-attr]').forEach(function (el) {
+    el.getAttribute('data-i18n-attr').split(',').forEach(function (pair) {
+      var bits = pair.split(':');
+      if (bits.length !== 2) return;
+      var v = lookup(bits[1].trim());
+      if (v !== undefined) el.setAttribute(bits[0].trim(), v);
+    });
+  });
+
+  /* Re-render JS-generated regions so they pick up the new language */
+  if (typeof _cartRender === 'function') { try { _cartRender(); } catch (e) {} }
+
+  document.dispatchEvent(new CustomEvent('aw:languagechange', { detail: { lang: lang } }));
 }
 
-(function() {
+function initLanguage() {
+  applyLanguage(awGetSavedLang(), { skipPersist: true });
+}
+
+/* Click handlers are bound immediately and do NOT wait on the dictionary.
+   Previously they were attached inside translations.js `onload`, so a failed
+   or blocked request left the buttons completely inert. */
+(function bindLanguageButtons() {
+  function bind() {
+    document.querySelectorAll('.lang-opt').forEach(function (btn) {
+      if (btn._awBound) return;
+      btn._awBound = true;
+      btn.setAttribute('type', 'button');
+      btn.addEventListener('click', function () {
+        applyLanguage(btn.getAttribute('data-lang'));
+      });
+    });
+    /* Direction/font/active-state from storage, before copy arrives */
+    awSetLangState(awGetSavedLang());
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bind);
+  } else {
+    bind();
+  }
+})();
+
+/* Load the dictionary, then swap the copy in. */
+(function loadTranslations() {
+  if (window.I18N) { initLanguage(); return; }
   var s = document.createElement('script');
   s.src = '/assets/translations.js';
-  s.onload = function() {
+  s.onload = function () {
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initLanguage);
     } else {
       initLanguage();
     }
+  };
+  s.onerror = function () {
+    /* Copy stays in the HTML's default language — still fully usable. */
+    if (window.console) console.warn('[i18n] translations.js failed to load; using inline copy.');
   };
   document.head.appendChild(s);
 })();

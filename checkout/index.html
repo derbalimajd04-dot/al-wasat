@@ -23,10 +23,18 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Tenor+Sans&family=EB+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Tenor+Sans&family=EB+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet"></noscript>
+<script>/* pre-paint boot: JS flag + stored language. Runs before first paint so
+   reveal-on-scroll can hide safely and RTL never flips after render. */
+(function(d){var h=d.documentElement;h.className+=(h.className?' ':'')+'js';
+try{var L=['en','fr','ar'],l=localStorage.getItem('alwasat_lang');if(L.indexOf(l)<0)l='en';
+h.setAttribute('lang',l);h.setAttribute('dir',l==='ar'?'rtl':'ltr');h.className+=' lang-'+l;
+if(l==='ar'){var k=d.createElement('link');k.id='aw-ar-font';k.rel='stylesheet';
+k.href='https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600&display=swap';
+d.head.appendChild(k);}}catch(e){}})(document);</script>
 <link rel="stylesheet" href="/styles.css">
 </head>
 <body class="checkout-page">
-<a href="#main" class="skip-link">Skip to content</a>
+<a href="#main" class="skip-link" data-i18n="skip-link">Skip to content</a>
 
 <div class="grain"></div>
 <div class="cursor-dot" id="curDot"></div>
@@ -41,12 +49,12 @@
     <li><a href="/trade/" data-i18n="nav-trade">Trade</a></li>
     <li><a href="/#contact" data-i18n="nav-contact">Contact</a></li>
   </ul>
-  <div class="lang-pill" id="langPill" role="group" aria-label="Language">
-  <button class="lang-opt active" data-lang="en" aria-label="English">EN</button>
-  <button class="lang-opt" data-lang="fr" aria-label="French">FR</button>
-  <button class="lang-opt" data-lang="ar" aria-label="Arabic">AR</button>
+  <div class="lang-pill" id="langPill" role="group" aria-label="Language" data-i18n-attr="aria-label:lang-label">
+  <button class="lang-opt active" type="button" data-lang="en" aria-label="English">EN</button>
+  <button class="lang-opt" type="button" data-lang="fr" aria-label="French">FR</button>
+  <button class="lang-opt" type="button" data-lang="ar" aria-label="Arabic">AR</button>
 </div>
-<button class="nav-ham" id="navHam" aria-label="Open navigation menu" aria-expanded="false"><span></span><span></span><span></span></button>
+<button class="nav-ham" id="navHam" type="button" aria-label="Open navigation menu" data-i18n-attr="aria-label:nav-menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 <div class="nav-overlay" id="navOverlay"></div>
 
@@ -63,22 +71,22 @@
 
       <!-- Order summary -->
       <div class="co-summary reveal">
-        <div class="co-head">Order Summary</div>
+        <div class="co-head" data-i18n="checkout-summary">Order Summary</div>
         <div id="coItems"></div>
         <div class="co-total">
-          <span class="co-total-label">Total</span>
+          <span class="co-total-label" data-i18n="cart-total">Total</span>
           <span class="co-total-val" id="coTotal">£0.00</span>
         </div>
-        <a href="/shop/" class="co-edit">← Edit cart</a>
+        <a href="/shop/" class="co-edit">← <span data-i18n="checkout-edit">Edit cart</span></a>
       </div>
 
       <!-- Payment -->
       <div class="co-form-wrap reveal rd1">
         <div class="co-section-title">Payment</div>
-        <p class="co-pay-note">Secure checkout powered by Stripe. Your shipping address and payment details are collected on the next page.</p>
+        <p class="co-pay-note" data-i18n="checkout-note">Secure checkout powered by Stripe. Your shipping address and payment details are collected on the next page.</p>
         <div class="co-pay-box">
           <button class="co-stripe-btn" id="stripeBtn" type="button">
-            <span>Pay Securely with Stripe</span><span>&nbsp;→</span>
+            <span data-i18n="checkout-pay">Pay Securely with Stripe</span><span>&nbsp;→</span>
           </button>
           <p class="co-pay-methods">Visa · Mastercard · Amex · Apple Pay · Google Pay</p>
         </div>
@@ -106,15 +114,15 @@
 </div>
 
 <footer>
-  <div class="fl">© 2026 AL WASAT. All rights reserved.</div>
+  <div class="fl" data-i18n="footer-rights">© 2026 AL WASAT. All rights reserved.</div>
   <div class="fc">Al Wasat</div>
-  <div class="fr">Extra Virgin Olive Oil · Tunisia</div>
+  <div class="fr" data-i18n="footer-tagline">Extra Virgin Olive Oil · Tunisia</div>
   <div class="footer-legal">
-    <a href="/legal/privacy-policy/">Privacy Policy</a>
-    <a href="/legal/terms/">Terms</a>
-    <a href="/legal/returns/">Returns</a>
-    <a href="/legal/cookies/">Cookies</a>
-    <a href="/legal/shipping/">Shipping</a>
+    <a href="/legal/privacy-policy/" data-i18n="footer-privacy">Privacy Policy</a>
+    <a href="/legal/terms/" data-i18n="footer-terms">Terms</a>
+    <a href="/legal/returns/" data-i18n="footer-returns">Returns</a>
+    <a href="/legal/cookies/" data-i18n="footer-cookies">Cookies</a>
+    <a href="/legal/shipping/" data-i18n="footer-shipping">Shipping</a>
   </div>
 </footer>
 
@@ -163,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function showCheckoutError(msg) {
     btn.disabled = false;
-    btn.innerHTML = '<span>Pay Securely with Stripe</span><span>&nbsp;→</span>';
+    btn.innerHTML = '<span data-i18n="checkout-pay">' + (window.awT ? window.awT('checkout-pay','Pay Securely with Stripe') : 'Pay Securely with Stripe') + '</span><span>&nbsp;→</span>';
     errEl.textContent = msg;
     errEl.style.display = 'block';
     errEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -203,12 +211,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<a href="https://wa.me/21698236621" class="wa-btn" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>
+<a href="https://wa.me/21698236621" class="wa-btn" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" data-i18n-attr="aria-label:wa-label"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>
 <div class="cookie-banner" id="cookieBanner" style="display:none">
-  <p>We use cookies to improve your experience.</p>
+  <p class="cookie-banner-text" data-i18n="cookie-text">We use cookies to improve your experience.</p>
   <div>
-    <button class="cookie-accept" onclick="acceptCookie()">Accept</button>
-    <a class="cookie-decline" onclick="declineCookie()">Decline</a>
+    <button class="cookie-accept" type="button" onclick="acceptCookie()" data-i18n="cookie-accept">Accept</button>
+    <button class="cookie-decline" type="button" onclick="declineCookie()" data-i18n="cookie-decline">Decline</button>
   </div>
 </div>
 </body>
