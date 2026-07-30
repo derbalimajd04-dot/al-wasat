@@ -2687,3 +2687,114 @@ footer{background:var(--black)}
     border-top:1px solid rgb(35 42 24 / 0.12);
   }
 }
+
+/* ================================================================ */
+/* === CHECKOUT — cream theme                                   === */
+/* The last step in the journey; it was the only surface still dark  */
+/* after the collection and detail pages moved to cream. Calm, light */
+/* and legible matters most here.                                   */
+/* ================================================================ */
+.checkout-page{background:var(--warm-cream)}
+.checkout-wrap{background:var(--warm-cream);color:var(--deep-olive);min-height:0}
+.checkout-page .kicker{color:var(--olive-on-cream)}
+.checkout-page .kicker-rule{background:var(--olive-on-cream)}
+.checkout-title{color:var(--deep-olive)}
+.checkout-title em{color:var(--olive)}
+
+/* Order summary reads as a card, like the product cards */
+.co-summary{
+  background:#FFFDF9;
+  border:1px solid rgb(35 42 24 / 0.10);
+  box-shadow:0 1px 2px rgb(35 42 24 / 0.03);
+}
+.co-head{
+  color:var(--olive-on-cream);
+  border-bottom:1px solid rgb(35 42 24 / 0.12);
+}
+.co-item{border-bottom:1px solid rgb(35 42 24 / 0.08)}
+.co-item-name{color:var(--deep-olive)}
+.co-item-sub{color:#6B6555;font-style:normal}
+.co-item-price{color:var(--deep-olive)}
+.co-total{border-top:1px solid rgb(35 42 24 / 0.18)}
+.co-total-label{color:#5C5647}
+.co-total-val{color:var(--deep-olive)}
+.co-edit{color:#5C5647}
+.co-edit:hover{color:var(--deep-olive)}
+
+/* Payment block */
+.co-section-title{
+  color:var(--olive-on-cream);
+  border-bottom:1px solid rgb(35 42 24 / 0.12);
+}
+.co-pay-note{color:#4A4636;font-style:normal}
+.co-pay-box{
+  background:#FFFDF9;
+  border:1px solid rgb(35 42 24 / 0.10);
+}
+.co-pay-fallback{color:#5C5647}
+.co-pay-fallback a{color:var(--olive-on-cream)}
+.co-pay-methods{color:#6B6555}
+.cd-stripe-note,.cd-delivery-note{color:#6B6555;font-style:normal}
+
+/* Pay button: olive, matching every other primary action on cream */
+.co-stripe-btn{
+  background:var(--deep-olive);
+  color:var(--warm-cream);
+  border:1px solid var(--deep-olive);
+}
+.co-stripe-btn:hover{background:var(--olive);border-color:var(--olive)}
+.co-stripe-btn:disabled{opacity:0.55}
+
+/* Trust list — it is a label/value list of <div><span>+<strong>, not a
+   ul/li, so it is styled as a spec list rather than bullets. */
+.co-trust-list{
+  display:grid;gap:0;margin-top:var(--sp-5);
+  background:#FFFDF9;
+  border:1px solid rgb(35 42 24 / 0.10);
+}
+.co-trust-list>div{
+  display:flex;align-items:baseline;justify-content:space-between;
+  gap:var(--sp-4);padding:0.85rem var(--sp-4);
+  border-bottom:1px solid rgb(35 42 24 / 0.07);
+}
+.co-trust-list>div:last-child{border-bottom:none}
+.co-trust-list>div>span{
+  font-family:var(--tenor);font-size:var(--fs-micro);
+  letter-spacing:var(--track-tight);text-transform:none;
+  color:#6B6555;flex-shrink:0;
+}
+.co-trust-list>div>strong{
+  font-family:var(--body);font-weight:400;font-style:normal;
+  font-size:var(--fs-body-s);color:var(--deep-olive);text-align:right;
+}
+
+/* Error: readable on cream, and clearly an error without shouting */
+.co-error{
+  background:rgb(140 60 40 / 0.06);
+  border:1px solid rgb(140 60 40 / 0.28);
+  color:#7A3A28;
+  text-transform:none;
+  letter-spacing:var(--track-tight);
+  font-family:var(--body);
+  font-size:var(--fs-body-s);
+  line-height:1.6;
+}
+
+/* Order-success screen */
+.order-success{background:var(--warm-cream);min-height:0}
+.os-title{color:var(--deep-olive)}
+.os-title em{color:var(--olive)}
+.os-body{color:#4A4636;font-style:normal}
+
+/* Fields, if the page ever renders them */
+.checkout-page .field label{color:#5C5647}
+.checkout-page .field input,
+.checkout-page .field select,
+.checkout-page .field textarea{
+  color:var(--deep-olive);
+  border-bottom-color:rgb(35 42 24 / 0.22);
+}
+.checkout-page .field input:focus,
+.checkout-page .field select:focus,
+.checkout-page .field textarea:focus{border-bottom-color:var(--olive-on-cream)}
+.checkout-page .field::after{background:var(--olive-on-cream)}

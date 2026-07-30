@@ -192,13 +192,32 @@ document.addEventListener('DOMContentLoaded', () => {
         data = await res.json();
       } catch {
         console.error('create-checkout: non-JSON response, status', res.status);
-        showCheckoutError('Payment unavailable (server error ' + res.status + '). Please try again or contact us.');
+        /* 501/405 from a plain static file server means the serverless
+           function is not running — the usual cause locally. Surfacing a
+           raw status code to a customer is noise; distinguish the two so
+           the message is actionable for whoever is reading it. */
+        if (res.status === 501 || res.status === 405) {
+          console.warn(
+            'The Stripe checkout function did not run. A static file server ' +
+            'cannot execute /.netlify/functions/*. Use `netlify dev` to test ' +
+            'checkout locally.'
+          );
+          showCheckoutError(
+            'Checkout is not available on this preview. Please try again from ' +
+            'the live site, or contact us and we will take your order directly.'
+          );
+        } else {
+          showCheckoutError(
+            'We could not start the payment. Please try again, or contact us ' +
+            'and we will take your order directly.'
+          );
+        }
         return;
       }
       if (data.url) {
         window.location.href = data.url;
       } else {
-        showCheckoutError(data.error || 'Payment unavailable. Please try again or contact us.');
+        showCheckoutError(data.error || 'We could not start the payment. Please try again, or contact us and we will take your order directly.');
       }
     } catch (err) {
       console.error('create-checkout fetch error:', err.message);
