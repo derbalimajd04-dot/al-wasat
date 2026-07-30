@@ -2246,3 +2246,168 @@ html{overflow-x:clip}
   }
   .eyebrow-rule{width:20px;flex-shrink:0}
 }
+
+/* ================================================================ */
+/* === PALETTE + SECTION RHYTHM                                 === */
+/* Gold is rare. Olive carries the agricultural story. Cream and    */
+/* ivory carry the shopping. Black carries depth.                   */
+/* ================================================================ */
+:root{
+  --black:#080806;
+  --charcoal:#14120F;
+  --soft-black:#1B1812;
+
+  --olive:#3D4A2A;
+  --deep-olive:#232A18;
+  --soft-olive:#687A45;
+
+  --warm-cream:#EFE4D0;
+
+  /* map the existing surface tokens onto the named palette */
+  --ink:#080806;
+  --ink2:#14120F;
+  --ink3:#1B1812;
+}
+
+/* --- HERO SIZING ------------------------------------------------
+   Two faults: the columns were centred independently, so with a 495px
+   text block beside a 638px product block the bottle floated 76px above
+   the copy and the two read as unrelated. And 173px sat dead beneath the
+   proof row because the forced 100dvh was taller than the content.
+   Fix: size the bottle from viewport height so it earns the space
+   (product-first), and give both columns a shared optical centre. */
+@media(min-width:1025px){
+  .hero-inner{
+    align-items:center;
+    min-height:100dvh;
+    padding-top:calc(var(--nav-h,7rem) + 2rem);
+    padding-bottom:4rem;
+    gap:5rem;
+  }
+  .hero-product{justify-content:center}
+  /* Height-driven, so it fills tall viewports and shrinks on short ones
+     instead of leaving a gap. */
+  .hero-bottle{
+    width:auto;
+    height:min(58vh,600px);
+    max-width:100%;
+    aspect-ratio:4/5;
+  }
+  .hero-price-tag{width:min(58vh * 0.8,480px);max-width:100%}
+  .hero-content{align-self:center}
+}
+@supports not (height:100dvh){
+  @media(min-width:1025px){.hero-inner{min-height:100vh}}
+}
+
+/* --- SECTION RHYTHM --------------------------------------------- */
+/* black → cream → olive → charcoal → cream → black.
+   The alternation is what stops the page reading as one dark tunnel. */
+
+/* 1 · Hero — black, depth */
+.hero-overlay{background:linear-gradient(115deg,
+  rgb(8 8 6 / 0.94) 0%, rgb(8 8 6 / 0.80) 42%, rgb(8 8 6 / 0.55) 100%)}
+
+/* 2 · Products — cream, comfort (already ivory; warmed slightly) */
+.home-shop-sec{background:var(--warm-cream)}
+
+/* 3 · Trust / proof — deep olive, the agricultural anchor */
+.trust-strip{background:var(--deep-olive)}
+.trust-strip-list li{color:var(--warm-cream)}
+.trust-strip-list li::before{background:var(--gold);opacity:1}
+
+.trust-band{background:var(--olive)}
+.trust-band .trust-label{color:rgb(239 228 208 / 0.72)}
+.trust-band .trust-value{color:var(--cream)}
+.trust-band .trust-value span{color:rgb(239 228 208 / 0.75)}
+.trust-band .trust-meta{color:rgb(239 228 208 / 0.82)}
+.trust-item{border-right-color:rgb(239 228 208 / 0.18)}
+.trust-item:last-child{border-right:none}
+.lang-ar .trust-item{border-left-color:rgb(239 228 208 / 0.18)}
+.trust-band .trust-link{color:var(--bright-gold,#E8CFA0);border-bottom-color:rgb(232 207 160 / 0.5)}
+
+/* 4 · Heritage + process — charcoal, olive and gold accents only */
+.heritage{background:var(--charcoal)}
+.process-sec{background:var(--soft-black)}
+.quote-sec{background:var(--charcoal)}
+.pnum,.ps-num{color:var(--soft-olive);opacity:0.85}
+
+/* 5 · Reviews — cream, comfort before the ask */
+.reviews-sec{background:var(--warm-cream);color:var(--deep-olive)}
+.reviews-sec .kicker{color:var(--soft-olive)}
+.reviews-sec .kicker-rule{background:var(--soft-olive)}
+.reviews-sec .sec-heading{color:var(--deep-olive)}
+.reviews-sec .sec-heading em{color:var(--olive)}
+.review-card{
+  background:#FFFDF9;
+  border:1px solid rgb(35 42 24 / 0.10);
+  box-shadow:0 1px 2px rgb(35 42 24 / 0.04);
+}
+.review-text{color:#3A3428}
+.review-stars{color:var(--deep-gold,#8B6A35)}
+.review-name{color:var(--deep-olive)}
+.review-loc{color:#6B6555}
+.review-verified{color:var(--olive)}
+
+/* 6 · Newsletter + contact — back to black for the close */
+.newsletter-sec{background:var(--black)}
+.contact-sec{background:var(--charcoal)}
+footer{background:var(--black)}
+
+/* --- MOBILE ----------------------------------------------------- */
+@media(max-width:1024px){
+  /* Bottle sized from viewport height here too, so the headline and CTA
+     stay above the fold on short phones. */
+  .hero-bottle{height:auto}
+}
+/* --- Olive tints that hold AA on their own grounds ---------------
+   --soft-olive #687A45 is a mid-tone: it fails as small text on both
+   charcoal (3.97:1) and warm cream (3.74:1). Two derived tints instead,
+   each measured against the ground it is actually used on. */
+:root{
+  --olive-on-dark:#849B57;   /* 6.06:1 on charcoal, 5.74:1 on soft-black */
+  --olive-on-cream:#526036;  /* 5.41:1 on warm cream                     */
+}
+.pnum{color:var(--olive-on-dark);opacity:1}
+/* .ps-num is 5rem display type — large-text 3:1 applies, so the softer
+   mid-tone is fine there and reads quieter, which is the intent. */
+.ps-num{color:var(--soft-olive);opacity:0.7}
+.reviews-sec .kicker{color:var(--olive-on-cream)}
+.reviews-sec .kicker-rule{background:var(--olive-on-cream)}
+.review-verified{color:var(--olive-on-cream)}
+.home-shop-sec .kicker{color:var(--olive-on-cream)}
+.home-shop-sec .kicker-rule{background:var(--olive-on-cream)}
+.home-product-sub{color:#5C5647}
+/* Bottle a touch larger for product presence, and the price row keyed to
+   the image's own width so the two read as one object. `58vh * 0.8` was
+   also an unreliable way to guess that width — deriving it from the
+   column instead. */
+@media(min-width:1025px){
+  .hero-product{width:fit-content;margin-inline:auto}
+  .hero-bottle{height:min(64vh,640px)}
+  .hero-price-tag{width:100%;max-width:none}
+}
+/* .reviews-sec was authored as an inset 1200px block with 120px side
+   margins — invisible when it shared the page background, but now that it
+   carries its own cream ground the inset reads as a misaligned panel.
+   Full-bleed the band; constrain the content inside it instead. */
+.reviews-sec{max-width:none;margin-inline:0;padding-inline:var(--section-x)}
+.reviews-sec>*{max-width:1200px;margin-inline:auto}
+.reviews-grid{max-width:1200px;margin-inline:auto}
+/* --- Mobile hero: CTA before supporting copy ---------------------
+   At 390×740 the primary CTA sat 95px below the fold, behind the
+   supporting paragraph. Swapping the two puts the buying action in the
+   first viewport — see the product, see the price, act — and moves the
+   detail copy to where it belongs, after the decision. */
+@media(max-width:1024px){
+  .hero-actions{order:4;margin-bottom:1.25rem}
+  .hero-sub{order:5;margin-bottom:1.5rem}
+  .hero-proof{order:6}
+  /* price row to a single compact line so it costs less height */
+  .hero-price-tag{padding-top:0.7rem;padding-bottom:0.7rem;gap:0.6rem}
+  .hpt-cta{width:auto;margin-left:auto;text-align:right}
+}
+@media(max-width:560px){
+  .hero-bottle{max-height:30vh}
+  .hero-eyebrow{margin-bottom:0.9rem}
+}
