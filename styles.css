@@ -2569,3 +2569,17 @@ footer{background:var(--black)}
    stray artefact, and duplicates the card's own Add to Cart / Details
    actions. The whole card is already tappable. */
 .shop-page .p-img-wrap::after{content:none;display:none}
+/* --- Three-up on wide screens ------------------------------------
+   Three columns only shrinks the bottle if the container stays the same
+   width. Widening it keeps each card close to the size that worked at
+   two-up (~455px vs 482px) while showing three products per row.
+   Below 1280px it falls back to two, so a card never gets cramped. */
+@media(min-width:1280px){
+  .shop-page .product-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    max-width:1620px;
+  }
+}
+@media(min-width:1025px) and (max-width:1279px){
+  .shop-page .product-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:1180px}
+}
