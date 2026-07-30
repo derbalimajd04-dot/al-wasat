@@ -2411,3 +2411,161 @@ footer{background:var(--black)}
   .hero-bottle{max-height:30vh}
   .hero-eyebrow{margin-bottom:0.9rem}
 }
+
+/* ================================================================ */
+/* === SHOP PAGE — cream theme, two-up grid                     === */
+/* Two changes: back to two columns (three shrank the bottles and    */
+/* the product is the reason for the page), and the cream/white      */
+/* treatment from the homepage cards carried across, so browsing     */
+/* happens on a comfortable light ground rather than in the dark.    */
+/* ================================================================ */
+
+/* --- Page ground ------------------------------------------------ */
+.shop-page{background:var(--warm-cream)}
+.shop-page .page-hero{
+  background:var(--warm-cream);
+  border-bottom:none;
+  color:var(--deep-olive);
+}
+.shop-page .page-hero-bg{display:none}
+.shop-page .kicker{color:var(--olive-on-cream)}
+.shop-page .kicker-rule{background:var(--olive-on-cream)}
+.shop-page .page-title{color:var(--deep-olive)}
+.shop-page .page-title em{color:var(--olive)}
+.shop-page .page-desc{color:#4A4636}
+
+/* --- Subscription toggle + marquee on cream --------------------- */
+.shop-page .sub-toggle-wrap{
+  background:rgb(82 96 54 / 0.06);
+  border-top:1px solid rgb(35 42 24 / 0.10);
+  border-bottom:1px solid rgb(35 42 24 / 0.10);
+}
+.shop-page .sub-toggle-option{color:#5C5647}
+.shop-page .sub-toggle-option.active,
+.shop-page .sub-toggle-option--right.active{color:var(--olive-on-cream)}
+.shop-page .sub-toggle-btn{background:rgb(82 96 54 / 0.14);border-color:rgb(82 96 54 / 0.3)}
+.shop-page .sub-toggle-btn.on{background:rgb(82 96 54 / 0.28);border-color:var(--olive-on-cream)}
+.shop-page .sub-toggle-thumb{background:var(--olive-on-cream)}
+/* The marquee was a dark decorative band mid-page; on cream it just
+   interrupts the browse. */
+.shop-page .marquee{display:none}
+
+/* --- Filters: cream, sticky ------------------------------------- */
+.shop-page .filters{
+  background:rgb(239 228 208 / 0.94);
+  border-top:1px solid rgb(35 42 24 / 0.10);
+  border-bottom:1px solid rgb(35 42 24 / 0.10);
+}
+.shop-page .filter-btn{
+  background:transparent;
+  border:1px solid rgb(35 42 24 / 0.16);
+  color:#4A4636;
+}
+.shop-page .filter-btn::before{background:var(--deep-olive)}
+.shop-page .filter-btn:hover{border-color:rgb(35 42 24 / 0.4);color:var(--deep-olive)}
+.shop-page .filter-btn.active{color:var(--warm-cream);border-color:var(--deep-olive)}
+
+/* --- Grid: two-up. Three columns made the bottles small, and the   */
+/*     bottle is what sells the page.                               */
+.shop-page .product-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:var(--sp-5);
+  max-width:1180px;
+  padding:var(--sp-7) var(--section-x) var(--sp-9);
+  background:transparent;
+}
+
+/* --- Card: white on cream, minimal border, smooth lift ---------- */
+.shop-page .p-card{
+  background:#FFFDF9;
+  border:1px solid rgb(35 42 24 / 0.09);
+  box-shadow:0 1px 2px rgb(35 42 24 / 0.03);
+  transition:box-shadow var(--dur) var(--ease),
+             transform var(--dur) var(--ease),
+             border-color var(--dur) var(--ease);
+}
+.shop-page .p-card:hover{
+  background:#FFFDF9;
+  border-color:rgb(35 42 24 / 0.18);
+  box-shadow:0 14px 34px rgb(35 42 24 / 0.10);
+  transform:translateY(-3px);
+}
+.shop-page .p-img-wrap{background:#FFFFFF}
+.shop-page .p-tag{
+  background:rgb(255 253 249 / 0.92);
+  border:1px solid rgb(35 42 24 / 0.14);
+  color:var(--olive-on-cream);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+}
+.shop-page .organic-pill{
+  background:rgb(82 96 54 / 0.10);
+  border-color:rgb(82 96 54 / 0.35);
+  color:var(--olive-on-cream);
+}
+.shop-page .p-name{color:var(--deep-olive)}
+.shop-page .p-sub{color:#5C5647}
+.shop-page .p-price{color:var(--deep-olive)}
+.shop-page .p-price-label{color:#6B6555}
+.shop-page .p-poly{color:#6B6555}
+.shop-page .p-attr{
+  border-color:rgb(35 42 24 / 0.14);
+  color:#5C5647;
+}
+/* Gold reads as an accent on white and fails as text there, so the
+   primary action is olive with cream type; gold stays for price context
+   on the dark pages. */
+.shop-page .p-add-btn{
+  background:var(--deep-olive);
+  border-color:var(--deep-olive);
+  color:var(--warm-cream);
+}
+.shop-page .p-add-btn:hover{background:var(--olive);border-color:var(--olive)}
+.shop-page .p-add-btn.added{
+  background:transparent;color:var(--olive-on-cream);
+  border-color:var(--olive-on-cream);
+}
+.shop-page .p-details-btn{
+  border-color:rgb(35 42 24 / 0.18);
+  color:#5C5647;
+}
+.shop-page .p-details-btn:hover{
+  border-color:rgb(35 42 24 / 0.42);
+  color:var(--deep-olive);
+  background:rgb(82 96 54 / 0.05);
+}
+
+/* --- Dark sections resume after the grid, for rhythm ------------ */
+.shop-page .assurance{background:var(--charcoal);border-top:none}
+.shop-page .bottom-cta{background:var(--black)}
+
+/* --- Responsive ------------------------------------------------- */
+@media(max-width:1024px){
+  .shop-page .product-grid{gap:var(--sp-4);padding:var(--sp-6) var(--section-x) var(--sp-8)}
+}
+@media(max-width:767px){
+  .shop-page .product-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:0.75rem;padding:0.75rem;background:transparent;
+  }
+  .shop-page .p-card{background:#FFFDF9;border:1px solid rgb(35 42 24 / 0.09)}
+  .shop-page .p-img-wrap{background:#FFFFFF}
+}
+@media(max-width:420px){
+  .shop-page .product-grid{grid-template-columns:1fr;gap:0.85rem}
+}
+/* A 4:5 image in a 482px card is 600px tall — one row fills the viewport
+   and the name, price and CTA fall below the fold. Squarer proportions
+   keep the bottle prominent while letting a full card, and a second row,
+   be seen at once. */
+@media(min-width:1025px){
+  .shop-page .p-img-wrap{aspect-ratio:5/4}
+  .shop-page .p-name{margin-top:var(--sp-4)}
+}
+@media(min-width:768px) and (max-width:1024px){
+  .shop-page .p-img-wrap{aspect-ratio:1/1}
+}
+/* A ::after "View" chip was pinned over the product image on mobile — a
+   dark gold-bordered badge that now sits on a white card looking like a
+   stray artefact, and duplicates the card's own Add to Cart / Details
+   actions. The whole card is already tappable. */
+.shop-page .p-img-wrap::after{content:none;display:none}
