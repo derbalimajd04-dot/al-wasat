@@ -2583,3 +2583,107 @@ footer{background:var(--black)}
 @media(min-width:1025px) and (max-width:1279px){
   .shop-page .product-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:1180px}
 }
+
+/* ================================================================ */
+/* === PRODUCT DETAIL SURFACES — cream theme                    === */
+/* Two surfaces show a single product's detail, and both were dark    */
+/* while the collection is now cream. Themed together so the journey  */
+/* grid → modal → product page stays on one ground.                  */
+/*   1. .pdm  — the modal behind the card's "Details" button          */
+/*   2. .pdp  — the per-product pages under /shop/<slug>/            */
+/* ================================================================ */
+
+/* --- 1 · DETAILS MODAL ------------------------------------------ */
+/* Scrim stays dark so the card lifts off the page; the card itself
+   matches the product cards it was opened from. */
+.pdm-overlay{background:rgb(35 42 24 / 0.55);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.pdm{
+  background:#FFFDF9;
+  border:1px solid rgb(35 42 24 / 0.10);
+  box-shadow:0 30px 80px rgb(8 8 6 / 0.42);
+  color:var(--deep-olive);
+}
+.pdm-close{
+  border:1px solid rgb(35 42 24 / 0.16);
+  color:#5C5647;background:transparent;
+}
+.pdm-close:hover{border-color:rgb(35 42 24 / 0.45);color:var(--deep-olive)}
+.pdm-tag{color:var(--olive-on-cream)}
+.pdm-name{color:var(--deep-olive)}
+.pdm-sub{color:#5C5647;font-style:normal}
+.pdm-price{color:var(--deep-olive)}
+.pdm-price-lbl{color:#6B6555}
+.pdm-specs{border-top:1px solid rgb(35 42 24 / 0.12)}
+.pdm-spec{border-bottom:1px solid rgb(35 42 24 / 0.08)}
+.pdm-spec:nth-child(odd){border-right:1px solid rgb(35 42 24 / 0.08)}
+.pdm-spec-label{color:#6B6555;text-transform:none;letter-spacing:var(--track-tight)}
+.pdm-spec-val{color:var(--deep-olive)}
+/* Olive action, matching the collection cards — gold is unreadable as
+   text on white and stays reserved for the dark pages. */
+.pdm-add-btn{
+  background:var(--deep-olive);border-color:var(--deep-olive);
+  color:var(--warm-cream);
+}
+.pdm-add-btn:hover{background:var(--olive);border-color:var(--olive)}
+.pdm-add-btn.added{
+  background:transparent;color:var(--olive-on-cream);
+  border-color:var(--olive-on-cream);
+}
+.pdm-shop{
+  border-color:rgb(35 42 24 / 0.22);color:var(--deep-olive);
+}
+.pdm-shop:hover{background:rgb(82 96 54 / 0.06);border-color:rgb(35 42 24 / 0.45);color:var(--deep-olive)}
+
+/* --- 2 · PRODUCT PAGES ------------------------------------------ */
+.product-page{background:var(--warm-cream)}
+.pdp{
+  background:var(--warm-cream);
+  color:var(--deep-olive);
+  min-height:0;
+}
+.product-page .kicker{color:var(--olive-on-cream)}
+.product-page .kicker-rule{background:var(--olive-on-cream)}
+.pdp-kicker{color:var(--olive-on-cream)}
+.pdp-title{color:var(--deep-olive)}
+.pdp-title em{color:var(--olive)}
+.pdp-desc{color:#4A4636}
+.pdp-price{color:var(--deep-olive)}
+.pdp-price span{color:#6B6555}
+
+/* Gallery on white so the marble photography sits flush */
+.pdp-media img{background:#FFFFFF;border:1px solid rgb(35 42 24 / 0.09)}
+.pdp-media img:first-child{background:#FFFFFF}
+.pdp-dot{border-color:rgb(35 42 24 / 0.35)}
+.pdp-dot[aria-current="true"]{background:var(--deep-olive);border-color:var(--deep-olive)}
+
+.pdp-add-btn{
+  background:var(--deep-olive);border-color:var(--deep-olive);
+  color:var(--warm-cream);
+}
+.pdp-add-btn:hover{background:var(--olive);border-color:var(--olive);color:var(--warm-cream)}
+.pdp-secondary{color:#5C5647}
+.pdp-secondary:hover{color:var(--deep-olive)}
+
+.pdp-trust li,.pdp-trust span{color:#5C5647}
+.pdp-trust li::before,.pdp-trust span::before{background:var(--olive-on-cream);opacity:1}
+
+.pdp-spec-grid{
+  border:1px solid rgb(35 42 24 / 0.12);
+  background:#FFFDF9;
+}
+.pdp-spec,.pdp-spec-grid>div{
+  border-right-color:rgb(35 42 24 / 0.08);
+  border-bottom-color:rgb(35 42 24 / 0.08);
+}
+.pdp-spec span,.pdp-spec-grid>div span{
+  color:#6B6555;text-transform:none;letter-spacing:var(--track-tight);
+}
+.pdp-spec strong,.pdp-spec-grid>div strong{color:var(--deep-olive);font-style:normal}
+
+/* Sticky buy bar on the light ground */
+@media(max-width:1024px){
+  .pdp-actions{
+    background:rgb(255 253 249 / 0.96);
+    border-top:1px solid rgb(35 42 24 / 0.12);
+  }
+}
