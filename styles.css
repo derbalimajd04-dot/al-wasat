@@ -2798,3 +2798,66 @@ footer{background:var(--black)}
 .checkout-page .field select:focus,
 .checkout-page .field textarea:focus{border-bottom-color:var(--olive-on-cream)}
 .checkout-page .field::after{background:var(--olive-on-cream)}
+
+/* ================================================================ */
+/* === MOBILE NAV FIXES                                         === */
+/* ================================================================ */
+
+/* --- 1 · Drawer was trapped inside the nav ----------------------
+   backdrop-filter on an element makes it a containing block for its
+   position:fixed descendants. .nav-links is fixed with top:0;bottom:0,
+   so it resolved against the ~74px nav instead of the viewport — a
+   stubby 160px panel, mispositioned, with its slide-in transform
+   measured against the wrong box.
+
+   The blur moves to a pseudo-element. A pseudo-element does not become
+   a containing block for its parent's descendants, so the drawer is
+   measured against the viewport again while the bar keeps its glass. */
+nav,nav.nav-transparent,nav.nav-transparent.scrolled{
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+  background:transparent;
+}
+nav::before{
+  content:'';
+  position:absolute;inset:0;z-index:-1;
+  background:rgb(var(--ink-rgb) / 0.72);
+  -webkit-backdrop-filter:blur(20px) saturate(140%);
+  backdrop-filter:blur(20px) saturate(140%);
+  transition:background var(--dur) ease;
+}
+nav.nav-transparent.scrolled::before{background:rgb(var(--ink-rgb) / 0.9)}
+/* .nav-blur is a leftover of the old scroll-driven backdrop; it would
+   now double up on the pseudo-element. */
+.nav-blur{display:none}
+
+/* --- 2 · Language switcher was invisible on phones --------------
+   `.lang-pill{display:none}` at ≤767px was undone by
+   `.nav-links.open ~ .lang-pill` — a *sibling* selector. Since the pill
+   is moved *inside* the drawer, that sibling rule can never match, so
+   the pill stayed hidden and the language switcher was unreachable
+   below 767px. Match it where it actually lives. */
+@media(max-width:767px){
+  .nav-links .lang-pill{display:flex;position:static;background:transparent}
+}
+
+/* --- 3 · Drawer must be usable if the transition is interrupted --
+   A throttled or interrupted transition could leave the panel stranded
+   off-screen. Driving the open state from the transform's end value
+   only (not the transition) means the class alone is sufficient. */
+@media(max-width:1024px){
+  .nav-links{height:100dvh;max-height:100dvh;overflow-y:auto;overscroll-behavior:contain}
+  .nav-links.open{transform:translateX(0) !important}
+}
+@supports not (height:100dvh){
+  @media(max-width:1024px){.nav-links{height:100vh;max-height:100vh}}
+}
+/* --- 4 · Floating button must not sit over the open drawer -------
+   .wa-btn is z-index 640; the nav drawer is 490 and its overlay 489, so
+   the button floated on top of the open menu. Hidden while either the
+   nav drawer or the cart is open, via :has() so the state is derived
+   from the DOM and cannot desync. */
+body:has(.nav-links.open) .wa-btn,
+body:has(.cart-drawer.open) .wa-btn{
+  opacity:0;pointer-events:none;
+}
