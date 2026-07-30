@@ -2028,3 +2028,221 @@ body:has(.cart-toast.show) .wa-btn:hover{transform:translateY(-4.5rem) scale(1.0
    under the old price layout. With the rebuilt card it collides with the
    price. */
 .p-price + .p-poly{margin-top:0}
+
+/* ================================================================ */
+/* === CALM LAYER — Apple-leaning refinement                     === */
+/* Not an Apple pastiche: the discipline is Apple's (space instead  */
+/* of lines, few labels, large calm type, restrained motion), the   */
+/* warmth stays Tunisian.                                          */
+/*                                                                  */
+/* Diagnosis this layer addresses:                                  */
+/*   174 hairline borders — the page was drawn as a grid of boxes.   */
+/*    90 uppercase labels — everything shouted at the same pitch.    */
+/*   104 ad-hoc padding pairs — no vertical rhythm.                  */
+/* ================================================================ */
+
+:root{
+  /* Softer ground. Pure #0A0906 against cream is a harsh edge to read
+     against for long; lifting the base and easing text off pure white
+     lowers the contrast ratio without dropping below AA. */
+  --ink:#0C0B09;
+  --ink2:#141210;
+  --ink3:#1B1916;
+  --cream:#F0EBE2;
+
+  /* Section rhythm — one scale, used everywhere. */
+  --section-y:9rem;      /* vertical breathing between sections   */
+  --section-x:6rem;      /* page gutter                            */
+  --stack:2rem;          /* gap between blocks inside a section    */
+
+  /* Separation by tone, not by line. */
+  --hair:rgb(var(--gold-rgb) / 0.07);
+}
+
+/* --- 1. SPACE INSTEAD OF LINES ---------------------------------- */
+/* Bands now read apart because of air and a tonal step, not because
+   a gold rule was drawn between them. */
+.heritage,.process-sec,.quote-sec,.newsletter-sec,.contact-sec,
+.trust-band,.reviews-sec,.home-shop-sec{
+  padding-top:var(--section-y);
+  padding-bottom:var(--section-y);
+  border-top:none;
+  border-bottom:none;
+}
+.trust-band{background:var(--ink)}
+.process-sec::before{display:none}          /* decorative top gradient rule */
+.quote-sec{background:var(--ink)}
+.reviews-sec{background:var(--ink2)}
+.newsletter-sec{background:var(--ink)}
+.contact-sec{background:var(--ink2)}
+
+/* Hairlines that remain are quieter. */
+.p-card,.review-card,.trust-item,.assurance,.ass-item,
+.pillar-list,.pillar-row,.p-attr,.trade-table,.trade-table th,.trade-table td{
+  border-color:var(--hair);
+}
+.ornament{display:none}                     /* gem + rule motif, 6 instances */
+.orn-line,.orn-gem{display:none}
+.q-mark{display:none}                       /* 14rem decorative quote glyph */
+
+/* --- 2. FEWER, QUIETER LABELS ----------------------------------- */
+/* Uppercase now marks structure only — kickers, nav, buttons. Meta
+   text reads as sentence case, which is calmer and faster to scan. */
+.p-attr,.p-poly,.trust-meta,.hero-proof span,.review-loc,
+.cd-item-meta,.co-item-sub,.p-sub,.home-product-sub,.pdp-trust li,
+.pdp-trust span,.trust-label,.press-quote,.tl-desc,.ass-sub{
+  text-transform:none;
+  letter-spacing:var(--track-tight);
+}
+.trust-label{font-size:var(--fs-micro);color:var(--stone)}
+.hero-proof span{font-size:var(--fs-label);color:var(--stone2)}
+/* Kickers keep their tracking but lose the weight of full caps at size. */
+.kicker,.press-kicker,.timeline-kicker{
+  font-size:var(--fs-micro);
+  letter-spacing:0.2em;
+  color:var(--stone2);
+}
+.kicker-rule{width:24px;opacity:0.6}
+
+/* --- 3. CALMER TYPE -------------------------------------------- */
+/* Larger body, more leading, shorter measure — the three things that
+   make long copy comfortable. */
+.sec-body,.article-p,.article-lead,.pdesc,.ps-desc,.j-excerpt,
+.tc-desc,.trade-terr-note,.ass-sub,.page-desc,.trade-hero-right{
+  font-size:var(--fs-body-l);
+  line-height:1.75;
+  max-width:62ch;
+}
+.sec-body{color:var(--stone2)}
+.hero-sub{font-size:var(--fs-body-l);line-height:1.7;max-width:44ch}
+/* Display type: tighter leading, no letterspacing — it reads as
+   confident rather than stretched. */
+.sec-heading,.page-title,.hero-h1,.journal-hero-title,.pdp-title,
+.checkout-title,.bcta-title,.q-text{
+  letter-spacing:-0.01em;
+  line-height:1.1;
+}
+.q-text{font-size:clamp(1.5rem,2.6vw,2.1rem);line-height:1.45;max-width:36ch;margin-inline:auto}
+
+/* --- 4. TRUST STRIP -------------------------------------------- */
+/* Four plain facts, no boxes, no icons competing with the words. */
+.trust-strip{padding:var(--stack) var(--section-x);background:var(--ink2)}
+.trust-strip-list{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:var(--sp-4);list-style:none;
+  max-width:1300px;margin:0 auto;
+}
+.trust-strip-list li{
+  display:flex;align-items:center;gap:0.6rem;
+  font-family:var(--tenor);font-size:var(--fs-label);
+  letter-spacing:var(--track-tight);color:var(--stone2);
+  line-height:1.5;
+}
+.trust-strip-list li::before{
+  content:'';flex-shrink:0;width:5px;height:5px;border-radius:50%;
+  background:var(--gold);opacity:0.75;
+}
+
+/* --- 5. SOFTER, FASTER MOTION ---------------------------------- */
+/* Long slow reveals make a site feel heavy, not luxurious. Shorter
+   travel, shorter duration, no stagger past the second item. */
+.reveal{transition-duration:0.55s}
+.js .reveal{transform:translateY(14px)}
+.rd1{transition-delay:0.06s}
+.rd2{transition-delay:0.12s}
+.rd3,.rd4{transition-delay:0.16s}
+.p-card{transition-duration:0.5s}
+.js .p-card,.js .j-card{transform:translateY(14px)}
+
+/* --- 6. HERO: MORE PRODUCT, MORE AIR -------------------------- */
+.hero-inner{padding-left:var(--section-x);padding-right:var(--section-x)}
+.hero-price-tag{border:none;border-top:1px solid var(--hair);background:transparent;padding-left:0;padding-right:0}
+.hero-proof{border-top:1px solid var(--hair)}
+.hero-eyebrow{color:var(--stone2)}
+/* Desktop-only sizing. Unscoped, `gap` applied to the mobile layout too,
+   where .hero-content is display:contents — so every promoted child got a
+   96px gap and the hero fell apart vertically. */
+@media(min-width:1025px){
+  .hero-inner{gap:6rem}
+  .hero-bottle,.hero-price-tag{max-width:470px}
+  .hero-proof{gap:3rem}
+}
+
+/* --- 7. RESPONSIVE RHYTHM ------------------------------------- */
+@media(max-width:1100px){
+  :root{--section-y:6.5rem;--section-x:3rem}
+  .trust-strip-list{grid-template-columns:repeat(2,1fr);gap:var(--sp-4) var(--sp-5)}
+}
+@media(max-width:768px){
+  :root{--section-y:4.5rem;--section-x:1.5rem}
+  .sec-body,.article-p,.article-lead,.pdesc,.ps-desc,.j-excerpt,
+  .tc-desc,.ass-sub,.page-desc{font-size:var(--fs-body);line-height:1.7}
+  .hero-sub{font-size:var(--fs-body)}
+  /* Motion is largely stripped on touch: it costs frames and adds
+     nothing on a small screen being scrolled quickly. */
+  .js .reveal,.js .p-card,.js .j-card{transform:none;opacity:1}
+  .reveal,.p-card,.j-card{transition:none}
+  .rd1,.rd2,.rd3,.rd4{transition-delay:0s}
+}
+@media(max-width:480px){
+  :root{--section-y:3.5rem;--section-x:1.25rem}
+  .trust-strip-list{grid-template-columns:1fr;gap:0.75rem}
+  .trust-strip{padding:1.75rem var(--section-x)}
+}
+/* H1 was breaking as "Tunisian Extra / Virgin / Olive Oil." — an orphaned
+   word reads as a mistake. Give the copy column more room and size the
+   display type to land on two lines at every desktop width. */
+/* Desktop-scoped: unscoped, this overrode the mobile single-column rule
+   further up the file and pushed the H1 into an off-screen second column. */
+@media(min-width:1025px){
+  .hero-inner{grid-template-columns:1.15fr 0.85fr}
+  .hero-content{max-width:34rem}
+}
+.hero-h1{font-size:clamp(2.4rem,3.5vw,3.4rem)}
+
+/* --- Nav: always a translucent bar ------------------------------
+   The transparent variant relied on JS adding .scrolled to fade a
+   backdrop in. Over the ivory product band that left cream text on a
+   near-white ground — unreadable — and it failed entirely if the scroll
+   handler never ran. A persistent translucent bar is both the calmer
+   choice and removes the dependency: contrast is guaranteed over any
+   section, light or dark. */
+nav.nav-transparent{
+  background:rgb(var(--ink-rgb) / 0.72);
+  -webkit-backdrop-filter:blur(20px) saturate(140%);
+  backdrop-filter:blur(20px) saturate(140%);
+}
+nav.nav-transparent .nav-blur{
+  background:rgb(var(--ink-rgb) / 0.18);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  border-bottom:1px solid transparent;
+  transition:background var(--dur) ease;
+}
+nav.nav-transparent.scrolled{background:rgb(var(--ink-rgb) / 0.88)}
+nav.nav-transparent.scrolled .nav-blur{
+  background:transparent;border-bottom-color:var(--hair);
+}
+
+/* --- Stop accidental horizontal panning -------------------------
+   The off-canvas cart drawer and nav panel sit at translateX(100%),
+   which extends the scrollable area. body had overflow-x:hidden but
+   html did not, so the overflow propagated to the viewport and the
+   page could be panned sideways ~280px on a phone. `clip` prevents
+   this without creating a scroll container (which `hidden` on html
+   would, breaking position:sticky in some browsers). */
+html{overflow-x:clip}
+@supports not (overflow:clip){
+  html{overflow-x:hidden}
+}
+/* Eyebrow wrapped to three tracked-uppercase lines at 390px, which is
+   both ugly and a lot of vertical space for a subtitle. */
+@media(max-width:560px){
+  .hero-eyebrow{
+    font-size:var(--fs-micro);
+    letter-spacing:0.12em;
+    gap:0.75rem;
+    line-height:1.5;
+    margin-bottom:1.1rem;
+  }
+  .eyebrow-rule{width:20px;flex-shrink:0}
+}
