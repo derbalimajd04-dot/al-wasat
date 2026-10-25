@@ -103,8 +103,9 @@ footer{background:var(--editorial-paper);border-top:1px solid var(--editorial-in
 .shop-page .p-card[data-pid="classic-500"],.shop-page .p-card[data-pid="organic-500"]{--product-photo-ratio:1280/797}
 .shop-page .p-card[data-pid="classic-1l"]{--product-photo-ratio:1280/799}
 .shop-page .p-card[data-pid="organic-1l"]{--product-photo-ratio:1280/796}
-.shop-page .p-card[data-pid="gift-card"]{--product-photo-ratio:1280/714}
 .shop-page .p-img-wrap{background:transparent;aspect-ratio:var(--product-photo-ratio);border:0}
+.shop-page .p-card[data-pid="gift-card"] .p-img-wrap{background:#040b1d;transition:background .45s ease}
+.shop-page .p-card[data-pid="gift-card"]:hover .p-img-wrap{background:#040f24}
 .shop-page .p-img{filter:none}
 .shop-page .p-img.front,.shop-page .p-img.back{object-fit:contain;object-position:center}
 /* Keep the image swap, without moving either photo outside its frame. */
