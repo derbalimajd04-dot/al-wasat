@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "node scripts/build.js",
+    "optimize:images": "node scripts/optimize-images.js",
     "dev": "netlify dev"
   },
   "dependencies": {

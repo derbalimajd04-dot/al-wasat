@@ -1,14 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TFTLQ2TYJV"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-TFTLQ2TYJV');
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AL WASAT — Checkout</title>
@@ -133,7 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (params.get('success') === 'true') {
     const sessionId = params.get('session_id') || '';
     saveCart([]);
-    if (typeof window._clearPromoCode === 'function') window._clearPromoCode();
     localStorage.removeItem('alwasat_sub');
     document.getElementById('checkoutWrap').style.display = 'none';
     document.getElementById('orderSuccess').style.display = 'block';

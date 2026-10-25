@@ -1,4 +1,8 @@
-/* === PRODUCT DATA (global — used by modal + cart) === */
+/* === PRODUCT DATA (global — used by modal + cart) ===
+   Only products that can actually be paid for belong here: getCart() drops
+   anything not listed, so a stale cart can never reach a broken checkout.
+   'harvest-2025' and 'merch-set' come back once their Stripe price IDs are
+   set in netlify/functions/create-checkout.js. */
 const PRODUCT_DATA = {
   'classic-500':  { tag:'Classic', name:'AL WASAT Classic', sub:'Extra Virgin Olive Oil', price:'£13.99', unit:'/ 500ml', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Polyphenols',v:'380 mg/kg'},{l:'Acidity',v:'< 0.3%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'500ml glass bottle'}] },
   'classic-1l':   { tag:'Classic', name:'AL WASAT Classic', sub:'Extra Virgin Olive Oil', price:'£22.99', unit:'/ 1 Litre', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Polyphenols',v:'380 mg/kg'},{l:'Acidity',v:'< 0.3%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'1 Litre glass bottle'}] },
@@ -6,10 +10,8 @@ const PRODUCT_DATA = {
   'organic-1l':   { tag:'Organic · Certified', name:'AL WASAT Organic', sub:'Organic Extra Virgin Olive Oil', price:'£28.99', unit:'/ 1 Litre', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Certification',v:'EU Organic Certified'},{l:'Polyphenols',v:'460 mg/kg'},{l:'Acidity',v:'< 0.2%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'1 Litre glass bottle'}] },
   'tasting-250ml':    { tag:'Tasting',      name:'AL WASAT Classic — 250ml Tasting', sub:'Cold-pressed · Single origin · Tunisia', price:'£9.99',  unit:'/ 250ml',  specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Polyphenols',v:'520 mg/kg'},{l:'Acidity',v:'< 0.3%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'250ml glass bottle'}] },
   'bulk-3l':          { tag:'Bulk',         name:'AL WASAT Bulk — 3L Tin',           sub:'Trade & Hospitality Format',            price:'£49.99', unit:'/ 3L tin', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Polyphenols',v:'490 mg/kg'},{l:'Acidity',v:'< 0.5%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'3 Litre tin'}] },
-  'harvest-2025':     { tag:'Limited 2025', name:'Limited Harvest 2025',      sub:'Single-Estate Reserve 500ml',       price:'£34.99', unit:'/ 500ml',  specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Estate',v:'Single-origin, named grove'},{l:'Polyphenols',v:'620 mg/kg'},{l:'Acidity',v:'< 0.15%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'500ml glass bottle, limited edition'}] },
   'gift-box':         { tag:'Gift Box',     name:'AL WASAT Gift Box Set',     sub:'Two 250ml bottles · Luxury gift box',   price:'£24.99', unit:'/ set',    specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Includes',v:'2 × 250ml bottles, gift-boxed'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Delivery',v:'Free UK delivery included'},{l:'Format',v:'Luxury gift box'}] },
   'subscription-box': { tag:'Subscribe',    name:'Quarterly Subscription Box', sub:'Seasonal harvest selections, delivered', price:'£39.99', unit:'/ quarter', specs:[{l:'Frequency',v:'Quarterly delivery'},{l:'Contents',v:'Single harvest or blend, curated each season'},{l:'Flexibility',v:'Cancel anytime, no commitments'},{l:'Perks',v:'Members-only access to limited batches'},{l:'Format',v:'Subscription box, gift-wrapped'}] },
-  'merch-set':        { tag:'Merch',        name:'AL WASAT Merch Set',        sub:'Tote · Apron · Pourer · Booklet',  price:'£29.99', unit:'/ set',    specs:[{l:'Contents',v:'Tote bag, cotton apron, stainless pourer, harvest booklet'},{l:'Material',v:'Organic cotton, food-grade steel'},{l:'Branding',v:'AL WASAT embossed & printed'},{l:'Format',v:'4-piece set, gift-ready packaging'}] },
   'gift-card':        { tag:'Gift Card',    name:'AL WASAT Digital Gift Card', sub:'Instant delivery by email',        price:'£15.00', unit:'/ card',   specs:[{l:'Delivery',v:'Instant — sent by email'},{l:'Validity',v:'12 months from purchase'},{l:'Redeemable',v:'Any product on al-wasat.co.uk'},{l:'Format',v:'Digital code, printable PDF included'}] },
 };
 
@@ -34,11 +36,12 @@ function saveCart(c) {
   _cartRender();
 }
 
-function addToCartById(pid) {
+function addToCartById(pid, qty) {
   const d = PRODUCT_DATA[pid]; if (!d) return;
+  const n = Math.max(1, Math.min(24, parseInt(qty, 10) || 1));
   const c = getCart();
   const x = c.find(i => i.pid === pid);
-  if (x) x.qty++; else c.push({ pid, name:d.name, price:d.price, priceNum:parseFloat(d.price.replace('£','')), unit:d.unit, qty:1 });
+  if (x) x.qty += n; else c.push({ pid, name:d.name, price:d.price, priceNum:parseFloat(d.price.replace('£','')), unit:d.unit, qty:n });
   saveCart(c);
 }
 
@@ -80,18 +83,53 @@ function showCartToast(message) {
   window._cartToastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
 }
 
+/* === DIALOG FOCUS ===
+   The cart drawer and product modal are hidden off-screen, not removed, so
+   they stay `inert` while closed (no tabbing into invisible controls). When
+   open, Tab is kept inside and focus returns to the opener on close. */
+let _dlgEl = null, _dlgReturn = null;
+function _dlgKeys(e) {
+  if (!_dlgEl || e.key !== 'Tab') return;
+  const f = [..._dlgEl.querySelectorAll('a[href],button:not([disabled]),input,select,textarea')]
+    .filter(el => el.offsetParent !== null);
+  if (!f.length) return;
+  const first = f[0], last = f[f.length - 1];
+  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+}
+function _dlgOpen(el, focusEl) {
+  _dlgReturn = document.activeElement;
+  _dlgEl = el; el.inert = false;
+  document.addEventListener('keydown', _dlgKeys);
+  (focusEl || el).focus();
+}
+function _dlgClose(el) {
+  el.inert = true;
+  if (_dlgEl !== el) return;
+  document.removeEventListener('keydown', _dlgKeys);
+  _dlgEl = null;
+  if (_dlgReturn && document.contains(_dlgReturn)) _dlgReturn.focus();
+  _dlgReturn = null;
+}
+
 function openCart() {
   const dr = document.getElementById('cartDrawer'), ov = document.getElementById('cartOverlay');
   if (!dr) return;
   _cartRender();
   dr.classList.add('open'); ov.classList.add('open'); document.body.style.overflow = 'hidden';
+  _dlgOpen(dr, document.getElementById('cartClose'));
 }
 
 function closeCart() {
   const dr = document.getElementById('cartDrawer'), ov = document.getElementById('cartOverlay');
-  if (!dr) return;
+  if (!dr || !dr.classList.contains('open')) return;
   dr.classList.remove('open'); ov.classList.remove('open'); document.body.style.overflow = '';
+  _dlgClose(dr);
 }
+
+/* Cart lines store the English unit; show it in the current language. */
+const _UNIT_KEYS = { '/ 1 Litre':'unit-litre', '/ 3L tin':'unit-tin', '/ set':'unit-set', '/ quarter':'unit-quarter', '/ card':'unit-card' };
+function _unitLabel(u) { return _UNIT_KEYS[u] ? awT(_UNIT_KEYS[u], u) : u; }
 
 function _cartBadge() {
   const n = getCart().reduce((s,i) => s+i.qty, 0);
@@ -100,31 +138,39 @@ function _cartBadge() {
 
 function _cartRender() {
   const el = document.getElementById('cartItems'); if (!el) return;
+  /* Re-rendering replaces the buttons; remember which one had focus. */
+  const fk = el.contains(document.activeElement) ? document.activeElement.getAttribute('data-fk') : null;
+  const refocus = () => {
+    if (fk === null) return;
+    const b = fk && el.querySelector('[data-fk="' + fk + '"]');
+    (b || document.getElementById('cartClose') || el).focus();
+  };
   const c = getCart(), foot = document.getElementById('cartFooter');
   if (!c.length) {
     el.innerHTML = '<div class="cd-empty"><p>' + awT('cart-empty', 'Your cart is empty.') +
       '</p><a href="/shop/" class="cd-empty-link">' + awT('cart-empty-link', 'Browse Collection') + ' →</a></div>';
-    if (foot) foot.style.display = 'none'; return;
+    if (foot) foot.style.display = 'none'; refocus(); return;
   }
   if (foot) foot.style.display = '';
   const tot = c.reduce((s,i) => s+i.priceNum*i.qty, 0);
   el.innerHTML = c.map(i => `<div class="cd-item">
     <div class="cd-item-info">
       <div class="cd-item-name">${i.name}</div>
-      <div class="cd-item-meta">${i.unit.replace('/ ','')} · ${i.price} each</div>
+      <div class="cd-item-meta">${_unitLabel(i.unit).replace('/ ','')} · ${i.price} ${awT('cart-each', 'each')}</div>
       <div class="cd-item-price">£${(i.priceNum * i.qty).toFixed(2)}</div>
     </div>
     <div class="cd-item-right">
       <div class="cd-qty-row">
-        <button class="cd-qty-btn" onclick="cartQty('${i.pid}',-1)">−</button>
-        <span class="cd-qty">${i.qty}</span>
-        <button class="cd-qty-btn" onclick="cartQty('${i.pid}',1)">+</button>
+        <button class="cd-qty-btn" type="button" data-fk="${i.pid}:dec" aria-label="${awT('cart-qty-dec', 'Decrease quantity')}" onclick="cartQty('${i.pid}',-1)">−</button>
+        <span class="cd-qty" aria-live="polite">${i.qty}</span>
+        <button class="cd-qty-btn" type="button" data-fk="${i.pid}:inc" aria-label="${awT('cart-qty-inc', 'Increase quantity')}" onclick="cartQty('${i.pid}',1)">+</button>
       </div>
-      <button class="cd-remove" onclick="cartRemove('${i.pid}')">✕</button>
+      <button class="cd-remove" type="button" aria-label="${awT('cart-remove', 'Remove')} ${i.name}" onclick="cartRemove('${i.pid}')">✕</button>
     </div>
   </div>`).join('');
   const totEl = document.getElementById('cartTotal'); if (totEl) totEl.textContent = '£'+tot.toFixed(2);
   if (typeof window._afterCartRender === 'function') window._afterCartRender();
+  refocus();
 }
 
 /* === DOMContentLoaded === */
@@ -252,30 +298,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(revealAll, 4000);
   }
 
-  /* === PRELOADER (home only) === */
-  /* `load` waits on every asset — the hero video, the CDN scripts, webfonts.
-     One stalled request used to leave the preloader up permanently, hiding
-     the entire site. Dismissal is now whichever comes first: `load`, or a
-     hard 3s ceiling from DOM-ready. Reduced-motion skips it entirely. */
-  const preloader = document.getElementById('preloader');
-  if (preloader) {
-    const reduceMotion = window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let dismissed = false;
-    const dismissPreloader = () => {
-      if (dismissed) return;
-      dismissed = true;
-      preloader.classList.add('out');
-      setTimeout(() => { preloader.style.display = 'none'; }, 1000);
-    };
-    if (reduceMotion) {
-      dismissPreloader();
-    } else {
-      window.addEventListener('load', () => setTimeout(dismissPreloader, 2100));
-      setTimeout(dismissPreloader, 3000);   /* failsafe ceiling */
-    }
-  }
-
   /* HERO PARALLAX — driven by Lenis callback above */
 
   /* === CONTACT FORM (home only) === */
@@ -337,43 +359,74 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* === CART INIT === */
   _cartBadge();
+  const cartDr = document.getElementById('cartDrawer');
+  if (cartDr) {
+    cartDr.setAttribute('role', 'dialog');
+    cartDr.setAttribute('aria-modal', 'true');
+    cartDr.setAttribute('aria-label', awT('cart-title', 'Your Selection'));
+    cartDr.inert = true;
+  }
   const cartCloseBtn = document.getElementById('cartClose');
   if (cartCloseBtn) cartCloseBtn.addEventListener('click', closeCart);
   const cartOv = document.getElementById('cartOverlay');
   if (cartOv) cartOv.addEventListener('click', closeCart);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCart(); });
 
-
-  /* === PRODUCT DETAIL MODAL (shop only) === */
+  /* === PRODUCT DETAIL MODAL (shop only) ===
+     Products with their own page (data-url) always go to that page, on every
+     screen size. The modal is only for products that do not have one yet. */
   const pdModal = document.getElementById('pdModal');
   if (pdModal) {
     const pdmClose = document.getElementById('pdmClose');
-    function closePdm() { pdModal.classList.remove('open'); document.body.style.overflow = ''; }
-    pdmClose.addEventListener('click', closePdm);
-    pdModal.addEventListener('click', e => { if (e.target === pdModal) closePdm(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closePdm(); closeCart(); } });
-    window['openDetails'] = function(e, btn) {
-      e.preventDefault(); e.stopPropagation();
-      const card = btn.closest('.p-card');
-      if (isMobileViewport()) {
-        if (!e.target.closest('.p-img-wrap,.p-name,.p-details-btn')) return;
-        if (card.dataset.url) {
-          window.location.href = card.dataset.url;
-          return;
-        }
-      }
-      const pid = card.dataset.pid;
+    const pdmBox = pdModal.querySelector('.pdm');
+    pdmBox.setAttribute('role', 'dialog');
+    pdmBox.setAttribute('aria-modal', 'true');
+    pdmBox.setAttribute('aria-labelledby', 'pdmName');
+    pdmClose.setAttribute('type', 'button');
+    pdmClose.setAttribute('aria-label', awT('modal-close', 'Close'));
+    pdModal.inert = true;
+
+    function closePdm() {
+      if (!pdModal.classList.contains('open')) return;
+      pdModal.classList.remove('open'); document.body.style.overflow = '';
+      _dlgClose(pdModal);
+    }
+    function showProduct(pid) {
       const d = PRODUCT_DATA[pid];
       if (!d) return;
       document.getElementById('pdmInner').innerHTML =
         `<div class="pdm-tag">${d.tag}</div>
-         <div class="pdm-name">${d.name}</div>
+         <h2 class="pdm-name" id="pdmName">${d.name}</h2>
          <div class="pdm-sub">${d.sub}</div>
          <div class="pdm-price">${d.price} <span class="pdm-price-lbl">${d.unit}</span></div>
          <div class="pdm-specs">${d.specs.map(s=>`<div class="pdm-spec"><div class="pdm-spec-label">${s.l}</div><div class="pdm-spec-val">${s.v}</div></div>`).join('')}</div>
-         <button class="pdm-add-btn" onclick="event.stopPropagation();addToCartById('${pid}');document.getElementById('pdModal').classList.remove('open');document.body.style.overflow='';openCart();">Add to Cart</button>`;
+         <button class="pdm-add-btn" type="button" id="pdmAdd">${awT('add-to-cart', 'Add to Cart')}</button>`;
+      document.getElementById('pdmAdd').addEventListener('click', e => {
+        e.stopPropagation();
+        addToCartById(pid);
+        const opener = _dlgReturn;
+        closePdm();
+        openCart();
+        _dlgReturn = opener;   /* closing the cart returns focus to the card */
+      });
       pdModal.classList.add('open');
       document.body.style.overflow = 'hidden';
+      _dlgOpen(pdModal, pdmClose);
+    }
+    pdmClose.addEventListener('click', closePdm);
+    pdModal.addEventListener('click', e => { if (e.target === pdModal) closePdm(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closePdm(); });
+
+    window['openDetails'] = function(e, el) {
+      e.preventDefault(); e.stopPropagation();
+      const card = el.closest('.p-card');
+      if (card.dataset.url) { window.location.href = card.dataset.url; return; }
+      showProduct(card.dataset.pid);
     };
+
+    /* Deep link from elsewhere on the site: /shop/?product=gift-box */
+    const linked = new URLSearchParams(location.search).get('product');
+    if (linked && PRODUCT_DATA[linked]) showProduct(linked);
   }
 
   /* === ADD TO CART (shop only) === */
@@ -559,157 +612,53 @@ document.addEventListener('DOMContentLoaded', () => {
   els.forEach(function(el){ obs.observe(el); });
 })();
 
-/* ============================================================= */
-/* === SUBSCRIPTION MODE                                      === */
-/* ============================================================= */
+/* === PRODUCT PAGE: quantity + add to cart === */
 (function () {
-  var SUB_DISCOUNT = 0.10;
-
-  window._subMode = localStorage.getItem('alwasat_sub') === '1';
-
-  function setSubMode(on) {
-    window._subMode = on;
-    localStorage.setItem('alwasat_sub', on ? '1' : '0');
-    _updateShopPrices();
-    _cartRender(); // refresh cart totals
-  }
-
-  function _updateShopPrices() {
-    var cards = document.querySelectorAll('.p-card');
-    cards.forEach(function (card) {
-      var priceEl = card.querySelector('.p-price');
-      if (!priceEl) return;
-      var base = parseFloat(priceEl.dataset.base);
-      if (isNaN(base)) return;
-      var displayed = window._subMode ? (base * (1 - SUB_DISCOUNT)).toFixed(2) : base.toFixed(2);
-      var label = priceEl.querySelector('.p-price-label');
-      priceEl.innerHTML = '£' + displayed + (label ? ' <span class="p-price-label">' + label.textContent + '</span>' : '');
-      priceEl.dataset.base = base; // preserve original
+  var add = document.querySelector('.pdp-add-btn[data-pid]');
+  var qty = document.getElementById('pdpQty');
+  if (!add || !qty) return;
+  function clamp() { qty.value = Math.max(1, Math.min(24, parseInt(qty.value, 10) || 1)); }
+  document.querySelectorAll('.pdp-qty [data-step]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      qty.value = (parseInt(qty.value, 10) || 1) + parseInt(b.getAttribute('data-step'), 10);
+      clamp();
     });
-    // Toggle active class on the toggle option labels
-    var optOne = document.getElementById('subOptOne');
-    var optSub = document.getElementById('subOptSub');
-    if (optOne) optOne.classList.toggle('active', !window._subMode);
-    if (optSub) optSub.classList.toggle('active', window._subMode);
-  }
-
-  document.addEventListener('DOMContentLoaded', function () {
-    // Wire toggle button
-    var btn = document.getElementById('subToggleBtn');
-    if (btn) {
-      // Restore state
-      if (window._subMode) btn.setAttribute('aria-checked', 'true');
-      btn.classList.toggle('on', window._subMode);
-      _updateShopPrices();
-
-      btn.addEventListener('click', function () {
-        var next = !(window._subMode);
-        btn.setAttribute('aria-checked', next ? 'true' : 'false');
-        btn.classList.toggle('on', next);
-        setSubMode(next);
-      });
-    }
+  });
+  qty.addEventListener('change', clamp);
+  add.addEventListener('click', function () {
+    clamp();
+    addToCartById(add.getAttribute('data-pid'), qty.value);
+    qty.value = 1;
+    openCart();
   });
 })();
 
-/* ============================================================= */
-/* === PROMO CODE                                             === */
-/* ============================================================= */
+/* === LAZY BACKGROUND VIDEO ===
+   Videos ship with preload="none" and only a poster frame. The file is
+   fetched once the video is near the viewport — never on data-saver
+   connections, under reduced motion, or when CSS hides the video (the shop
+   video is display:none on phones). The poster stays as the still image. */
 (function () {
-  window._promoState = JSON.parse(localStorage.getItem('alwasat_promo') || 'null');
+  var vids = document.querySelectorAll('video[data-src]');
+  if (!vids.length) return;
+  var conn = navigator.connection || {};
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (conn.saveData || /(^|-)2g$/.test(conn.effectiveType || '') || reduce) return;
 
-  function savePromo(state) {
-    window._promoState = state;
-    if (state) localStorage.setItem('alwasat_promo', JSON.stringify(state));
-    else localStorage.removeItem('alwasat_promo');
-    _cartRender();
+  function load(v) {
+    if (getComputedStyle(v).display === 'none') return;
+    v.src = v.dataset.src;
+    v.removeAttribute('data-src');
+    var p = v.play();
+    if (p && p.catch) p.catch(function () {});
   }
-
-  window._getPromoCode  = function () { return window._promoState ? window._promoState.code : ''; };
-  window._clearPromoCode = function () { savePromo(null); };
-
-  window._applyPromoCode = async function (code) {
-    if (!code) return null;
-    try {
-      var res  = await fetch('/.netlify/functions/validate-promo?code=' + encodeURIComponent(code));
-      var data = await res.json();
-      if (data.valid) { savePromo({ code: data.code, pct: data.pct, label: data.label }); return data; }
-      savePromo(null); return null;
-    } catch (_) { return null; }
-  };
-
-  // _afterCartRender is called at the end of _cartRender() via the hook added above
-  window._afterCartRender = function () {
-    var foot = document.getElementById('cartFooter');
-    if (!foot || foot.style.display === 'none') return;
-
-    // Ensure promo section exists inside footer
-    var promoEl = document.getElementById('cdPromoSection');
-    if (!promoEl) {
-      promoEl = document.createElement('div');
-      promoEl.id = 'cdPromoSection';
-      foot.insertBefore(promoEl, foot.firstChild);
-    }
-
-    var promo = window._promoState;
-    var sub   = window._subMode;
-
-    if (promo) {
-      promoEl.innerHTML =
-        '<div class="cd-promo-applied">' +
-          '<span class="cd-promo-code">' + promo.code + '</span>' +
-          '<span class="cd-promo-label">' + promo.label + '</span>' +
-          '<button class="cd-promo-remove" aria-label="Remove promo code" onclick="window._clearPromoCode()">&#x2715;</button>' +
-        '</div>';
-    } else {
-      promoEl.innerHTML =
-        '<div class="cd-promo-row">' +
-          '<input class="cd-promo-input" id="cdPromoInput" type="text" placeholder="Promo code" autocomplete="off" autocapitalize="characters">' +
-          '<button class="cd-promo-apply" id="cdPromoApply">Apply</button>' +
-        '</div>' +
-        '<div class="cd-promo-msg" id="cdPromoMsg"></div>';
-
-      var applyBtn = document.getElementById('cdPromoApply');
-      if (applyBtn) {
-        applyBtn.addEventListener('click', async function () {
-          var inp    = document.getElementById('cdPromoInput');
-          var msg    = document.getElementById('cdPromoMsg');
-          var code   = inp ? inp.value.trim() : '';
-          if (!code) return;
-          applyBtn.disabled = true; applyBtn.textContent = '…';
-          var result = await window._applyPromoCode(code);
-          if (!result) {
-            if (msg) { msg.textContent = 'Code not recognised.'; msg.className = 'cd-promo-msg err'; }
-            applyBtn.disabled = false; applyBtn.textContent = 'Apply';
-          }
-          // On success savePromo calls _cartRender which re-runs this hook
-        });
-      }
-    }
-
-    // Recalculate total with stacked discounts
-    var subMult   = sub   ? 0.90 : 1;
-    var promoMult = promo ? (1 - promo.pct / 100) : 1;
-    var combined  = subMult * promoMult;
-
-    var totalRow = foot.querySelector('.cd-total-row');
-    if (combined < 1) {
-      var base  = getCart().reduce(function (s, i) { return s + i.priceNum * i.qty; }, 0);
-      var totEl = document.getElementById('cartTotal');
-      if (totEl) totEl.textContent = '£' + (base * combined).toFixed(2);
-
-      if (totalRow) {
-        var badge = totalRow.querySelector('.cd-discount-badge');
-        if (!badge) { badge = document.createElement('span'); badge.className = 'cd-discount-badge'; totalRow.appendChild(badge); }
-        var parts = [];
-        if (sub)   parts.push('Sub −10%');
-        if (promo) parts.push(promo.code + ' −' + promo.pct + '%');
-        badge.textContent = parts.join(' · ');
-      }
-    } else {
-      if (totalRow) { var b2 = totalRow.querySelector('.cd-discount-badge'); if (b2) b2.remove(); }
-    }
-  };
+  if (typeof IntersectionObserver === 'undefined') { vids.forEach(load); return; }
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { obs.unobserve(e.target); load(e.target); }
+    });
+  }, { rootMargin: '200px' });
+  vids.forEach(function (v) { obs.observe(v); });
 })();
 
 // === NEWSLETTER ===
@@ -723,7 +672,7 @@ document.addEventListener('DOMContentLoaded', () => {
     var email = emailInput ? emailInput.value.trim() : '';
     if (!email) return;
     btn.disabled = true;
-    btn.innerHTML = '<span>Joining…</span>';
+    btn.innerHTML = '<span>' + awT('nl-joining', 'Joining…') + '</span>';
     try {
       var res = await fetch('/.netlify/functions/subscribe', {
         method: 'POST',
@@ -740,22 +689,40 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } catch (_) {
       btn.disabled = false;
-      btn.innerHTML = '<span>Join</span><span> →</span>';
+      btn.innerHTML = '<span>' + awT('nl-btn', 'Join') + '</span><span>&nbsp;→</span>';
       var errEl = form.querySelector('.nl-err');
       if (!errEl) {
         errEl = document.createElement('p');
         errEl.className = 'nl-err';
-        errEl.style.cssText = 'font-size:0.7rem;color:rgba(192,96,64,0.85);text-align:center;margin-top:0.75rem;font-family:var(--tenor);letter-spacing:0.08em';
+        errEl.setAttribute('role', 'alert');
         form.appendChild(errEl);
       }
-      errEl.textContent = 'Something went wrong. Please try again.';
+      errEl.textContent = awT('nl-error', 'Something went wrong. Please try again.');
     }
   });
 })();
 
 // === COOKIE CONSENT BANNER ===
+/* Google Analytics loads only after an explicit Accept (UK PECR). Until then
+   no tag, no cookies, no request to Google. */
+var GA_ID = 'G-TFTLQ2TYJV';
+function loadAnalytics() {
+  if (window._gaLoaded) return;
+  window._gaLoaded = true;
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { dataLayer.push(arguments); };
+  gtag('js', new Date());
+  gtag('config', GA_ID);
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+  document.head.appendChild(s);
+}
+try { if (localStorage.getItem('cookieConsent') === 'true') loadAnalytics(); } catch (e) {}
+
 function acceptCookie() {
   localStorage.setItem('cookieConsent', 'true');
+  loadAnalytics();
   var b = document.getElementById('cookieBanner');
   if (b) { b.classList.remove('visible'); setTimeout(function () { b.style.display = 'none'; }, 400); }
 }
@@ -927,16 +894,6 @@ function initLanguage() {
   function resetLocalDiscountState() {
     localStorage.removeItem('alwasat_sub');
     localStorage.removeItem('alwasat_promo');
-    window._subMode = false;
-    window._promoState = null;
-
-    document.querySelectorAll('.p-price[data-base]').forEach(function (priceEl) {
-      var base = parseFloat(priceEl.dataset.base);
-      if (isNaN(base)) return;
-      var label = priceEl.querySelector('.p-price-label');
-      priceEl.innerHTML = '£' + base.toFixed(2) + (label ? ' <span class="p-price-label">' + label.textContent + '</span>' : '');
-      priceEl.dataset.base = base;
-    });
   }
 
   window._afterCartRender = function () {
@@ -948,7 +905,7 @@ function initLanguage() {
       promoEl.id = 'cdPromoSection';
       foot.insertBefore(promoEl, foot.firstChild);
     }
-    promoEl.innerHTML = '<p class="cd-stripe-note">Promo codes can be applied securely on the Stripe payment page.</p>';
+    promoEl.innerHTML = '<p class="cd-stripe-note">' + awT('cart-promo-note', 'Promo codes can be applied securely on the Stripe payment page.') + '</p>';
     var deliveryNote = document.getElementById('cdDeliveryNote');
     if (!deliveryNote) {
       deliveryNote = document.createElement('p');
@@ -956,7 +913,7 @@ function initLanguage() {
       deliveryNote.className = 'cd-delivery-note';
       foot.insertBefore(deliveryNote, promoEl.nextSibling);
     }
-    deliveryNote.textContent = 'Delivery: 5-7 working days. Secure checkout by Stripe.';
+    deliveryNote.textContent = awT('cart-delivery-note', 'Delivery: 5–7 working days. Secure checkout by Stripe.');
     var totalRow = foot.querySelector('.cd-total-row');
     if (totalRow) {
       var badge = totalRow.querySelector('.cd-discount-badge');

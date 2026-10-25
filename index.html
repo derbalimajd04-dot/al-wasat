@@ -1,14 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TFTLQ2TYJV"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-TFTLQ2TYJV');
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AL WASAT — Tunisian Extra Virgin Olive Oil</title>
@@ -56,17 +48,11 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
 
 <!-- Harvest year banner -->
 <div class="harvest-banner" id="harvestBanner" style="display:none">
-  <span class="harvest-text" data-i18n="harvest-text">NOW AVAILABLE — 2024 HARVEST · LIMITED QUANTITY</span>
+  <span class="harvest-text"><span data-i18n="harvest-text">NOW AVAILABLE — 2025 HARVEST</span><span class="harvest-text-extra" data-i18n="harvest-text-2"> · LIMITED QUANTITY</span></span>
   <button class="harvest-close" id="harvestClose" type="button" aria-label="Dismiss banner" data-i18n-attr="aria-label:harvest-dismiss">×</button>
 </div>
 
 <div class="grain"></div>
-
-<div id="preloader">
-  <div class="pre-logo">Al Wasat</div>
-  <div class="pre-bar-wrap"><div class="pre-bar"></div></div>
-  <div class="pre-tagline">Extra Virgin · Tunisia · Est. 1960</div>
-</div>
 
 <nav id="nav" class="nav-transparent">
   <div class="nav-blur"></div>
@@ -93,9 +79,7 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
 
 <section class="hero" id="main">
   <div class="hero-video-wrap">
-  <video class="hero-video" autoplay muted loop playsinline>
-    <source src="/assets/hero.mp4" type="video/mp4">
-  </video>
+  <video class="hero-video" muted loop playsinline preload="none" poster="/assets/hero-poster.webp" data-src="/assets/hero.mp4" aria-hidden="true"></video>
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-inner">
@@ -118,7 +102,7 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
     </div>
     <div class="hero-product">
       <a class="hero-bottle" href="/shop/classic-500ml/">
-        <img src="/assets/classic-500ml.jpg" width="1310" height="816"
+        <img src="/assets/classic-500ml-1280.webp" srcset="/assets/classic-500ml-640.webp 640w, /assets/classic-500ml-1280.webp 1280w" sizes="(max-width: 767px) 100vw, 470px" width="1310" height="816"
              alt="AL WASAT Classic extra virgin olive oil, 500ml bottle" fetchpriority="high" decoding="async">
       </a>
       <a class="hero-price-tag" href="/shop/classic-500ml/">
@@ -139,7 +123,7 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
   </div>
   <div class="home-shop-grid">
     <a class="home-product reveal rd1" href="/shop/classic-500ml/">
-      <span class="home-product-img"><img loading="lazy" src="/assets/classic-500ml.jpg" alt="AL WASAT Classic 500ml"></span>
+      <span class="home-product-img"><img loading="lazy" src="/assets/classic-500ml-1280.webp" srcset="/assets/classic-500ml-640.webp 640w, /assets/classic-500ml-1280.webp 1280w" sizes="(max-width: 767px) 50vw, 33vw" alt="AL WASAT Classic 500ml"></span>
       <span class="home-product-meta">
         <span class="home-product-name" data-i18n="home-p1-name">AL WASAT Classic</span>
         <span class="home-product-sub" data-i18n="home-p1-sub">500ml · Cold-extracted</span>
@@ -147,15 +131,15 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
       </span>
     </a>
     <a class="home-product reveal rd2" href="/shop/organic-500ml/">
-      <span class="home-product-img"><img loading="lazy" src="/assets/organic-500ml.jpg" alt="AL WASAT Organic 500ml"></span>
+      <span class="home-product-img"><img loading="lazy" src="/assets/organic-500ml-1280.webp" srcset="/assets/organic-500ml-640.webp 640w, /assets/organic-500ml-1280.webp 1280w" sizes="(max-width: 767px) 50vw, 33vw" alt="AL WASAT Organic 500ml"></span>
       <span class="home-product-meta">
         <span class="home-product-name" data-i18n="home-p2-name">AL WASAT Organic</span>
         <span class="home-product-sub" data-i18n="home-p2-sub">500ml · Certified organic</span>
         <span class="home-product-price">£16.99</span>
       </span>
     </a>
-    <a class="home-product reveal rd3" href="/shop/">
-      <span class="home-product-img"><img loading="lazy" src="/assets/product-gift-box-set.jpg" alt="AL WASAT Gift Box Set"></span>
+    <a class="home-product reveal rd3" href="/shop/?product=gift-box">
+      <span class="home-product-img"><img loading="lazy" src="/assets/product-gift-box-set-1280.webp" srcset="/assets/product-gift-box-set-640.webp 640w, /assets/product-gift-box-set-1280.webp 1280w" sizes="(max-width: 767px) 50vw, 33vw" alt="AL WASAT Gift Box Set"></span>
       <span class="home-product-meta">
         <span class="home-product-name" data-i18n="home-p3-name">Gift Box Set</span>
         <span class="home-product-sub" data-i18n="home-p3-sub">Gift-ready presentation</span>
@@ -165,28 +149,6 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
   </div>
 </section>
 
-
-
-<!-- ============================================================
-     TRUST BAND — verifiable proof, placed directly after the shop
-     shortcut and customer reviews.
-
-     ⚠ ACTION REQUIRED BEFORE LAUNCH
-     Each item below has a `data-verify` slot for the document that
-     substantiates it. Replace the TODO hrefs with real links (a PDF
-     certificate, a certifying-body register entry, or a batch lab
-     report). Items whose href is still "#TODO" render WITHOUT a link,
-     so nothing ever claims to be verifiable when it is not.
-     ============================================================ -->
-<section class="trust-strip" aria-label="Product assurances">
-  <ul class="trust-strip-list">
-    <li><span data-i18n="strip-1">Cold-extracted below 27&deg;C</span></li>
-    <li><span data-i18n="strip-2">Lab-tested every batch</span></li>
-    <li><span data-i18n="strip-3">Harvest-dated, never blended</span></li>
-    <li><span data-i18n="strip-4">UK delivery in 5&ndash;7 days</span></li>
-  </ul>
-</section>
-
 <section class="heritage" id="heritage">
   <div class="reveal">
     <div class="img-frame">
@@ -194,7 +156,7 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
       <div class="frame-corner fc-br"></div>
       <div class="frame-corner fc-tr"></div>
       <div class="frame-corner fc-bl"></div>
-      <img loading="lazy" src="/assets/chapter2.jpg" alt="Olive grove heritage" onerror="this.style.cssText='background:linear-gradient(135deg,#1E1B16 0%,#0A0906 100%);min-height:500px;width:100%;display:block'">
+      <img loading="lazy" src="/assets/chapter2-1280.webp" srcset="/assets/chapter2-640.webp 640w, /assets/chapter2-1280.webp 1280w" sizes="(max-width: 900px) 100vw, 50vw" alt="Olive grove heritage" onerror="this.style.cssText='background:linear-gradient(135deg,#1E1B16 0%,#0A0906 100%);min-height:500px;width:100%;display:block'">
     </div>
     <div class="float-tag">
       <span class="float-tag-num">60+</span>
@@ -223,9 +185,6 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
     </div>
   </div>
 </section>
-
-
-
 
 <div class="process-sec">
   <div class="process-head reveal">
@@ -260,6 +219,25 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
   <div class="ornament reveal rd2"><div class="orn-line"></div><div class="orn-gem"></div><div class="orn-line"></div></div>
 </div>
 
+<!-- ============================================================
+     TRUST STRIP — quick-glance assurances, placed directly above the
+     certification band so all proof reads as one block.
+
+     ⚠ ACTION REQUIRED BEFORE LAUNCH
+     Each item below has a `data-verify` slot for the document that
+     substantiates it. Replace the TODO hrefs with real links (a PDF
+     certificate, a certifying-body register entry, or a batch lab
+     report). Items whose href is still "#TODO" render WITHOUT a link,
+     so nothing ever claims to be verifiable when it is not.
+     ============================================================ -->
+<section class="trust-strip" aria-label="Product assurances">
+  <ul class="trust-strip-list">
+    <li><span data-i18n="strip-1">Cold-extracted below 27&deg;C</span></li>
+    <li><span data-i18n="strip-2">Lab-tested every batch</span></li>
+    <li><span data-i18n="strip-3">Harvest-dated, never blended</span></li>
+    <li><span data-i18n="strip-4">UK delivery in 5&ndash;7 days</span></li>
+  </ul>
+</section>
 <section class="trust-band" aria-labelledby="trust-title">
   <h2 class="sr-only" id="trust-title" data-i18n="trust-title">Certifications and testing</h2>
   <ul class="trust-grid">
@@ -312,20 +290,10 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
   </div>
 </section>
 
-
-
-
-
-
-
-
-
-
-
 <section class="newsletter-sec">
   <div class="newsletter-inner">
     <p class="kicker reveal" style="justify-content:center"><span class="kicker-rule"></span><span data-i18n="nl-kicker">Newsletter</span></p>
-    <h2 class="sec-heading reveal" style="text-align:center" data-i18n-html="nl-heading">Be first when the<br><em>2025 harvest arrives.</em></h2>
+    <h2 class="sec-heading reveal" style="text-align:center" data-i18n-html="nl-heading">Be first when the<br><em>2026 harvest arrives.</em></h2>
     <p class="newsletter-sub reveal rd1" data-i18n="nl-sub">Join the list. No noise — only the harvest.</p>
     <form class="newsletter-form reveal rd2" name="newsletter" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="newsletter">
@@ -337,7 +305,7 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
     </form>
     <div id="newsletterSuccess" style="display:none;text-align:center;padding:2rem 0">
       <p style="font-family:'EB Garamond',serif;font-size:1.2rem;color:#C9A96E;letter-spacing:0.05em" data-i18n="nl-success-1">You're on the list.</p>
-      <p style="font-family:'Tenor Sans',sans-serif;font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;color:#8B7355;margin-top:0.5rem" data-i18n="nl-success-2">We'll be in touch when the 2025 harvest arrives.</p>
+      <p style="font-family:'Tenor Sans',sans-serif;font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;color:#8B7355;margin-top:0.5rem" data-i18n="nl-success-2">We'll be in touch when the 2026 harvest arrives.</p>
     </div>
   </div>
 </section>
@@ -345,8 +313,8 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
 <section class="contact-sec" id="contact">
   <div>
     <p class="kicker reveal"><span class="kicker-rule"></span><span data-i18n="contact-kicker">Contact</span></p>
-    <h2 class="sec-heading reveal" data-i18n-html="contact-heading">Serious enquiries<br><em>welcome.</em></h2>
-    <p class="sec-body reveal" data-i18n="contact-body">Distributors, retailers, and culinary professionals. We work selectively, with parties who share our commitment to provenance and quality.</p>
+    <h2 class="sec-heading reveal" data-i18n-html="contact-heading">Questions, orders<br><em>&amp; trade.</em></h2>
+    <p class="sec-body reveal" data-i18n="contact-body">A question about an order, a gift or our oil — or a trade enquiry from a distributor, retailer or kitchen. Every message is read by our team.</p>
     <div class="contact-detail reveal rd1">
       <div class="cd-item"><div class="cd-label" data-i18n="contact-email-label">Email</div><div class="cd-value"><a href="mailto:jamel.derbali@gmail.com" style="color:inherit;text-decoration:none">jamel.derbali@gmail.com</a></div></div>
       <div class="cd-item"><div class="cd-label" data-i18n="contact-wa-label">WhatsApp</div><div class="cd-value"><a href="https://wa.me/21698236621" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">+216 98 236 621</a></div></div>
@@ -366,7 +334,7 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
     <div class="field"><label for="f-email" data-i18n="form-email">Email Address</label><input id="f-email" name="email" type="email" placeholder="your@email.com" required autocomplete="email" inputmode="email" data-i18n-attr="placeholder:form-email-ph"><span class="field-error" role="alert" data-i18n="form-email-err">Please enter a valid email address.</span></div>
     <div class="field">
       <label for="f-type" data-i18n="form-type">Nature of Enquiry</label>
-      <select id="f-type" name="enquiry" required><option value="" style="background:#151210" data-i18n="form-type-ph">Select…</option><option style="background:#151210" data-i18n="form-opt-dist">Distribution</option><option style="background:#151210" data-i18n="form-opt-retail">Retail</option><option style="background:#151210" data-i18n="form-opt-culinary">Culinary / Hospitality</option><option style="background:#151210" data-i18n="form-opt-other">Other</option></select>
+      <select id="f-type" name="enquiry" required><option value="" style="background:#151210" data-i18n="form-type-ph">Select…</option><option style="background:#151210" data-i18n="form-opt-order">Order or product question</option><option style="background:#151210" data-i18n="form-opt-dist">Distribution</option><option style="background:#151210" data-i18n="form-opt-retail">Retail</option><option style="background:#151210" data-i18n="form-opt-culinary">Culinary / Hospitality</option><option style="background:#151210" data-i18n="form-opt-other">Other</option></select>
       <span class="field-error" role="alert" data-i18n="form-type-err">Please select an enquiry type.</span>
     </div>
     <div class="field"><label for="f-msg" data-i18n="form-msg">Message</label><textarea id="f-msg" name="message" placeholder="Tell us about your interest…" data-i18n-attr="placeholder:form-msg-ph"></textarea></div>
