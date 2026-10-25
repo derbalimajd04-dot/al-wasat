@@ -24,7 +24,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#0a0a0a">
+<meta name="theme-color" content="#faf9f5">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Tenor+Sans&family=EB+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -38,6 +38,8 @@ if(l==='ar'){var k=d.createElement('link');k.id='aw-ar-font';k.rel='stylesheet';
 k.href='https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600&display=swap';
 d.head.appendChild(k);}}catch(e){}})(document);</script>
 <link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/assets/editorial.css">
+<link rel="stylesheet" href="/assets/editorial-home.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"AL WASAT","url":"https://al-wasat.co.uk","logo":"https://al-wasat.co.uk/assets/logo.jpg","description":"Premium cold-extracted Tunisian extra virgin olive oil. Polyphenols 380-620mg/kg. Harvest-documented, lab-verified. From the Sfax region of Tunisia since 1960.","contactPoint":{"@type":"ContactPoint","telephone":"+216-98-236-621","contactType":"customer service"},"sameAs":[]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"AL WASAT","url":"https://al-wasat.co.uk"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"AL WASAT — Premium Tunisian Extra Virgin Olive Oil","speakable":{"@type":"SpeakableSpecification","cssSelector":[".hero-h1",".hero-sub","#heritage .sec-heading","#heritage .sec-body"]},"url":"https://al-wasat.co.uk"}</script>
@@ -51,8 +53,6 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
   <span class="harvest-text"><span data-i18n="harvest-text">NOW AVAILABLE — 2025 HARVEST</span><span class="harvest-text-extra" data-i18n="harvest-text-2"> · LIMITED QUANTITY</span></span>
   <button class="harvest-close" id="harvestClose" type="button" aria-label="Dismiss banner" data-i18n-attr="aria-label:harvest-dismiss">×</button>
 </div>
-
-<div class="grain"></div>
 
 <nav id="nav" class="nav-transparent">
   <div class="nav-blur"></div>
@@ -77,22 +77,19 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
 </nav>
 <div class="nav-overlay" id="navOverlay"></div>
 
-<section class="hero" id="main">
-  <div class="hero-video-wrap">
-  <video class="hero-video" muted loop playsinline preload="none" poster="/assets/hero-poster.webp" data-src="/assets/hero.mp4" aria-hidden="true"></video>
-  </div>
-  <div class="hero-overlay"></div>
+<main id="main">
+<section class="hero" aria-labelledby="hero-title">
   <div class="hero-inner">
     <div class="hero-content">
-      <p class="hero-eyebrow"><span class="eyebrow-rule"></span><span data-i18n="hero-eyebrow">Cold-extracted in Sfax, Tunisia &nbsp;·&nbsp; Since 1960</span></p>
-      <h1 class="hero-h1">
-        <span class="hl" data-i18n="hero-h1-1">Tunisian Extra Virgin</span>
-        <span class="hl" data-i18n="hero-h1-2">Olive Oil.</span>
+      <p class="hero-eyebrow" data-i18n="editorial-eyebrow">Sfax, Tunisia · Since 1960</p>
+      <h1 class="hero-h1" id="hero-title">
+        <span class="hl" data-i18n="editorial-title-1">Good oil.</span>
+        <span class="hl" data-i18n="editorial-title-2">Deep roots.</span>
       </h1>
-      <p class="hero-sub" data-i18n="hero-sub">Cold-extracted below 27°C within a day of picking. Every harvest documented, every batch lab-tested. Grown and pressed in Sfax, Tunisia.</p>
+      <p class="hero-sub" data-i18n="editorial-intro">Tunisian extra virgin olive oil. Cold-extracted, harvest-documented, and made for your everyday table.</p>
       <div class="hero-actions">
-        <a href="/shop/" class="btn-primary"><span data-i18n="hero-discover">Shop the Collection</span><div class="btn-arrow"></div></a>
-        <a href="#heritage" class="btn-ghost" data-i18n="hero-story">Explore the Harvest</a>
+        <a href="/shop/" class="btn-primary"><span data-i18n="hero-discover">Shop the Collection</span><span aria-hidden="true">↗</span></a>
+        <a href="#heritage" class="btn-ghost" data-i18n="editorial-story">Our roots</a>
       </div>
       <ul class="hero-proof">
         <li><strong>380–620</strong><span data-i18n="hero-proof-1">mg/kg polyphenols</span></li>
@@ -102,13 +99,12 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
     </div>
     <div class="hero-product">
       <a class="hero-bottle" href="/shop/classic-500ml/">
-        <img src="/assets/classic-500ml-1280.webp" srcset="/assets/classic-500ml-640.webp 640w, /assets/classic-500ml-1280.webp 1280w" sizes="(max-width: 767px) 100vw, 470px" width="1310" height="816"
-             alt="AL WASAT Classic extra virgin olive oil, 500ml bottle" fetchpriority="high" decoding="async">
+        <img src="/assets/classic-500ml-1280.webp" srcset="/assets/classic-500ml-640.webp 640w, /assets/classic-500ml-1280.webp 1280w" sizes="(max-width: 767px) 100vw, 50vw" width="1280" height="797"
+             alt="AL WASAT Classic 500ml bottle with olives on a marble table" data-i18n-attr="alt:editorial-photo-alt" fetchpriority="high" decoding="async">
       </a>
       <a class="hero-price-tag" href="/shop/classic-500ml/">
-        <span class="hpt-name" data-i18n="hero-bottle-name">Classic 500ml</span>
-        <span class="hpt-price">£13.99</span>
-        <span class="hpt-cta" data-i18n="hero-bottle-cta">Shop this bottle →</span>
+        <span class="hpt-name"><span class="hpt-index" aria-hidden="true">01 / </span><span data-i18n="hero-bottle-name">Classic 500ml</span></span>
+        <span class="hpt-price">£13.99 <span aria-hidden="true">↗</span></span>
       </a>
     </div>
   </div>
@@ -123,7 +119,7 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
   </div>
   <div class="home-shop-grid">
     <a class="home-product reveal rd1" href="/shop/classic-500ml/">
-      <span class="home-product-img"><img loading="lazy" src="/assets/classic-500ml-1280.webp" srcset="/assets/classic-500ml-640.webp 640w, /assets/classic-500ml-1280.webp 1280w" sizes="(max-width: 767px) 50vw, 33vw" alt="AL WASAT Classic 500ml"></span>
+      <span class="home-product-img"><img loading="lazy" src="/assets/classic-500ml-1280.webp" srcset="/assets/classic-500ml-640.webp 640w, /assets/classic-500ml-1280.webp 1280w" sizes="(max-width: 600px) 100vw, 33vw" alt="AL WASAT Classic 500ml"></span>
       <span class="home-product-meta">
         <span class="home-product-name" data-i18n="home-p1-name">AL WASAT Classic</span>
         <span class="home-product-sub" data-i18n="home-p1-sub">500ml · Cold-extracted</span>
@@ -131,7 +127,7 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
       </span>
     </a>
     <a class="home-product reveal rd2" href="/shop/organic-500ml/">
-      <span class="home-product-img"><img loading="lazy" src="/assets/organic-500ml-1280.webp" srcset="/assets/organic-500ml-640.webp 640w, /assets/organic-500ml-1280.webp 1280w" sizes="(max-width: 767px) 50vw, 33vw" alt="AL WASAT Organic 500ml"></span>
+      <span class="home-product-img"><img loading="lazy" src="/assets/organic-500ml-1280.webp" srcset="/assets/organic-500ml-640.webp 640w, /assets/organic-500ml-1280.webp 1280w" sizes="(max-width: 600px) 100vw, 33vw" alt="AL WASAT Organic 500ml"></span>
       <span class="home-product-meta">
         <span class="home-product-name" data-i18n="home-p2-name">AL WASAT Organic</span>
         <span class="home-product-sub" data-i18n="home-p2-sub">500ml · Certified organic</span>
@@ -139,7 +135,7 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
       </span>
     </a>
     <a class="home-product reveal rd3" href="/shop/?product=gift-box">
-      <span class="home-product-img"><img loading="lazy" src="/assets/product-gift-box-set-1280.webp" srcset="/assets/product-gift-box-set-640.webp 640w, /assets/product-gift-box-set-1280.webp 1280w" sizes="(max-width: 767px) 50vw, 33vw" alt="AL WASAT Gift Box Set"></span>
+      <span class="home-product-img"><img loading="lazy" src="/assets/product-gift-box-set-1280.webp" srcset="/assets/product-gift-box-set-640.webp 640w, /assets/product-gift-box-set-1280.webp 1280w" sizes="(max-width: 600px) 100vw, 33vw" alt="AL WASAT Gift Box Set"></span>
       <span class="home-product-meta">
         <span class="home-product-name" data-i18n="home-p3-name">Gift Box Set</span>
         <span class="home-product-sub" data-i18n="home-p3-sub">Gift-ready presentation</span>
@@ -152,11 +148,7 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
 <section class="heritage" id="heritage">
   <div class="reveal">
     <div class="img-frame">
-      <div class="frame-corner fc-tl"></div>
-      <div class="frame-corner fc-br"></div>
-      <div class="frame-corner fc-tr"></div>
-      <div class="frame-corner fc-bl"></div>
-      <img loading="lazy" src="/assets/chapter2-1280.webp" srcset="/assets/chapter2-640.webp 640w, /assets/chapter2-1280.webp 1280w" sizes="(max-width: 900px) 100vw, 50vw" alt="Olive grove heritage" onerror="this.style.cssText='background:linear-gradient(135deg,#1E1B16 0%,#0A0906 100%);min-height:500px;width:100%;display:block'">
+      <img loading="lazy" src="/assets/chapter2-1280.webp" srcset="/assets/chapter2-640.webp 640w, /assets/chapter2-1280.webp 1280w" sizes="(max-width: 900px) 100vw, 50vw" alt="Olive trees in the Tunisian countryside" data-i18n-attr="alt:editorial-grove-alt" width="1280" height="543">
     </div>
     <div class="float-tag">
       <span class="float-tag-num">60+</span>
@@ -188,8 +180,8 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
 
 <div class="process-sec">
   <div class="process-head reveal">
-    <p class="kicker" style="justify-content:center"><span class="kicker-rule"></span><span data-i18n="process-kicker">From Grove to Bottle</span></p>
-    <h2 class="sec-heading" style="text-align:center;margin-bottom:0" data-i18n-html="process-heading">A <em>closed chain</em> of quality.</h2>
+    <p class="kicker"><span class="kicker-rule"></span><span data-i18n="process-kicker">From Grove to Bottle</span></p>
+    <h2 class="sec-heading" data-i18n-html="process-heading">A <em>closed chain</em> of quality.</h2>
   </div>
   <div class="process-steps">
     <div class="ps reveal">
@@ -213,7 +205,6 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
 </div>
 
 <div class="quote-sec">
-  <div class="q-mark">"</div>
   <blockquote class="q-text reveal" data-i18n-html="quote-text">We do not blend across harvests. We do not dilute with secondary pressings. We do not compromise on the <em>traceability</em> our clients expect.</blockquote>
   <p class="q-attr reveal rd1" data-i18n="quote-attr">AL WASAT — Standard of Practice</p>
   <div class="ornament reveal rd2"><div class="orn-line"></div><div class="orn-gem"></div><div class="orn-line"></div></div>
@@ -269,8 +260,8 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
 
 <section class="reviews-sec">
   <div class="ornament reveal"><div class="orn-line"></div><div class="orn-gem"></div><div class="orn-line"></div></div>
-  <p class="kicker reveal" style="justify-content:center"><span class="kicker-rule"></span><span data-i18n="reviews-kicker">Customer Reviews</span></p>
-  <h2 class="sec-heading reveal" style="text-align:center" data-i18n-html="reviews-heading">What our <em>customers say.</em></h2>
+  <p class="kicker reveal"><span class="kicker-rule"></span><span data-i18n="reviews-kicker">Customer Reviews</span></p>
+  <h2 class="sec-heading reveal" data-i18n-html="reviews-heading">What our <em>customers say.</em></h2>
   <div class="reviews-grid reveal rd1">
     <div class="review-card">
       <div class="review-stars">★★★★★</div>
@@ -292,20 +283,21 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
 
 <section class="newsletter-sec">
   <div class="newsletter-inner">
-    <p class="kicker reveal" style="justify-content:center"><span class="kicker-rule"></span><span data-i18n="nl-kicker">Newsletter</span></p>
-    <h2 class="sec-heading reveal" style="text-align:center" data-i18n-html="nl-heading">Be first when the<br><em>2026 harvest arrives.</em></h2>
+    <p class="kicker reveal"><span class="kicker-rule"></span><span data-i18n="nl-kicker">Newsletter</span></p>
+    <h2 class="sec-heading reveal" data-i18n-html="nl-heading">Be first when the<br><em>2026 harvest arrives.</em></h2>
     <p class="newsletter-sub reveal rd1" data-i18n="nl-sub">Join the list. No noise — only the harvest.</p>
     <form class="newsletter-form reveal rd2" name="newsletter" method="POST" action="/" data-netlify="true" netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="newsletter">
       <input type="text" name="bot-field" style="display:none" tabindex="-1" autocomplete="off">
       <div class="newsletter-row">
-        <input type="email" name="email" placeholder="your@email.com" required autocomplete="email" class="newsletter-input" data-i18n-attr="placeholder:nl-placeholder">
+        <label class="sr-only" for="newsletter-email" data-i18n="form-email">Email Address</label>
+        <input id="newsletter-email" type="email" name="email" placeholder="your@email.com" required autocomplete="email" class="newsletter-input" data-i18n-attr="placeholder:nl-placeholder">
         <button type="submit" class="newsletter-btn"><span data-i18n="nl-btn">Join</span><span>&nbsp;→</span></button>
       </div>
     </form>
     <div id="newsletterSuccess" style="display:none;text-align:center;padding:2rem 0">
-      <p style="font-family:'EB Garamond',serif;font-size:1.2rem;color:#C9A96E;letter-spacing:0.05em" data-i18n="nl-success-1">You're on the list.</p>
-      <p style="font-family:'Tenor Sans',sans-serif;font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;color:#8B7355;margin-top:0.5rem" data-i18n="nl-success-2">We'll be in touch when the 2026 harvest arrives.</p>
+      <p class="newsletter-success-title" data-i18n="nl-success-1">You're on the list.</p>
+      <p class="newsletter-success-body" data-i18n="nl-success-2">We'll be in touch when the 2026 harvest arrives.</p>
     </div>
   </div>
 </section>
@@ -334,7 +326,7 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
     <div class="field"><label for="f-email" data-i18n="form-email">Email Address</label><input id="f-email" name="email" type="email" placeholder="your@email.com" required autocomplete="email" inputmode="email" data-i18n-attr="placeholder:form-email-ph"><span class="field-error" role="alert" data-i18n="form-email-err">Please enter a valid email address.</span></div>
     <div class="field">
       <label for="f-type" data-i18n="form-type">Nature of Enquiry</label>
-      <select id="f-type" name="enquiry" required><option value="" style="background:#151210" data-i18n="form-type-ph">Select…</option><option style="background:#151210" data-i18n="form-opt-order">Order or product question</option><option style="background:#151210" data-i18n="form-opt-dist">Distribution</option><option style="background:#151210" data-i18n="form-opt-retail">Retail</option><option style="background:#151210" data-i18n="form-opt-culinary">Culinary / Hospitality</option><option style="background:#151210" data-i18n="form-opt-other">Other</option></select>
+      <select id="f-type" name="enquiry" required><option value="" data-i18n="form-type-ph">Select…</option><option data-i18n="form-opt-order">Order or product question</option><option data-i18n="form-opt-dist">Distribution</option><option data-i18n="form-opt-retail">Retail</option><option data-i18n="form-opt-culinary">Culinary / Hospitality</option><option data-i18n="form-opt-other">Other</option></select>
       <span class="field-error" role="alert" data-i18n="form-type-err">Please select an enquiry type.</span>
     </div>
     <div class="field"><label for="f-msg" data-i18n="form-msg">Message</label><textarea id="f-msg" name="message" placeholder="Tell us about your interest…" data-i18n-attr="placeholder:form-msg-ph"></textarea></div>
@@ -344,6 +336,7 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
   </form>
 </section>
 
+</main>
 <footer>
   <div class="fl" data-i18n="footer-rights">© 2026 AL WASAT. All rights reserved.</div>
   <div class="fc">Al Wasat</div>

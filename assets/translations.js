@@ -9,6 +9,15 @@
 window.I18N = {
 
   en: {
+    /* --- Editorial homepage -------------------------------------- */
+    "editorial-eyebrow": "Sfax, Tunisia · Since 1960",
+    "editorial-title-1": "Good oil.",
+    "editorial-title-2": "Deep roots.",
+    "editorial-intro": "Tunisian extra virgin olive oil. Cold-extracted, harvest-documented, and made for your everyday table.",
+    "editorial-story": "Our roots",
+    "editorial-photo-alt": "AL WASAT Classic 500ml bottle with olives on a marble table",
+    "editorial-grove-alt": "Olive trees in the Tunisian countryside",
+
     /* --- Navigation ------------------------------------------- */
     'nav-home': 'Home',
     'nav-collection': 'Collection',
@@ -339,6 +348,15 @@ window.I18N = {
   },
 
   fr: {
+    /* --- Editorial homepage -------------------------------------- */
+    "editorial-eyebrow": "Sfax, Tunisie · Depuis 1960",
+    "editorial-title-1": "Une huile vraie.",
+    "editorial-title-2": "Des racines fortes.",
+    "editorial-intro": "Une huile d’olive extra vierge tunisienne. Extraite à froid, chaque récolte documentée, pour votre table au quotidien.",
+    "editorial-story": "Nos racines",
+    "editorial-photo-alt": "Bouteille AL WASAT Classic 500ml avec des olives sur une table en marbre",
+    "editorial-grove-alt": "Des oliviers dans la campagne tunisienne",
+
     /* --- Navigation ------------------------------------------- */
     'nav-home': 'Accueil',
     'nav-collection': 'Collection',
@@ -649,6 +667,15 @@ window.I18N = {
   },
 
   ar: {
+    /* --- Editorial homepage -------------------------------------- */
+    "editorial-eyebrow": "صفاقس، تونس · منذ 1960",
+    "editorial-title-1": "زيت أصيل.",
+    "editorial-title-2": "جذور راسخة.",
+    "editorial-intro": "زيت زيتون تونسي بكر ممتاز. مستخلص على البارد، كل حصاد موثّق، لمائدتكم كل يوم.",
+    "editorial-story": "جذورنا",
+    "editorial-photo-alt": "زجاجة الوسط كلاسيك 500 مل مع زيتون على طاولة رخامية",
+    "editorial-grove-alt": "أشجار زيتون في الريف التونسي",
+
     /* --- Navigation ------------------------------------------- */
     'nav-home': 'الرئيسية',
     'nav-collection': 'المجموعة',
