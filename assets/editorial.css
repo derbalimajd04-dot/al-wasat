@@ -101,8 +101,9 @@ footer{background:var(--editorial-paper);border-top:1px solid var(--editorial-in
 .shop-page .product-grid{max-width:1600px;padding:3rem var(--section-x) 6rem;gap:3rem 2rem}
 .shop-page .p-card,.shop-page .p-card:hover{background:transparent;border:0;border-bottom:1px solid var(--editorial-rule);border-radius:0;box-shadow:none;transform:none;padding-bottom:1.25rem}
 .shop-page .p-img-wrap{background:#fff;aspect-ratio:4/3;border:1px solid rgb(32 37 30 / .08)}
-.shop-page .p-img{filter:none;object-fit:contain;object-position:center;transform:none}
-.shop-page .p-card:hover .p-img,.shop-page .p-card:hover .p-img-wrap .p-img.front+.p-img.back{transform:none}
+.shop-page .p-img{filter:none}
+.shop-page .p-img.front{object-fit:contain;object-position:center}
+.shop-page .p-img.back{object-fit:cover;object-position:center 45%}
 .shop-page .p-tag{top:.75rem;left:.75rem;border:0;background:var(--editorial-paper);color:var(--editorial-ink);font-size:.75rem;letter-spacing:.08em;padding:.35rem .65rem;backdrop-filter:none;-webkit-backdrop-filter:none}
 .shop-page .organic-pill{color:var(--editorial-olive);background:#e7eadd;border-color:transparent}
 .shop-page .p-card>.p-name{margin-top:1.25rem;font-family:var(--serif);font-size:1.8rem;font-weight:600;letter-spacing:-.035em;line-height:1.15}
