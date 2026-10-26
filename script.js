@@ -4,15 +4,15 @@
    'harvest-2025' and 'merch-set' come back once their Stripe price IDs are
    set in netlify/functions/create-checkout.js. */
 const PRODUCT_DATA = {
-  'classic-500':  { tag:'Classic', name:'AL WASAT Classic', sub:'Extra Virgin Olive Oil', price:'£13.99', unit:'/ 500ml', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Polyphenols',v:'380 mg/kg'},{l:'Acidity',v:'< 0.3%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'500ml glass bottle'}] },
-  'classic-1l':   { tag:'Classic', name:'AL WASAT Classic', sub:'Extra Virgin Olive Oil', price:'£22.99', unit:'/ 1 Litre', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Polyphenols',v:'380 mg/kg'},{l:'Acidity',v:'< 0.3%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'1 Litre glass bottle'}] },
-  'organic-500':  { tag:'Organic · Certified', name:'AL WASAT Organic', sub:'Organic Extra Virgin Olive Oil', price:'£16.99', unit:'/ 500ml', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Certification',v:'EU Organic Certified'},{l:'Polyphenols',v:'460 mg/kg'},{l:'Acidity',v:'< 0.2%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'500ml glass bottle'}] },
-  'organic-1l':   { tag:'Organic · Certified', name:'AL WASAT Organic', sub:'Organic Extra Virgin Olive Oil', price:'£28.99', unit:'/ 1 Litre', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Certification',v:'EU Organic Certified'},{l:'Polyphenols',v:'460 mg/kg'},{l:'Acidity',v:'< 0.2%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'1 Litre glass bottle'}] },
-  'tasting-250ml':    { tag:'Tasting',      name:'AL WASAT Classic — 250ml Tasting', sub:'Cold-pressed · Single origin · Tunisia', price:'£9.99',  unit:'/ 250ml',  specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Polyphenols',v:'520 mg/kg'},{l:'Acidity',v:'< 0.3%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'250ml glass bottle'}] },
-  'bulk-3l':          { tag:'Bulk',         name:'AL WASAT Bulk — 3L Tin',           sub:'Trade & Hospitality Format',            price:'£49.99', unit:'/ 3L tin', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Polyphenols',v:'490 mg/kg'},{l:'Acidity',v:'< 0.5%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'3 Litre tin'}] },
-  'gift-box':         { tag:'Gift Box',     name:'AL WASAT Gift Box Set',     sub:'Two 250ml bottles · Luxury gift box',   price:'£24.99', unit:'/ set',    specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Includes',v:'2 × 250ml bottles, gift-boxed'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Delivery',v:'Free UK delivery included'},{l:'Format',v:'Luxury gift box'}] },
-  'subscription-box': { tag:'Subscribe',    name:'Quarterly Subscription Box', sub:'Seasonal harvest selections, delivered', price:'£39.99', unit:'/ quarter', specs:[{l:'Frequency',v:'Quarterly delivery'},{l:'Contents',v:'Single harvest or blend, curated each season'},{l:'Flexibility',v:'Cancel anytime, no commitments'},{l:'Perks',v:'Members-only access to limited batches'},{l:'Format',v:'Subscription box, gift-wrapped'}] },
-  'gift-card':        { tag:'Gift Card',    name:'AL WASAT Digital Gift Card', sub:'Instant delivery by email',        price:'£15.00', unit:'/ card',   specs:[{l:'Delivery',v:'Instant — sent by email'},{l:'Validity',v:'12 months from purchase'},{l:'Redeemable',v:'Any product on al-wasat.co.uk'},{l:'Format',v:'Digital code, printable PDF included'}] },
+  'classic-500':  { nameKey:'home-p1-name', tagKey:'tag-classic', subKey:'p-sub-evoo', tag:'Classic', name:'AL WASAT Classic', sub:'Extra Virgin Olive Oil', price:'£13.99', unit:'/ 500ml', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Polyphenols',v:'380 mg/kg'},{l:'Acidity',v:'< 0.3%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'500ml glass bottle'}] },
+  'classic-1l':   { nameKey:'home-p1-name', tagKey:'tag-classic', subKey:'p-sub-evoo', tag:'Classic', name:'AL WASAT Classic', sub:'Extra Virgin Olive Oil', price:'£22.99', unit:'/ 1 Litre', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Polyphenols',v:'380 mg/kg'},{l:'Acidity',v:'< 0.3%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'1 Litre glass bottle'}] },
+  'organic-500':  { nameKey:'home-p2-name', tagKey:'tag-organic', subKey:'p-sub-organic', tag:'Organic · Certified', name:'AL WASAT Organic', sub:'Organic Extra Virgin Olive Oil', price:'£16.99', unit:'/ 500ml', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Certification',v:'EU Organic Certified'},{l:'Polyphenols',v:'460 mg/kg'},{l:'Acidity',v:'< 0.2%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'500ml glass bottle'}] },
+  'organic-1l':   { nameKey:'home-p2-name', tagKey:'tag-organic', subKey:'p-sub-organic', tag:'Organic · Certified', name:'AL WASAT Organic', sub:'Organic Extra Virgin Olive Oil', price:'£28.99', unit:'/ 1 Litre', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Certification',v:'EU Organic Certified'},{l:'Polyphenols',v:'460 mg/kg'},{l:'Acidity',v:'< 0.2%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'1 Litre glass bottle'}] },
+  'tasting-250ml':    { nameKey:'pname-tasting', tagKey:'tag-tasting', subKey:'p-sub-tasting', tag:'Tasting',      name:'AL WASAT Classic — 250ml Tasting', sub:'Cold-pressed · Single origin · Tunisia', price:'£9.99',  unit:'/ 250ml',  specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Polyphenols',v:'520 mg/kg'},{l:'Acidity',v:'< 0.3%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'250ml glass bottle'}] },
+  'bulk-3l':          { nameKey:'pname-bulk', tagKey:'tag-bulk', subKey:'p-sub-bulk', tag:'Bulk',         name:'AL WASAT Bulk — 3L Tin',           sub:'Trade & Hospitality Format',            price:'£49.99', unit:'/ 3L tin', specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Polyphenols',v:'490 mg/kg'},{l:'Acidity',v:'< 0.5%'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Format',v:'3 Litre tin'}] },
+  'gift-box':         { nameKey:'home-p3-name', tagKey:'tag-giftbox', subKey:'p-sub-giftbox', tag:'Gift Box',     name:'AL WASAT Gift Box Set',     sub:'Two 250ml bottles · Luxury gift box',   price:'£24.99', unit:'/ set',    specs:[{l:'Origin',v:'Sfax Region, Tunisia'},{l:'Includes',v:'2 × 250ml bottles, gift-boxed'},{l:'Variety',v:'Chemlali & Chetoui'},{l:'Extraction',v:'Cold-pressed, ≤ 27°C'},{l:'Delivery',v:'Free UK delivery included'},{l:'Format',v:'Luxury gift box'}] },
+  'subscription-box': { nameKey:'name-sub', tagKey:'tag-subscribe', subKey:'p-sub-sub', tag:'Subscribe',    name:'Quarterly Subscription Box', sub:'Seasonal harvest selections, delivered', price:'£39.99', unit:'/ quarter', specs:[{l:'Frequency',v:'Quarterly delivery'},{l:'Contents',v:'Single harvest or blend, curated each season'},{l:'Flexibility',v:'Cancel anytime, no commitments'},{l:'Perks',v:'Members-only access to limited batches'},{l:'Format',v:'Subscription box, gift-wrapped'}] },
+  'gift-card':        { nameKey:'pname-giftcard', tagKey:'tag-giftcard', subKey:'p-sub-giftcard', tag:'Gift Card',    name:'AL WASAT Digital Gift Card', sub:'Instant delivery by email',        price:'£15.00', unit:'/ card',   specs:[{l:'Delivery',v:'Instant — sent by email'},{l:'Validity',v:'12 months from purchase'},{l:'Redeemable',v:'Any product on al-wasat.co.uk'},{l:'Format',v:'Digital code, printable PDF included'}] },
 };
 
 /* === CART (global) === */
@@ -23,15 +23,26 @@ function getCart() {
     const raw = localStorage.getItem(_CK);
     const cart = raw ? JSON.parse(raw) : [];
     if (!Array.isArray(cart)) return [];
+    /* Only pid and qty are trusted from storage. Name, price and unit always
+       come from PRODUCT_DATA, so a price change or edited storage can never
+       show a stale total, and names follow the current language. */
     return cart.filter(i =>
       i && typeof i.pid === 'string' && i.pid in PRODUCT_DATA &&
       typeof i.qty === 'number' && Number.isInteger(i.qty) && i.qty > 0
-    );
+    ).map(i => {
+      const d = PRODUCT_DATA[i.pid];
+      return { pid:i.pid, qty:i.qty, name:productName(i.pid), price:d.price, priceNum:parseFloat(d.price.replace('£','')), unit:d.unit };
+    });
   } catch { return []; }
 }
 
+function productName(pid) {
+  const d = PRODUCT_DATA[pid];
+  return d ? awT(d.nameKey, d.name) : '';
+}
+
 function saveCart(c) {
-  localStorage.setItem(_CK, JSON.stringify(c));
+  localStorage.setItem(_CK, JSON.stringify(c.map(i => ({ pid:i.pid, qty:i.qty }))));
   _cartBadge();
   _cartRender();
 }
@@ -41,7 +52,7 @@ function addToCartById(pid, qty) {
   const n = Math.max(1, Math.min(24, parseInt(qty, 10) || 1));
   const c = getCart();
   const x = c.find(i => i.pid === pid);
-  if (x) x.qty += n; else c.push({ pid, name:d.name, price:d.price, priceNum:parseFloat(d.price.replace('£','')), unit:d.unit, qty:n });
+  if (x) x.qty += n; else c.push({ pid, qty:n });
   saveCart(c);
 }
 
@@ -73,9 +84,10 @@ function showCartToast(message) {
     toast = document.createElement('div');
     toast.id = 'cartToast';
     toast.className = 'cart-toast';
-    toast.innerHTML = '<span></span><button type="button" onclick="openCart()">View Cart</button>';
+    toast.innerHTML = '<span></span><button type="button" onclick="openCart()"></button>';
     document.body.appendChild(toast);
   }
+  toast.querySelector('button').textContent = awT('cart-view', 'View Cart');
   const label = toast.querySelector('span');
   if (label) label.textContent = message;
   toast.classList.add('show');
@@ -130,6 +142,7 @@ function closeCart() {
 /* Cart lines store the English unit; show it in the current language. */
 const _UNIT_KEYS = { '/ 1 Litre':'unit-litre', '/ 3L tin':'unit-tin', '/ set':'unit-set', '/ quarter':'unit-quarter', '/ card':'unit-card' };
 function _unitLabel(u) { return _UNIT_KEYS[u] ? awT(_UNIT_KEYS[u], u) : u; }
+const _SPEC_KEYS = { 'Origin':'spec-origin', 'Polyphenols':'poly-label', 'Acidity':'acid-label', 'Extraction':'spec-extraction', 'Format':'spec-format', 'Certification':'spec-cert' };
 
 function _cartBadge() {
   const n = getCart().reduce((s,i) => s+i.qty, 0);
@@ -298,8 +311,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(revealAll, 4000);
   }
 
-  /* HERO PARALLAX — driven by Lenis callback above */
-
   /* === CONTACT FORM (home only) === */
   const contactForm = document.getElementById('contactForm');
   if (contactForm) {
@@ -395,11 +406,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const d = PRODUCT_DATA[pid];
       if (!d) return;
       document.getElementById('pdmInner').innerHTML =
-        `<div class="pdm-tag">${d.tag}</div>
-         <h2 class="pdm-name" id="pdmName">${d.name}</h2>
-         <div class="pdm-sub">${d.sub}</div>
-         <div class="pdm-price">${d.price} <span class="pdm-price-lbl">${d.unit}</span></div>
-         <div class="pdm-specs">${d.specs.map(s=>`<div class="pdm-spec"><div class="pdm-spec-label">${s.l}</div><div class="pdm-spec-val">${s.v}</div></div>`).join('')}</div>
+        `<div class="pdm-tag">${awT(d.tagKey, d.tag)}</div>
+         <h2 class="pdm-name" id="pdmName">${productName(pid)}</h2>
+         <div class="pdm-sub">${awT(d.subKey, d.sub)}</div>
+         <div class="pdm-price">${d.price} <span class="pdm-price-lbl">${_unitLabel(d.unit)}</span></div>
+         <div class="pdm-specs">${d.specs.map(s=>`<div class="pdm-spec"><div class="pdm-spec-label">${_SPEC_KEYS[s.l] ? awT(_SPEC_KEYS[s.l], s.l) : s.l}</div><div class="pdm-spec-val">${s.v}</div></div>`).join('')}</div>
          <button class="pdm-add-btn" type="button" id="pdmAdd">${awT('add-to-cart', 'Add to Cart')}</button>`;
       document.getElementById('pdmAdd').addEventListener('click', e => {
         e.stopPropagation();
@@ -439,8 +450,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.textContent = awT('added-to-cart', 'Added ✓'); btn.classList.add('added');
     setTimeout(() => { btn.textContent = orig; btn.classList.remove('added'); }, 1600);
     if (isMobileViewport()) {
-      const product = PRODUCT_DATA[pid];
-      showCartToast((product ? product.name : 'Product') + ' ' + awT('cart-added-toast', 'added'));
+      showCartToast(productName(pid) + ' ' + awT('cart-added-toast', 'added'));
     } else {
       openCart();
     }
@@ -561,8 +571,6 @@ document.addEventListener('DOMContentLoaded', () => {
     var scroll = e.scroll;
     var navEl = document.querySelector('nav');
     if (navEl) navEl.classList.toggle('scrolled', scroll > 60);
-    var heroWrap = document.querySelector('.hero-video-wrap');
-    if (heroWrap) heroWrap.style.transform = 'translateY(' + (scroll * 0.025) + 'px)';
   });
 
   /* Anchor-link scrolling handled by Lenis (html scroll-behavior:auto set in CSS) */

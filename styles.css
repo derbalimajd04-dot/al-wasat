@@ -72,7 +72,7 @@
 
   /* --- Type families --- */
   --serif:'Playfair Display',Georgia,serif;
-  --tenor:'Tenor Sans',sans-serif;
+  --tenor:var(--tenor);
   --body:'EB Garamond',Georgia,serif;
 }
 
@@ -998,17 +998,17 @@ html{scroll-behavior:auto}
 .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem;text-align:left}
 .review-card{background:#161310;border:1px solid rgb(var(--gold-rgb) / 0.1);padding:2rem;display:flex;flex-direction:column;gap:1rem}
 .review-stars{color:#C9A96E;font-size:1rem;letter-spacing:0.15em}
-.review-text{font-family:'EB Garamond',serif;font-size:1.05rem;line-height:1.8;color:#BEB49A;font-style:italic;flex:1}
+.review-text{font-family:var(--serif);font-size:1.05rem;line-height:1.8;color:#BEB49A;font-style:italic;flex:1}
 .review-meta{display:flex;flex-direction:column;gap:0.2rem}
-.review-name{font-family:'Tenor Sans',sans-serif;font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:#F5F0E8}
-.review-loc{font-family:'Tenor Sans',sans-serif;font-size:var(--fs-label);letter-spacing:0.08em;color:#8B7355}
-.review-verified{font-family:'Tenor Sans',sans-serif;font-size:var(--fs-micro);letter-spacing:0.1em;text-transform:uppercase;color:#C9A96E;opacity:0.7}
+.review-name{font-family:var(--tenor);font-size:0.78rem;letter-spacing:0.12em;text-transform:uppercase;color:#F5F0E8}
+.review-loc{font-family:var(--tenor);font-size:var(--fs-label);letter-spacing:0.08em;color:#8B7355}
+.review-verified{font-family:var(--tenor);font-size:var(--fs-micro);letter-spacing:0.1em;text-transform:uppercase;color:#C9A96E;opacity:0.7}
 @media(max-width:767px){.reviews-grid{grid-template-columns:1fr}}
 @media(min-width:768px) and (max-width:1023px){.reviews-grid{grid-template-columns:repeat(2,1fr)}}
 
 /* === FOOTER LEGAL LINKS === */
 .footer-legal{grid-column:1/-1;width:100%;text-align:center;padding-top:1rem;margin-top:1rem;border-top:1px solid rgb(var(--gold-rgb) / 0.08);display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}
-.footer-legal a{font-family:'Tenor Sans',sans-serif;font-size:var(--fs-label);letter-spacing:0.12em;text-transform:uppercase;color:#5A4E44;text-decoration:none;transition:color 0.2s}
+.footer-legal a{font-family:var(--tenor);font-size:var(--fs-label);letter-spacing:0.12em;text-transform:uppercase;color:#5A4E44;text-decoration:none;transition:color 0.2s}
 .footer-legal a:hover{color:#C9A96E}
 
 /* === RTL (Arabic) body-class rules === */

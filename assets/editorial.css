@@ -340,6 +340,14 @@ footer{background:var(--editorial-paper);border-top:1px solid var(--editorial-in
   .cd-items{padding-inline:1.25rem}
 }
 .lang-ar{--serif:'Noto Sans Arabic',Arial,sans-serif;--tenor:'Noto Sans Arabic',Arial,sans-serif;--body:'Noto Sans Arabic',Arial,sans-serif}
+/* English-only blocks (journal articles, legal pages, about facts) carry
+   lang="en" dir="ltr", so in Arabic mode they read left-to-right in the
+   Latin faces instead of inheriting the RTL overrides. */
+.lang-ar [lang="en"][dir="ltr"]{--serif:Georgia,'Times New Roman',serif;--display:var(--serif);--tenor:Arial,Helvetica,sans-serif;--body:Arial,Helvetica,sans-serif;text-align:left}
+.lang-ar [lang="en"][dir="ltr"] :is(.article-body,.sec-heading,.sec-body,.kicker){text-align:left}
+.lang-ar [lang="en"][dir="ltr"] .article-h2{padding-right:0;padding-left:1.5rem;border-right:none;border-left:2px solid var(--gold)}
+.lang-ar [lang="en"][dir="ltr"] .trade-table{direction:ltr}
+.lang-ar [lang="en"][dir="ltr"] .trade-table :is(th,td){text-align:left}
 .lang-ar body :is(.hero-eyebrow,.hero-sub,.hero-actions a,.hero-proof span,.nav-links a,.kicker,.home-product-sub,.p-sub,.p-tag,.field label,.ps-title,.q-attr){letter-spacing:0}
 .lang-ar :is(.sec-heading,.page-title,.pdp-title,.journal-hero-title,.article-hero-title,.checkout-title,.bcta-title){letter-spacing:0;line-height:1.35}
 @media(prefers-reduced-motion:reduce){

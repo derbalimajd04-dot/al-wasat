@@ -11,10 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#0a0a0a">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Tenor+Sans&family=EB+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-<noscript><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,300;0,400;1,300;1,400&family=Tenor+Sans&family=EB+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet"></noscript>
+<noscript></noscript>
 <script>/* pre-paint boot: JS flag + stored language. Runs before first paint so
    reveal-on-scroll can hide safely and RTL never flips after render. */
 (function(d){var h=d.documentElement;h.className+=(h.className?' ':'')+'js';
@@ -54,8 +51,8 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
   <div class="checkout-inner">
 
     <div class="checkout-header">
-      <p class="kicker reveal"><span class="kicker-rule"></span>Checkout</p>
-      <h1 class="checkout-title reveal">Your <em>Order</em></h1>
+      <p class="kicker reveal"><span class="kicker-rule"></span><span data-i18n="checkout-kicker">Checkout</span></p>
+      <h1 class="checkout-title reveal" data-i18n-html="checkout-heading">Your <em>Order</em></h1>
     </div>
 
     <div class="checkout-grid checkout-grid--slim">
@@ -73,7 +70,7 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
 
       <!-- Payment -->
       <div class="co-form-wrap reveal rd1">
-        <div class="co-section-title">Payment</div>
+        <div class="co-section-title" data-i18n="checkout-payment">Payment</div>
         <p class="co-pay-note" data-i18n="checkout-note">Secure checkout powered by Stripe. Your shipping address and payment details are collected on the next page.</p>
         <div class="co-pay-box">
           <button class="co-stripe-btn" id="stripeBtn" type="button">
@@ -81,11 +78,11 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
           </button>
           <p class="co-pay-methods">Visa · Mastercard · Amex · Apple Pay · Google Pay</p>
         </div>
-        <div class="co-trust-list" aria-label="Checkout assurances">
-          <div><span>Delivery</span><strong>5-7 working days</strong></div>
-          <div><span>Payment</span><strong>Secure Stripe checkout</strong></div>
-          <div><span>Origin</span><strong>Single-origin Tunisian olive oil</strong></div>
-          <div><span>Support</span><strong><a href="mailto:jamel.derbali@gmail.com">Contact us</a></strong></div>
+        <div class="co-trust-list" aria-label="Checkout assurances" data-i18n-attr="aria-label:checkout-assurances">
+          <div><span data-i18n="co-delivery">Delivery</span><strong data-i18n="co-delivery-v">5–7 working days</strong></div>
+          <div><span data-i18n="checkout-payment">Payment</span><strong data-i18n="co-payment-v">Secure Stripe checkout</strong></div>
+          <div><span data-i18n="spec-origin">Origin</span><strong data-i18n="co-origin-v">Single-origin Tunisian olive oil</strong></div>
+          <div><span data-i18n="co-support">Support</span><strong><a href="mailto:jamel.derbali@gmail.com" data-i18n="co-support-v">Contact us</a></strong></div>
         </div>
         <div class="co-error" id="coError" role="alert" style="display:none"></div>
       </div>
@@ -98,9 +95,9 @@ d.head.appendChild(k);}}catch(e){}})(document);</script>
 <div id="orderSuccess" class="order-success" style="display:none">
   <div class="os-inner">
     <div class="ornament"><div class="orn-line"></div><div class="orn-gem"></div><div class="orn-line"></div></div>
-    <h2 class="os-title">Order <em>Confirmed</em></h2>
-    <p class="os-body">Thank you. You'll receive a confirmation email shortly.<br>Delivery is estimated at 5-7 working days.</p>
-    <a href="/" class="bcta-btn os-btn"><span>Back to Home</span><span>&nbsp;→</span></a>
+    <h2 class="os-title" data-i18n-html="os-title">Order <em>Confirmed</em></h2>
+    <p class="os-body" data-i18n-html="os-body">Thank you. You'll receive a confirmation email shortly.<br>Delivery is estimated at 5–7 working days.</p>
+    <a href="/" class="bcta-btn os-btn"><span data-i18n="os-btn">Back to Home</span><span>&nbsp;→</span></a>
   </div>
 </div>
 
@@ -143,15 +140,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const base  = cart.reduce((s, i) => s + i.priceNum * i.qty, 0);
 
-  document.getElementById('coItems').innerHTML = cart.map(i =>
-    `<div class="co-item">
-      <div>
-        <div class="co-item-name">${i.name}</div>
-        <div class="co-item-sub">${i.unit.replace('/ ','')} &times; ${i.qty}</div>
-      </div>
-      <div class="co-item-price">£${(i.priceNum * i.qty).toFixed(2)}</div>
-    </div>`
-  ).join('');
+  /* Re-rendered on language change so product names follow the switch. */
+  function renderSummary() {
+    document.getElementById('coItems').innerHTML = getCart().map(i =>
+      `<div class="co-item">
+        <div>
+          <div class="co-item-name">${i.name}</div>
+          <div class="co-item-sub">${_unitLabel(i.unit).replace('/ ','')} &times; ${i.qty}</div>
+        </div>
+        <div class="co-item-price">£${(i.priceNum * i.qty).toFixed(2)}</div>
+      </div>`
+    ).join('');
+  }
+  renderSummary();
+  document.addEventListener('aw:languagechange', renderSummary);
   document.getElementById('coTotal').textContent = '£' + base.toFixed(2);
 
   // Stripe redirect
@@ -169,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
   btn.addEventListener('click', async () => {
     errEl.style.display = 'none';
     btn.disabled = true;
-    btn.innerHTML = '<span>Redirecting…</span>';
+    btn.innerHTML = '<span>' + awT('checkout-redirecting', 'Redirecting…') + '</span>';
     try {
       const res = await fetch('/.netlify/functions/create-checkout', {
         method: 'POST',
@@ -194,26 +196,24 @@ document.addEventListener('DOMContentLoaded', () => {
             'cannot execute /.netlify/functions/*. Use `netlify dev` to test ' +
             'checkout locally.'
           );
-          showCheckoutError(
+          showCheckoutError(awT('checkout-err-preview',
             'Checkout is not available on this preview. Please try again from ' +
-            'the live site, or contact us and we will take your order directly.'
-          );
+            'the live site, or contact us and we will take your order directly.'));
         } else {
-          showCheckoutError(
+          showCheckoutError(awT('checkout-err-start',
             'We could not start the payment. Please try again, or contact us ' +
-            'and we will take your order directly.'
-          );
+            'and we will take your order directly.'));
         }
         return;
       }
       if (data.url) {
         window.location.href = data.url;
       } else {
-        showCheckoutError(data.error || 'We could not start the payment. Please try again, or contact us and we will take your order directly.');
+        showCheckoutError(data.error || awT('checkout-err-start', 'We could not start the payment. Please try again, or contact us and we will take your order directly.'));
       }
     } catch (err) {
       console.error('create-checkout fetch error:', err.message);
-      showCheckoutError('Could not reach payment service. Check your connection and try again.');
+      showCheckoutError(awT('checkout-err-network', 'Could not reach payment service. Check your connection and try again.'));
     }
   });
 });

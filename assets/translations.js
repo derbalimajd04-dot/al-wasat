@@ -344,7 +344,30 @@ window.I18N = {
     'pdp-use-organic-500': 'Finishing, salads, raw applications',
     'pdp-use-organic-1l': 'Daily cooking, finishing, sharing',
     'cart-each': 'each',
-    'name-sub': 'Quarterly Subscription Box'
+    'name-sub': 'Quarterly Subscription Box',
+    'pname-tasting': 'AL WASAT Classic — 250ml Tasting',
+    'pname-bulk': 'AL WASAT Bulk — 3L Tin',
+    'pname-giftcard': 'AL WASAT Digital Gift Card',
+    'cart-view': 'View Cart',
+
+    /* --- Checkout page ------------------------------------------------ */
+    'checkout-kicker': 'Checkout',
+    'checkout-heading': 'Your <em>Order</em>',
+    'checkout-payment': 'Payment',
+    'checkout-assurances': 'Checkout assurances',
+    'co-delivery': 'Delivery',
+    'co-delivery-v': '5–7 working days',
+    'co-payment-v': 'Secure Stripe checkout',
+    'co-origin-v': 'Single-origin Tunisian olive oil',
+    'co-support': 'Support',
+    'co-support-v': 'Contact us',
+    'os-title': 'Order <em>Confirmed</em>',
+    'os-body': 'Thank you. You\'ll receive a confirmation email shortly.<br>Delivery is estimated at 5–7 working days.',
+    'os-btn': 'Back to Home',
+    'checkout-redirecting': 'Redirecting…',
+    'checkout-err-preview': 'Checkout is not available on this preview. Please try again from the live site, or contact us and we will take your order directly.',
+    'checkout-err-start': 'We could not start the payment. Please try again, or contact us and we will take your order directly.',
+    'checkout-err-network': 'Could not reach payment service. Check your connection and try again.'
   },
 
   fr: {
@@ -663,7 +686,30 @@ window.I18N = {
     'pdp-use-organic-500': 'Touche finale, salades, usages crus',
     'pdp-use-organic-1l': 'Cuisine quotidienne, touche finale, partage',
     'cart-each': 'l’unité',
-    'name-sub': 'Coffret d’abonnement trimestriel'
+    'name-sub': 'Coffret d’abonnement trimestriel',
+    'pname-tasting': 'AL WASAT Classique — Dégustation 250 ml',
+    'pname-bulk': 'AL WASAT Vrac — Bidon 3 L',
+    'pname-giftcard': 'Carte cadeau numérique AL WASAT',
+    'cart-view': 'Voir le panier',
+
+    /* --- Checkout page ------------------------------------------------ */
+    'checkout-kicker': 'Commande',
+    'checkout-heading': 'Votre <em>commande</em>',
+    'checkout-payment': 'Paiement',
+    'checkout-assurances': 'Garanties de commande',
+    'co-delivery': 'Livraison',
+    'co-delivery-v': '5 à 7 jours ouvrés',
+    'co-payment-v': 'Paiement sécurisé par Stripe',
+    'co-origin-v': 'Huile d’olive tunisienne d’origine unique',
+    'co-support': 'Assistance',
+    'co-support-v': 'Nous contacter',
+    'os-title': 'Commande <em>confirmée</em>',
+    'os-body': 'Merci. Vous allez recevoir un e-mail de confirmation.<br>Livraison estimée sous 5 à 7 jours ouvrés.',
+    'os-btn': 'Retour à l’accueil',
+    'checkout-redirecting': 'Redirection…',
+    'checkout-err-preview': 'Le paiement n’est pas disponible sur cette prévisualisation. Réessayez depuis le site, ou contactez-nous et nous prendrons votre commande directement.',
+    'checkout-err-start': 'Nous n’avons pas pu lancer le paiement. Réessayez, ou contactez-nous et nous prendrons votre commande directement.',
+    'checkout-err-network': 'Impossible de joindre le service de paiement. Vérifiez votre connexion et réessayez.'
   },
 
   ar: {
@@ -982,6 +1028,29 @@ window.I18N = {
     'pdp-use-organic-500': 'اللمسات الأخيرة، السلطات، الاستعمال نيئاً',
     'pdp-use-organic-1l': 'الطبخ اليومي، اللمسات الأخيرة، المشاركة',
     'cart-each': 'للوحدة',
-    'name-sub': 'صندوق الاشتراك الفصلي'
+    'name-sub': 'صندوق الاشتراك الفصلي',
+    'pname-tasting': 'الوسط الكلاسيكي — عبوة تذوّق 250 مل',
+    'pname-bulk': 'الوسط بالجملة — علبة 3 لتر',
+    'pname-giftcard': 'بطاقة هدية رقمية من الوسط',
+    'cart-view': 'عرض السلة',
+
+    /* --- Checkout page ------------------------------------------------ */
+    'checkout-kicker': 'إتمام الطلب',
+    'checkout-heading': 'طلبك',
+    'checkout-payment': 'الدفع',
+    'checkout-assurances': 'ضمانات الطلب',
+    'co-delivery': 'التوصيل',
+    'co-delivery-v': 'من 5 إلى 7 أيام عمل',
+    'co-payment-v': 'دفع آمن عبر Stripe',
+    'co-origin-v': 'زيت زيتون تونسي من مصدر واحد',
+    'co-support': 'الدعم',
+    'co-support-v': 'تواصل معنا',
+    'os-title': 'تم <em>تأكيد</em> الطلب',
+    'os-body': 'شكراً لك. ستصلك رسالة تأكيد عبر البريد الإلكتروني قريباً.<br>مدة التوصيل المتوقعة من 5 إلى 7 أيام عمل.',
+    'os-btn': 'العودة إلى الرئيسية',
+    'checkout-redirecting': 'جارٍ التحويل…',
+    'checkout-err-preview': 'الدفع غير متاح في هذه المعاينة. يُرجى المحاولة من الموقع الرسمي، أو التواصل معنا وسنستلم طلبك مباشرة.',
+    'checkout-err-start': 'تعذّر بدء عملية الدفع. يُرجى المحاولة مجدداً، أو التواصل معنا وسنستلم طلبك مباشرة.',
+    'checkout-err-network': 'تعذّر الوصول إلى خدمة الدفع. تحقّق من اتصالك وحاول مجدداً.'
   }
 };

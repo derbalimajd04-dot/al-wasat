@@ -58,7 +58,7 @@ exports.handler = async (event) => {
     </td></tr>
     <tr><td style="padding:40px 48px 24px;text-align:center">
       <h1 style="margin:0;font-size:28px;font-weight:300;color:#F5F0E8;letter-spacing:1px">You're on the <em style="color:#C9A96E;font-style:italic">list.</em></h1>
-      <p style="margin:20px 0 0;font-size:14px;color:#8B7355;line-height:1.9">No noise. No promotions. Only the harvest.<br>We'll be in touch when the 2025 batch is ready.</p>
+      <p style="margin:20px 0 0;font-size:14px;color:#8B7355;line-height:1.9">No noise. No promotions. Only the harvest.<br>We'll be in touch when the 2026 harvest arrives.</p>
     </td></tr>
     <tr><td style="padding:24px 48px 40px;text-align:center;border-top:1px solid rgba(201,169,110,0.08)">
       <a href="https://al-wasat.co.uk/shop/" style="display:inline-block;font-family:'Helvetica Neue',sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#C9A96E;text-decoration:none;border:1px solid rgba(201,169,110,0.35);padding:14px 32px">View the Collection</a>
