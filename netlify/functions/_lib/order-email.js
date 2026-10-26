@@ -86,7 +86,8 @@ async function sendOrderConfirmation(stripe, sessionId, { trusted = false } = {}
     expand: ['line_items', 'payment_intent'],
   });
 
-  if (session.payment_status !== 'paid') return 'not-paid';
+  /* 'no_payment_required' covers orders fully discounted by a promo code. */
+  if (session.payment_status !== 'paid' && session.payment_status !== 'no_payment_required') return 'not-paid';
 
   const email = session.customer_details && session.customer_details.email;
   if (!email) return 'no-email';
@@ -100,9 +101,18 @@ async function sendOrderConfirmation(stripe, sessionId, { trusted = false } = {}
     return 'already-sent';
   }
 
-  /* Claim the order before sending so a second caller sees the flag. */
+  /* Claim the order before sending so a second caller sees the flag. If the
+     claim itself fails, the signed webhook still sends (a possible duplicate
+     beats no confirmation); the public fallback does not. */
+  let claimed = false;
   if (pi && typeof pi === 'object') {
-    await stripe.paymentIntents.update(pi.id, { metadata: { [SENT_FLAG]: new Date().toISOString() } });
+    try {
+      await stripe.paymentIntents.update(pi.id, { metadata: { [SENT_FLAG]: new Date().toISOString() } });
+      claimed = true;
+    } catch (err) {
+      console.error('order-email: could not mark order as confirmed:', err.message);
+      if (!trusted) return 'skipped';
+    }
   }
 
   const name = (session.customer_details && session.customer_details.name) || 'valued customer';
@@ -121,7 +131,7 @@ async function sendOrderConfirmation(stripe, sessionId, { trusted = false } = {}
     });
   } catch (err) {
     /* Release the claim so the other path can retry. */
-    if (pi && typeof pi === 'object') {
+    if (claimed) {
       await stripe.paymentIntents.update(pi.id, { metadata: { [SENT_FLAG]: '' } }).catch(() => {});
     }
     throw err;
