@@ -353,3 +353,18 @@ footer{background:var(--editorial-paper);border-top:1px solid var(--editorial-in
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important}
 }
+/* Chrome uses compositor scrolling and solid sticky controls, avoiding
+   backdrop sampling of moving content. Safari keeps the existing effects. */
+html.chrome-performance{scroll-behavior:smooth}
+.chrome-performance :is(.shop-page .filters,.pdp-actions,.checkout-page .co-pay-box,.cd-footer){
+  background:var(--editorial-paper);
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+}
+/* Remove closed, full-screen blurred overlays from Chrome's render tree;
+   visibility still allows the existing opening and closing fades. */
+.chrome-performance :is(.cart-overlay,.pdm-overlay){
+  visibility:hidden;
+  transition:opacity .4s,visibility .4s;
+}
+.chrome-performance :is(.cart-overlay,.pdm-overlay).open{visibility:visible}

@@ -1,3 +1,15 @@
+/* Chrome gets native scrolling; Safari keeps its existing scroll behavior.
+   Prefer browser brands so other Chromium browsers aren't opted in. Chrome
+   on iOS uses WebKit and deliberately stays on the existing path. */
+const _chromePerformance = (() => {
+  const brands = navigator.userAgentData && navigator.userAgentData.brands;
+  if (brands && brands.length) return brands.some(b => b.brand === 'Google Chrome');
+  return /\bChrome\/\d+/.test(navigator.userAgent || '') &&
+    !/\b(?:Edg|OPR|SamsungBrowser|Vivaldi|Chromium)\//.test(navigator.userAgent || '') &&
+    !navigator.brave;
+})();
+if (_chromePerformance) document.documentElement.classList.add('chrome-performance');
+
 /* === PRODUCT DATA (global — used by modal + cart) ===
    Only products that can actually be paid for belong here: getCart() drops
    anything not listed, so a stale cart can never reach a broken checkout.
@@ -544,6 +556,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* === LENIS SMOOTH SCROLL === */
 (function() {
+  /* Native Chrome scrolling avoids a permanent RAF loop and lets compositor
+     scrolling continue without waiting for the page's JavaScript thread. */
+  if (_chromePerformance) return;
   if (typeof Lenis === 'undefined') return;
   if (window.matchMedia && window.matchMedia('(max-width: 767px)').matches) return;
   /* Smooth-scroll hijacking is a vestibular trigger — leave native scrolling
@@ -655,12 +670,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function load(v) {
     if (getComputedStyle(v).display === 'none') return;
-    v.src = v.dataset.src;
-    v.removeAttribute('data-src');
+    if (v.hasAttribute('data-src')) {
+      v.src = v.dataset.src;
+      v.removeAttribute('data-src');
+    }
     var p = v.play();
     if (p && p.catch) p.catch(function () {});
   }
   if (typeof IntersectionObserver === 'undefined') { vids.forEach(load); return; }
+  /* Chrome should decode the decorative video only while it can be seen.
+     Keep observing after loading so leaving the section releases that work. */
+  if (_chromePerformance) {
+    var visible = new Set();
+    function syncPlayback(v) {
+      if (!document.hidden && visible.has(v)) load(v);
+      else v.pause();
+    }
+    var playbackObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) visible.add(e.target);
+        else visible.delete(e.target);
+        syncPlayback(e.target);
+      });
+    });
+    vids.forEach(function (v) { playbackObs.observe(v); });
+    document.addEventListener('visibilitychange', function () {
+      vids.forEach(syncPlayback);
+    });
+    return;
+  }
   var obs = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (e.isIntersecting) { obs.unobserve(e.target); load(e.target); }
