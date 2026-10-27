@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "scripts": {
     "build": "node scripts/build.js",
+    "test": "node --test tests/*.test.js",
     "optimize:images": "node scripts/optimize-images.js",
+    "predev": "npm run build",
     "dev": "netlify dev"
   },
   "dependencies": {

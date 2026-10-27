@@ -1,0 +1,104 @@
+/* ================================================================ */
+/* === ARABIC / RTL — supersedes the earlier ad-hoc .lang-ar rules  */
+/* === The `lang-ar` class is set on <html> (pre-paint) AND <body>. */
+/* ================================================================ */
+
+/* --- Typography -------------------------------------------------- */
+/* The old `.lang-ar body` selector could never match (body inside body),
+   so the Arabic face was never actually applied. */
+.lang-ar,
+.lang-ar body,
+body.lang-ar{font-family:'Noto Sans Arabic','Noto Naskh Arabic',Tahoma,Arial,sans-serif}
+
+/* Arabic is a cursive script: letter-spacing severs the joins between
+   glyphs and makes words unreadable. Uppercase is a no-op. Italic is a
+   synthetic oblique with no typographic tradition in Arabic. Strip all
+   three wherever they were applied for the Latin design. */
+.lang-ar :is(h1,h2,h3,h4,p,span,a,li,td,th,button,label,input,textarea,select,div,blockquote,strong,em){
+  letter-spacing:normal;
+  font-style:normal;
+}
+.lang-ar :is(.kicker,.nav-links a,.btn-primary,.btn-ghost,.bcta-btn,.p-cta,.p-tag,.stat-l,
+.cert-item,.q-attr,.ps-title,.ptitle,.cd-title,.cd-total-label,.cd-checkout-btn,.cd-continue,
+.co-head,.co-section-title,.co-total-label,.filter-btn,.p-add-btn,.p-details-btn,.pdm-add-btn,
+.submit-btn,.newsletter-btn,.press-kicker,.j-cat,.j-arrow,.article-cat,.article-back,.article-next,
+.tc-name,.trade-terr-label,.tl-label,.fl,.fc,.fr,.footer-legal a,.harvest-text,.pdp-kicker,
+.ass-title,.cd-item-name,.co-item-name,.float-tag-label,.hero-eyebrow,.scroll-label,.mq-item){
+  letter-spacing:normal;
+  text-transform:none;
+  font-style:normal;
+}
+/* Serif display faces have no Arabic coverage — fall back cleanly */
+.lang-ar :is(.hero-h1,.sec-heading,.page-title,.q-text,.journal-hero-title,.article-hero-title,
+.checkout-title,.os-title,.bcta-title,.nl-heading,.pdp-title,.stat-n,.tl-year,.ps-num,.pnum,
+.float-tag-num,.p-name,.p-price,.pdm-name,.pdm-price,.fs-title,.trade-terr-region,.j-title,
+.cd-item-price,.cd-total-val,.co-item-price,.co-total-val,.nav-logo,.pre-logo){
+  font-family:'Noto Sans Arabic','Noto Naskh Arabic',Tahoma,Arial,sans-serif;
+  font-style:normal;
+  letter-spacing:normal;
+}
+/* Arabic ascenders/descenders need more room than the Latin scale allows */
+.lang-ar :is(.hero-h1,.sec-heading,.page-title,.journal-hero-title,.article-hero-title){line-height:1.35}
+.lang-ar :is(.q-text,.sec-body,.hero-sub,.article-p,.article-lead){line-height:1.9}
+.lang-ar .article-lead::first-letter{font-size:inherit;float:none;margin:0;line-height:inherit;color:inherit;text-shadow:none}
+
+/* --- Direction --------------------------------------------------- */
+.lang-ar{direction:rtl}
+.lang-ar .nav-links{direction:rtl}
+.lang-ar :is(.hero-content,.article-body,.sec-heading,.sec-body,.kicker,.page-hero-inner,
+.trade-hero-inner,.checkout-header,.pdp-info,.co-form-wrap,.contact-detail,.form-grid){text-align:right}
+.lang-ar :is(.kicker,.hero-eyebrow,.pillar-row,.hero-actions,.p-tag,.p-attrs,.ass-item,
+.cd-item,.co-item,.cd-header,.cd-total-row,.article-nav-foot,.submit-wrap,.pdp-actions){flex-direction:row-reverse}
+.lang-ar .hero-eyebrow{justify-content:flex-end}
+.lang-ar :is(.eyebrow-rule,.btn-arrow,.p-arrow){transform:scaleX(-1)}
+.lang-ar .pillar-row{text-align:right}
+.lang-ar .lang-opt+.lang-opt{border-left:none;border-right:1px solid rgb(var(--gold-rgb) / 0.18)}
+
+/* Centred sections must stay centred, not flip to right */
+.lang-ar :is(.quote-sec,.process-sec,.bottom-cta,.newsletter-sec,.press-sec,.timeline-header,
+.journal-hero,.reviews-sec,.cd-empty,.form-success,.trade-form-success,.os-inner) :is(.sec-heading,.kicker,.sec-body){text-align:center}
+.lang-ar .process-head .kicker,.lang-ar .timeline-header .kicker{justify-content:center}
+
+/* --- Cart drawer: slide in from the LEFT ------------------------- */
+/* The old rule set left:0 but kept translateX(100%), pushing the drawer
+   off the wrong edge and leaving it partly on-screen when closed. */
+.lang-ar .cart-drawer{left:0;right:auto;border-left:none;border-right:1px solid rgb(var(--gold-rgb) / 0.12);transform:translateX(-100%)}
+.lang-ar .cart-drawer.open{transform:translateX(0)}
+.lang-ar .cd-item-right{align-items:flex-start}
+.lang-ar :is(.cd-checkout-btn,.co-stripe-btn,.cd-promo-row){direction:rtl}
+.lang-ar .cd-promo-input{text-align:right}
+
+/* --- Mobile nav: slide in from the LEFT -------------------------- */
+@media(max-width:900px){
+  .lang-ar .nav-links{right:auto;left:0;transform:translateX(-110%);border-left:none;border-right:1px solid rgb(var(--gold-rgb) / 0.12)}
+  .lang-ar .nav-links.open{transform:translateX(0)}
+}
+
+/* --- Elements that must NOT flip --------------------------------- */
+/* Prices, phone numbers, and the marquee are direction-neutral. */
+.lang-ar :is(.p-price,.pdm-price,.pdp-price,.cd-item-price,.cd-total-val,.co-item-price,
+.co-total-val,.cart-count,.stat-n,.tl-year,.float-tag-num){direction:ltr;unicode-bidi:isolate}
+.lang-ar .marquee-track,.lang-ar .cert-track{direction:ltr}
+.lang-ar .timeline-track{direction:ltr}
+.lang-ar .trade-table{direction:rtl}
+.lang-ar .trade-table :is(th,td){text-align:right}
+
+/* --- Fixed-position UI ------------------------------------------- */
+.lang-ar .scroll-ind{right:auto;left:5rem}
+.lang-ar .harvest-close{right:auto;left:1.25rem}
+.lang-ar .pdm-close{right:auto;left:1.5rem}
+.lang-ar .float-tag{right:auto;left:-2.5rem}
+.lang-ar .heritage-flip .float-tag{left:auto;right:-2.5rem}
+.lang-ar .article-h2{padding-left:0;padding-right:1.5rem;border-left:none;border-right:2px solid var(--gold)}
+.lang-ar .q-mark{left:auto;right:4rem}
+.lang-ar .wa-btn{right:auto;left:1.5rem}
+@media(max-width:900px){
+  .lang-ar .scroll-ind{left:2rem}
+  .lang-ar .float-tag,.lang-ar .heritage-flip .float-tag{left:auto;right:auto}
+}
+@media(max-width:500px){.lang-ar .scroll-ind{left:1.25rem}}
+
+/* --- Language pill state ---------------------------------------- */
+.lang-opt[aria-pressed="true"]{color:var(--gold);background:rgb(var(--gold-rgb) / 0.12)}
+.lang-pill:focus-within{border-color:rgb(var(--gold-rgb) / 0.5)}
+

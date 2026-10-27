@@ -1,0 +1,302 @@
+/* ================================================================ */
+/* === REDESIGN LAYER (consolidated)                            === */
+/* Product-led hero · reduced visual noise · readability ·        */
+/* restrained gold with an ivory counterweight · trust band.      */
+/* Rules merged: one declaration per selector per media context.  */
+/* ================================================================ */
+.grain{opacity:0.015}
+body::before{opacity:0.25}
+.sec-heading em,.q-text em,.page-title em,.bcta-title em,.checkout-title em,
+.os-title em,.journal-hero-title em,.fs-title,.stat-n,.hero-h1 .hl:nth-child(2),
+.trade-terr-region,.article-lead::first-letter,.pdp-title em{text-shadow:none}
+.q-glow,.bcta-glow,.page-hero-bg,.journal-hero-bg,.trade-hero-bg{display:none}
+.ornament{margin-top:2rem;opacity:0.5}
+.hero{height:auto;min-height:0;display:block;padding:0;overflow:visible}
+.hero-video-wrap{position:absolute;inset:0;overflow:hidden}
+.hero-video{opacity:0.18;animation:none;transform:none;transition:none}
+.hero-overlay{background:linear-gradient(120deg,rgb(var(--ink-rgb) / 0.92) 0%,rgb(var(--ink-rgb) / 0.78) 45%,rgb(var(--ink-rgb) / 0.55) 100%)}
+.hero-inner{position:relative;z-index:3;display:grid;grid-template-columns:1.05fr 0.95fr;gap:4.5rem;align-items:center;max-width:1400px;margin:0 auto;padding:8.5rem 5rem 4.5rem;min-height:100vh;padding-top:7.25rem;padding-bottom:3.5rem}
+.hero-eyebrow,.hero-sub,.hero-actions,.hero-proof,.hero-h1 .hl{opacity:1;transform:none;animation:none}
+.hero-content{padding:0;max-width:none}
+.hero-eyebrow{margin-bottom:1.75rem;color:var(--stone2);font-size:var(--fs-label);letter-spacing:0.20em}
+.eyebrow-rule{background:linear-gradient(to right,var(--gold),transparent)}
+.hero-h1{font-size:clamp(2.6rem,4.4vw,4rem);line-height:1.02;margin-bottom:1.25rem;overflow:visible}
+.hero-h1 .hl{display:block}
+.hero-h1 .hl:nth-child(2){color:var(--gold);font-style:italic}
+.hero-sub{font-family:var(--body);font-style:normal;font-size:1.06rem;line-height:1.7;color:rgb(var(--cream-rgb) / 0.82);max-width:34ch;margin-bottom:1.75rem}
+.hero-actions{gap:2rem;margin-bottom:1.75rem;flex-wrap:wrap}
+.hero-proof{display:flex;gap:2.25rem;list-style:none;padding-top:1.35rem;border-top:1px solid rgb(var(--gold-rgb) / 0.16)}
+.hero-proof li{display:flex;flex-direction:column;gap:0.3rem}
+.hero-proof strong{font-family:var(--serif);font-weight:400;font-size:1.5rem;color:var(--gold);line-height:1}
+.hero-proof span{font-family:var(--tenor);font-size:var(--fs-micro);letter-spacing:0.15em;text-transform:uppercase;color:var(--stone2);line-height:1.4}
+.hero-product{position:relative;display:flex;flex-direction:column;align-items:center;gap:0}
+.hero-bottle{display:block;width:100%;max-width:390px;border:1px solid rgb(var(--gold-rgb) / 0.16);background:var(--ivory);overflow:hidden;line-height:0;aspect-ratio:4/5}
+.hero-bottle img{width:100%;height:100%;display:block;transition:transform 1.2s cubic-bezier(0.16,1,0.3,1);object-fit:cover;object-position:center 42%}
+.hero-bottle:hover img{transform:scale(1.03)}
+.hero-price-tag{display:flex;align-items:center;gap:0.9rem;flex-wrap:wrap;justify-content:space-between;text-decoration:none;padding:0.9rem 1.5rem;border:1px solid rgb(var(--gold-rgb) / 0.22);background:rgb(var(--ink-rgb) / 0.55);transition:border-color 0.3s,background 0.3s;width:100%;max-width:420px;border-top:none}
+.hero-price-tag:hover{border-color:rgb(var(--gold-rgb) / 0.5);background:rgb(var(--gold-rgb) / 0.06)}
+.hpt-name{font-family:var(--tenor);font-size:var(--fs-label);letter-spacing:0.18em;text-transform:uppercase;color:var(--cream)}
+.hpt-price{font-family:var(--serif);font-size:1.35rem;color:var(--gold)}
+.hpt-cta{font-family:var(--tenor);font-size:var(--fs-micro);letter-spacing:0.16em;text-transform:uppercase;color:var(--stone2);width:auto;text-align:right}
+.sec-body,.pdesc,.ps-desc,.j-excerpt,.tc-desc,.trade-terr-note,.ass-sub,
+.tl-desc,.p-sub,.page-desc,.trade-hero-right,.newsletter-sub,.pdp-desc,
+.trade-table td,.trade-table-note,.co-pay-note,.article-p,.article-lead,
+.os-body,.fs-body,.cd-empty p,.review-text,.press-quote{font-style:normal}
+.sec-body em,.pdesc em,.article-p em,.article-lead em,.review-text em{font-style:italic}
+.nav-links a{color:rgb(var(--cream-rgb) / 0.78)}
+.press-name{color:rgb(var(--cream-rgb) / 0.72)}
+.press-name:hover{color:var(--cream)}
+.press-quote{color:var(--stone2)}
+.p-attr,.stat-l,.float-tag-label,.cd-label,.ass-sub,.j-excerpt,
+.tc-desc,.ps-desc,.pdesc{color:var(--stone2)}
+.article-p{color:rgb(var(--cream-rgb) / 0.76)}
+.q-attr,.tl-label{color:var(--cream2)}
+.pdesc,.ps-desc,.tc-desc,.j-excerpt,.ass-sub,.trade-terr-note{font-size:1rem;line-height:1.75}
+.sec-body{font-size:1.08rem;line-height:1.8;color:var(--stone2)}
+.stat-n,.tl-year,.ps-num,.pnum,.float-tag-num,.trade-terr-region{color:var(--cream)}
+.tl-year{color:rgb(var(--cream-rgb) / 0.14)}
+.ps-num{color:rgb(var(--cream-rgb) / 0.16)}
+.q-text em{color:var(--cream)}
+.q-mark{color:rgb(var(--cream-rgb) / 0.04)}
+.p-price,.pdm-price,.pdp-price,.cd-total-val,.co-total-val,.hpt-price,
+.hero-proof strong,.home-product-price{color:var(--gold)}
+.home-shop-sec{background:var(--ivory);border-top:none;border-bottom:none;padding:7rem 5rem;color:var(--olive-ink)}
+.home-shop-sec .kicker{color:var(--olive2)}
+.home-shop-sec .kicker-rule{background:var(--olive2)}
+.home-shop-sec .sec-heading{color:var(--olive-ink)}
+.home-shop-sec .sec-heading em{color:var(--olive);font-style:italic}
+.home-shop-link{color:var(--olive);border-bottom-color:rgb(var(--olive-rgb) / 0.35)}
+.home-shop-link:hover{color:var(--olive-ink)}
+.home-product{background:#fff;border:1px solid rgb(var(--olive-rgb) / 0.14)}
+.home-product:hover{background:#fff;border-color:rgb(var(--olive-rgb) / 0.32);box-shadow:0 14px 34px rgba(35,42,24,0.1)}
+.home-product-img{background:#fff;padding:0;aspect-ratio:4/5}
+.home-product-img img{filter:none;width:100%;height:100%;object-fit:cover;object-position:center 45%}
+.home-product-name{color:var(--olive-ink)}
+.home-product-sub{color:#6B6555;font-style:normal}
+.home-product-price{color:var(--olive);font-weight:400}
+.marquee{padding:0.9rem 0;background:transparent}
+.marquee-track{animation-duration:45s}
+.mq-item{font-size:var(--fs-micro);color:rgb(var(--cream-rgb) / 0.42)}
+.mq-gem{border-color:rgb(var(--gold-rgb) / 0.35)}
+.lang-ar .hero-inner{direction:rtl}
+.lang-ar .hero-content{text-align:right}
+.lang-ar .hero-proof{flex-direction:row-reverse;direction:rtl}
+.lang-ar .hero-proof li{align-items:flex-end}
+.lang-ar .hero-proof strong{direction:ltr;unicode-bidi:isolate}
+.lang-ar .hpt-price{direction:ltr;unicode-bidi:isolate}
+.lang-ar .hero-price-tag{direction:rtl}
+.lang-ar .home-shop-sec .kicker{flex-direction:row-reverse}
+.lang-ar nav{flex-direction:row}
+.lang-ar .nav-links{flex-direction:row}
+.lang-ar .nav-logo{margin-left:0;margin-right:0}
+.lang-ar .footer-legal{flex-direction:row}
+.lang-ar .kicker-rule{margin-left:0;margin-right:0}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.trust-band{padding:4rem 5rem;background:var(--ink2);border-top:1px solid rgb(var(--gold-rgb) / 0.1);border-bottom:1px solid rgb(var(--gold-rgb) / 0.1)}
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;list-style:none;max-width:1300px;margin:0 auto}
+.trust-item{display:flex;flex-direction:column;gap:0.4rem;padding:0 2.5rem;border-right:1px solid rgb(var(--gold-rgb) / 0.12)}
+.trust-item:last-child{border-right:none}
+.trust-item:first-child{padding-left:0}
+.trust-label{font-family:var(--tenor);font-size:var(--fs-micro);letter-spacing:0.20em;text-transform:uppercase;color:var(--stone)}
+.trust-value{font-family:var(--serif);font-size:1.35rem;font-weight:400;color:var(--cream);line-height:1.2}
+.trust-value span{font-size:0.85rem;color:var(--stone2)}
+.trust-meta{font-family:var(--body);font-size:0.92rem;color:var(--stone2);line-height:1.5}
+.trust-link{margin-top:0.35rem;align-self:flex-start;font-family:var(--tenor);font-size:var(--fs-micro);letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgb(var(--gold-rgb) / 0.35);padding-bottom:2px;transition:color 0.3s,border-color 0.3s}
+.trust-link:hover{color:var(--gold2);border-color:var(--gold2)}
+.trust-link:not([href]),.press-name:not([href]){color:var(--stone);border-bottom:none;cursor:default;pointer-events:none}
+.press-name[href]{text-decoration:none;border-bottom:1px solid transparent;transition:color 0.4s,border-color 0.4s}
+.press-name[href]:hover{color:var(--cream);border-bottom-color:rgb(var(--cream-rgb) / 0.4)}
+.lang-ar .trust-item{border-right:none;border-left:1px solid rgb(var(--gold-rgb) / 0.12)}
+.lang-ar .trust-item:last-child{border-left:none}
+.lang-ar .trust-value{direction:ltr;unicode-bidi:isolate;text-align:right}
+@supports (min-height:100dvh){
+  .hero-inner{min-height:100dvh}
+}
+@media(max-width:1024px){
+  .hero-inner{grid-template-columns:1fr;gap:3.5rem;padding:8rem 2.5rem 3.5rem;min-height:0}
+  .hero-product{order:-1;align-items:flex-start}
+  .hero-bottle{max-width:min(100%,300px);aspect-ratio:1/1;max-height:38vh}
+  .hero-price-tag{align-self:stretch;max-width:min(100%,300px)}
+  .hero-sub{max-width:52ch}
+  .lang-ar .hero-product{align-items:flex-end}
+  .hero-bottle,.hero-price-tag{max-width:320px}
+  .nav-ham{display:flex}
+  .nav-links{position:fixed;top:0;right:0;bottom:0;width:72%;max-width:360px;background:rgb(var(--ink-rgb) / 0.97);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);flex-direction:column;justify-content:center;gap:2.5rem;padding:5rem 3rem;transform:translateX(110%);transition:transform 0.5s cubic-bezier(0.16,1,0.3,1);z-index:490;border-left:1px solid rgb(var(--gold-rgb) / 0.12)}
+  .nav-links.open{transform:translateX(0)}
+  .nav-links a{font-size:1.1rem;letter-spacing:0.12em;min-height:44px;display:flex;align-items:center}
+  .lang-ar .nav-links{right:auto;left:0;transform:translateX(-110%);border-left:none;border-right:1px solid rgb(var(--gold-rgb) / 0.12);flex-direction:column}
+  .lang-ar .nav-links.open{transform:translateX(0)}
+}
+@media(max-width:900px){
+  .home-shop-sec{padding:5rem 2rem}
+  .trust-band{padding:3rem 2rem}
+  .trust-grid{grid-template-columns:1fr 1fr;gap:2rem 0}
+  .trust-item{padding:0 1.5rem}
+  .trust-item:nth-child(odd){padding-left:0}
+  .trust-item:nth-child(2n){border-right:none}
+}
+@media(max-width:640px){
+  .hero-inner{padding:6.5rem 1.25rem 3rem;gap:2.5rem}
+  .hero-h1{font-size:clamp(2.3rem,10vw,3.1rem)}
+  .hero-sub{font-size:1.02rem;margin-bottom:2rem}
+  .hero-bottle{max-width:100%;aspect-ratio:3/2;max-height:30vh}
+  .hero-actions{gap:1.25rem;margin-bottom:2.25rem}
+  .hero-actions .btn-primary{width:100%;justify-content:center}
+  .hero-proof{gap:1.5rem;justify-content:space-between}
+  .hero-proof strong{font-size:1.2rem}
+  .hero-proof span{font-size:var(--fs-micro);letter-spacing:0.1em}
+  .home-shop-sec{padding:4rem 1.25rem}
+  .hero-bottle,.hero-price-tag{max-width:100%}
+  .hero-price-tag{max-width:100%}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-bottle img{transition:none !important}
+  .marquee-track{animation:none !important;transform:none !important}
+}
+@media(max-width:500px){
+  .trust-band{padding:2.5rem 1.25rem}
+  .trust-grid{grid-template-columns:1fr;gap:1.75rem}
+  .trust-item{padding:0 0 1.75rem;border-right:none;border-bottom:1px solid rgb(var(--gold-rgb) / 0.1)}
+  .trust-item:last-child{border-bottom:none;padding-bottom:0}
+}
+
+/* ================================================================ */
+/* === MOBILE POLISH                                            === */
+/* ================================================================ */
+
+/* --- Floating-element stacking -----------------------------------
+   .wa-btn (z 998) previously sat under the cookie banner (z 9995) and over
+   the cart toast (z 9996) at the same screen corner, so on mobile all three
+   collided. It now sits below both in the stack and lifts clear whenever
+   either is on screen.
+
+   Driven by :has() rather than an observer: the state is derived from the
+   DOM at paint time, so it cannot desync or get stuck if a callback is
+   missed. Browsers without :has() simply keep the button in place — the
+   button stays usable either way. */
+.wa-btn{z-index:640;transition:transform 0.35s cubic-bezier(0.16,1,0.3,1),box-shadow 0.2s ease}
+body:has(.cookie-banner.visible) .wa-btn{transform:translateY(-5.5rem)}
+body:has(.cart-toast.show) .wa-btn{transform:translateY(-4.5rem)}
+body:has(.cookie-banner.visible):has(.cart-toast.show) .wa-btn{transform:translateY(-9rem)}
+.wa-btn:hover{transform:scale(1.08)}
+body:has(.cookie-banner.visible) .wa-btn:hover{transform:translateY(-5.5rem) scale(1.08)}
+body:has(.cart-toast.show) .wa-btn:hover{transform:translateY(-4.5rem) scale(1.08)}
+/* Keep the toast clear of the button entirely. */
+@media(max-width:640px){
+  .cart-toast{right:4.25rem}
+  .lang-ar .cart-toast{right:0.65rem;left:4.25rem}
+}
+
+/* --- Language switcher moves into the drawer on mobile -----------
+   script.js relocates #langPill into #navLinks below 1024px. In the bar
+   it is a compact pill; in the drawer it becomes a full-width row so the
+   three options clear the 44px touch target. */
+@media(max-width:1024px){
+  .nav-links .lang-pill{
+    align-self:stretch;justify-content:center;margin-top:1.5rem;
+    padding-top:1.5rem;border:none;border-top:1px solid rgb(var(--gold-rgb) / 0.15);
+    background:transparent;border-radius:0;gap:0.5rem;
+  }
+  .nav-links .lang-pill .lang-opt{
+    flex:1;min-height:44px;font-size:var(--fs-label);letter-spacing:0.18em;
+    border:1px solid rgb(var(--gold-rgb) / 0.2);background:rgb(var(--gold-rgb) / 0.05);
+  }
+  .nav-links .lang-pill .lang-opt+.lang-opt{border-left:1px solid rgb(var(--gold-rgb) / 0.2)}
+  .nav-links .lang-pill .lang-opt.active{background:rgb(var(--gold-rgb) / 0.16);border-color:rgb(var(--gold-rgb) / 0.45)}
+  /* Nav bar now holds only logo · cart · menu, so it can breathe. */
+  nav,nav.nav-transparent,nav.nav-transparent.scrolled{gap:1rem}
+  .nav-logo{margin-right:auto}
+  .lang-ar .nav-logo{margin-right:0;margin-left:auto}
+}
+
+/* --- Sticky filters on the shop grid ----------------------------- */
+@media(max-width:1024px){
+  .filters{
+    position:sticky;top:60px;z-index:400;
+    background:rgb(var(--ink-rgb) / 0.94);
+    -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+    margin:0 -2rem;padding:0.75rem 2rem;
+    border-top:1px solid rgb(var(--gold-rgb) / 0.1);
+    border-bottom:1px solid rgb(var(--gold-rgb) / 0.1);
+    flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .filters::-webkit-scrollbar{display:none}
+  .filter-btn{flex:0 0 auto;white-space:nowrap;min-height:44px}
+  body.has-banner .filters{top:94px}
+}
+@media(max-width:500px){
+  .filters{margin:0 -1.25rem;padding:0.65rem 1.25rem;top:56px}
+  body.has-banner .filters{top:92px}
+}
+
+/* --- Nav spacing at the smallest sizes --------------------------- */
+@media(max-width:390px){
+  nav,nav.nav-transparent,nav.nav-transparent.scrolled{padding:0.9rem 1rem;gap:0.6rem}
+  .nav-logo{font-size:var(--fs-label);letter-spacing:0.19em}
+  .cart-nav-btn{padding:0.45rem 0.6rem}
+}
+
+/* --- Reduced motion: cover the newer components ------------------ */
+@media(prefers-reduced-motion:reduce){
+  .hero-bottle img,.home-product,.wa-btn,.trust-link,.press-name[href],
+  .cart-toast,.cookie-banner,.filters{transition:none !important}
+  .cart-toast{transform:none !important}
+  .cookie-banner{transform:none !important}
+  .cookie-banner:not(.visible){display:none}
+  body:has(.cookie-banner.visible) .wa-btn,body:has(.cart-toast.show) .wa-btn{transform:none !important}
+  /* Stat counters and any remaining reveal-driven content land final. */
+  .trust-item,.review-card,.stat-n{opacity:1 !important;transform:none !important}
+  .home-product:hover{transform:none !important}
+}
+
+/* --- Sticky-filter overflow fix ----------------------------------
+   `.filters` is a grid item AND a nowrap flex row. A grid item defaults to
+   min-width:auto, so it sized to the *unwrapped* width of all six buttons
+   (550px inside a 390px viewport) instead of scrolling. Both the item and
+   its grid parent's tracks need min-width:0 to allow shrink-to-fit. */
+.page-hero-inner{min-width:0}
+.page-hero-inner>*{min-width:0}
+/* No max-width cap: the bar uses negative side margins to run edge to edge,
+   and max-width:100% turned that into a 2rem shift left — the right end
+   stopped short and clipped the last visible button. min-width:0 alone
+   is what prevents the overflow. */
+@media(max-width:1024px){
+  .filters{min-width:0;max-width:none}
+}
+
+/* --- Mobile hero reading order -----------------------------------
+   On a phone the bottle-first stack pushed the headline below the image,
+   so the visitor saw the product before learning what it was. Promoting
+   .hero-content's children into the hero grid (display:contents) allows
+   the classic mobile commerce order: name → image → detail → CTA. */
+@media(max-width:1024px){
+  .hero-inner{display:grid;grid-template-columns:1fr}
+  .hero-content{display:contents}
+  .hero-eyebrow{order:1;margin-bottom:0.9rem}
+  .hero-h1{order:2;margin-bottom:1.25rem}
+  .hero-product{order:3;margin-bottom:1.5rem}
+  .hero-sub{order:4;margin-bottom:1.5rem}
+  .hero-actions{order:5;margin-bottom:1.5rem}
+  .hero-proof{order:6}
+  .hero-inner{gap:0}
+}
+@media(max-width:640px){
+  .hero-bottle{max-height:34vh}
+  .hero-h1{font-size:clamp(2.1rem,8.5vw,2.7rem)}
+  .hero-sub{font-size:1rem;margin-bottom:1.25rem}
+}
+
+
+/* --- Primary CTA: hold one line at the type scale's new floor ----- */
+@media(max-width:420px){
+  .btn-primary,.bcta-btn{
+    font-size:var(--fs-micro);
+    letter-spacing:0.14em;
+    padding:1.05rem 1.5rem;
+    gap:1rem;
+  }
+  .btn-primary span,.bcta-btn span{white-space:nowrap}
+  .hero-actions .btn-primary{justify-content:space-between}
+}
+

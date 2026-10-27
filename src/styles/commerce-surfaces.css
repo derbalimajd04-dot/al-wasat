@@ -1,0 +1,376 @@
+/* ================================================================ */
+/* === SHOP PAGE — cream theme, two-up grid                     === */
+/* Two changes: back to two columns (three shrank the bottles and    */
+/* the product is the reason for the page), and the cream/white      */
+/* treatment from the homepage cards carried across, so browsing     */
+/* happens on a comfortable light ground rather than in the dark.    */
+/* ================================================================ */
+
+/* --- Page ground ------------------------------------------------ */
+.shop-page{background:var(--warm-cream)}
+.shop-page .page-hero{
+  background:var(--warm-cream);
+  border-bottom:none;
+  color:var(--deep-olive);
+}
+.shop-page .page-hero-bg{display:none}
+.shop-page .kicker{color:var(--olive-on-cream)}
+.shop-page .kicker-rule{background:var(--olive-on-cream)}
+.shop-page .page-title{color:var(--deep-olive)}
+.shop-page .page-title em{color:var(--olive)}
+.shop-page .page-desc{color:#4A4636}
+
+/* --- Marquee on cream ------------------------------------------- */
+/* The marquee was a dark decorative band mid-page; on cream it just
+   interrupts the browse. */
+.shop-page .marquee{display:none}
+
+/* --- Filters: cream, sticky ------------------------------------- */
+.shop-page .filters{
+  background:rgb(239 228 208 / 0.94);
+  border-top:1px solid rgb(35 42 24 / 0.10);
+  border-bottom:1px solid rgb(35 42 24 / 0.10);
+}
+.shop-page .filter-btn{
+  background:transparent;
+  border:1px solid rgb(35 42 24 / 0.16);
+  color:#4A4636;
+}
+.shop-page .filter-btn::before{background:var(--deep-olive)}
+.shop-page .filter-btn:hover{border-color:rgb(35 42 24 / 0.4);color:var(--deep-olive)}
+.shop-page .filter-btn.active{color:var(--warm-cream);border-color:var(--deep-olive)}
+
+/* --- Grid: two-up. Three columns made the bottles small, and the   */
+/*     bottle is what sells the page.                               */
+.shop-page .product-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:var(--sp-5);
+  max-width:1180px;
+  padding:var(--sp-7) var(--section-x) var(--sp-9);
+  background:transparent;
+}
+
+/* --- Card: white on cream, minimal border, smooth lift ---------- */
+.shop-page .p-card{
+  background:#FFFDF9;
+  border:1px solid rgb(35 42 24 / 0.09);
+  box-shadow:0 1px 2px rgb(35 42 24 / 0.03);
+  transition:box-shadow var(--dur) var(--ease),
+             transform var(--dur) var(--ease),
+             border-color var(--dur) var(--ease);
+}
+.shop-page .p-card:hover{
+  background:#FFFDF9;
+  border-color:rgb(35 42 24 / 0.18);
+  box-shadow:0 14px 34px rgb(35 42 24 / 0.10);
+  transform:translateY(-3px);
+}
+.shop-page .p-img-wrap{background:#FFFFFF}
+.shop-page .p-tag{
+  background:rgb(255 253 249 / 0.92);
+  border:1px solid rgb(35 42 24 / 0.14);
+  color:var(--olive-on-cream);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+}
+.shop-page .organic-pill{
+  background:rgb(82 96 54 / 0.10);
+  border-color:rgb(82 96 54 / 0.35);
+  color:var(--olive-on-cream);
+}
+.shop-page .p-name{color:var(--deep-olive)}
+.shop-page .p-sub{color:#5C5647}
+.shop-page .p-price{color:var(--deep-olive)}
+.shop-page .p-price-label{color:#6B6555}
+.shop-page .p-poly{color:#6B6555}
+.shop-page .p-attr{
+  border-color:rgb(35 42 24 / 0.14);
+  color:#5C5647;
+}
+/* Gold reads as an accent on white and fails as text there, so the
+   primary action is olive with cream type; gold stays for price context
+   on the dark pages. */
+.shop-page .p-add-btn{
+  background:var(--deep-olive);
+  border-color:var(--deep-olive);
+  color:var(--warm-cream);
+}
+.shop-page .p-add-btn:hover{background:var(--olive);border-color:var(--olive)}
+.shop-page .p-add-btn.added{
+  background:transparent;color:var(--olive-on-cream);
+  border-color:var(--olive-on-cream);
+}
+.shop-page .p-details-btn{
+  border-color:rgb(35 42 24 / 0.18);
+  color:#5C5647;
+}
+.shop-page .p-details-btn:hover{
+  border-color:rgb(35 42 24 / 0.42);
+  color:var(--deep-olive);
+  background:rgb(82 96 54 / 0.05);
+}
+
+/* --- Dark sections resume after the grid, for rhythm ------------ */
+.shop-page .assurance{background:var(--charcoal);border-top:none}
+.shop-page .bottom-cta{background:var(--black)}
+
+/* --- Responsive ------------------------------------------------- */
+@media(max-width:1024px){
+  .shop-page .product-grid{gap:var(--sp-4);padding:var(--sp-6) var(--section-x) var(--sp-8)}
+}
+@media(max-width:767px){
+  .shop-page .product-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:0.75rem;padding:0.75rem;background:transparent;
+  }
+  .shop-page .p-card{background:#FFFDF9;border:1px solid rgb(35 42 24 / 0.09)}
+  .shop-page .p-img-wrap{background:#FFFFFF}
+}
+@media(max-width:420px){
+  .shop-page .product-grid{grid-template-columns:1fr;gap:0.85rem}
+}
+/* A 4:5 image in a 482px card is 600px tall — one row fills the viewport
+   and the name, price and CTA fall below the fold. Squarer proportions
+   keep the bottle prominent while letting a full card, and a second row,
+   be seen at once. */
+@media(min-width:1025px){
+  .shop-page .p-img-wrap{aspect-ratio:5/4}
+  .shop-page .p-name{margin-top:var(--sp-4)}
+}
+@media(min-width:768px) and (max-width:1024px){
+  .shop-page .p-img-wrap{aspect-ratio:1/1}
+}
+/* A ::after "View" chip was pinned over the product image on mobile — a
+   dark gold-bordered badge that now sits on a white card looking like a
+   stray artefact, and duplicates the card's own Add to Cart / Details
+   actions. The whole card is already tappable. */
+.shop-page .p-img-wrap::after{content:none;display:none}
+/* --- Three-up on wide screens ------------------------------------
+   Three columns only shrinks the bottle if the container stays the same
+   width. Widening it keeps each card close to the size that worked at
+   two-up (~455px vs 482px) while showing three products per row.
+   Below 1280px it falls back to two, so a card never gets cramped. */
+@media(min-width:1280px){
+  .shop-page .product-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    max-width:1620px;
+  }
+}
+@media(min-width:1025px) and (max-width:1279px){
+  .shop-page .product-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:1180px}
+}
+
+/* ================================================================ */
+/* === PRODUCT DETAIL SURFACES — cream theme                    === */
+/* Two surfaces show a single product's detail, and both were dark    */
+/* while the collection is now cream. Themed together so the journey  */
+/* grid → modal → product page stays on one ground.                  */
+/*   1. .pdm  — the modal behind the card's "Details" button          */
+/*   2. .pdp  — the per-product pages under /shop/<slug>/            */
+/* ================================================================ */
+
+/* --- 1 · DETAILS MODAL ------------------------------------------ */
+/* Scrim stays dark so the card lifts off the page; the card itself
+   matches the product cards it was opened from. */
+.pdm-overlay{background:rgb(35 42 24 / 0.55);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.pdm{
+  background:#FFFDF9;
+  border:1px solid rgb(35 42 24 / 0.10);
+  box-shadow:0 30px 80px rgb(8 8 6 / 0.42);
+  color:var(--deep-olive);
+}
+.pdm-close{
+  border:1px solid rgb(35 42 24 / 0.16);
+  color:#5C5647;background:transparent;
+}
+.pdm-close:hover{border-color:rgb(35 42 24 / 0.45);color:var(--deep-olive)}
+.pdm-tag{color:var(--olive-on-cream)}
+.pdm-name{color:var(--deep-olive)}
+.pdm-sub{color:#5C5647;font-style:normal}
+.pdm-price{color:var(--deep-olive)}
+.pdm-price-lbl{color:#6B6555}
+.pdm-specs{border-top:1px solid rgb(35 42 24 / 0.12)}
+.pdm-spec{border-bottom:1px solid rgb(35 42 24 / 0.08)}
+.pdm-spec:nth-child(odd){border-right:1px solid rgb(35 42 24 / 0.08)}
+.pdm-spec-label{color:#6B6555;text-transform:none;letter-spacing:var(--track-tight)}
+.pdm-spec-val{color:var(--deep-olive)}
+/* Olive action, matching the collection cards — gold is unreadable as
+   text on white and stays reserved for the dark pages. */
+.pdm-add-btn{
+  background:var(--deep-olive);border-color:var(--deep-olive);
+  color:var(--warm-cream);
+}
+.pdm-add-btn:hover{background:var(--olive);border-color:var(--olive)}
+.pdm-add-btn.added{
+  background:transparent;color:var(--olive-on-cream);
+  border-color:var(--olive-on-cream);
+}
+.pdm-shop{
+  border-color:rgb(35 42 24 / 0.22);color:var(--deep-olive);
+}
+.pdm-shop:hover{background:rgb(82 96 54 / 0.06);border-color:rgb(35 42 24 / 0.45);color:var(--deep-olive)}
+
+/* --- 2 · PRODUCT PAGES ------------------------------------------ */
+.product-page{background:var(--warm-cream)}
+.pdp{
+  background:var(--warm-cream);
+  color:var(--deep-olive);
+  min-height:0;
+}
+.product-page .kicker{color:var(--olive-on-cream)}
+.product-page .kicker-rule{background:var(--olive-on-cream)}
+.pdp-kicker{color:var(--olive-on-cream)}
+.pdp-title{color:var(--deep-olive)}
+.pdp-title em{color:var(--olive)}
+.pdp-desc{color:#4A4636}
+.pdp-price{color:var(--deep-olive)}
+.pdp-price span{color:#6B6555}
+
+/* Gallery on white so the marble photography sits flush */
+.pdp-media img{background:#FFFFFF;border:1px solid rgb(35 42 24 / 0.09)}
+.pdp-media img:first-child{background:#FFFFFF}
+.pdp-dot{border-color:rgb(35 42 24 / 0.35)}
+.pdp-dot[aria-current="true"]{background:var(--deep-olive);border-color:var(--deep-olive)}
+
+.pdp-add-btn{
+  background:var(--deep-olive);border-color:var(--deep-olive);
+  color:var(--warm-cream);
+}
+.pdp-add-btn:hover{background:var(--olive);border-color:var(--olive);color:var(--warm-cream)}
+.pdp-secondary{color:#5C5647}
+.pdp-secondary:hover{color:var(--deep-olive)}
+
+.pdp-trust li,.pdp-trust span{color:#5C5647}
+.pdp-trust li::before,.pdp-trust span::before{background:var(--olive-on-cream);opacity:1}
+
+.pdp-spec-grid{
+  border:1px solid rgb(35 42 24 / 0.12);
+  background:#FFFDF9;
+}
+.pdp-spec,.pdp-spec-grid>div{
+  border-right-color:rgb(35 42 24 / 0.08);
+  border-bottom-color:rgb(35 42 24 / 0.08);
+}
+.pdp-spec span,.pdp-spec-grid>div span{
+  color:#6B6555;text-transform:none;letter-spacing:var(--track-tight);
+}
+.pdp-spec strong,.pdp-spec-grid>div strong{color:var(--deep-olive);font-style:normal}
+
+/* Sticky buy bar on the light ground */
+@media(max-width:1024px){
+  .pdp-actions{
+    background:rgb(255 253 249 / 0.96);
+    border-top:1px solid rgb(35 42 24 / 0.12);
+  }
+}
+
+/* ================================================================ */
+/* === CHECKOUT — cream theme                                   === */
+/* The last step in the journey; it was the only surface still dark  */
+/* after the collection and detail pages moved to cream. Calm, light */
+/* and legible matters most here.                                   */
+/* ================================================================ */
+.checkout-page{background:var(--warm-cream)}
+.checkout-wrap{background:var(--warm-cream);color:var(--deep-olive);min-height:0}
+.checkout-page .kicker{color:var(--olive-on-cream)}
+.checkout-page .kicker-rule{background:var(--olive-on-cream)}
+.checkout-title{color:var(--deep-olive)}
+.checkout-title em{color:var(--olive)}
+
+/* Order summary reads as a card, like the product cards */
+.co-summary{
+  background:#FFFDF9;
+  border:1px solid rgb(35 42 24 / 0.10);
+  box-shadow:0 1px 2px rgb(35 42 24 / 0.03);
+}
+.co-head{
+  color:var(--olive-on-cream);
+  border-bottom:1px solid rgb(35 42 24 / 0.12);
+}
+.co-item{border-bottom:1px solid rgb(35 42 24 / 0.08)}
+.co-item-name{color:var(--deep-olive)}
+.co-item-sub{color:#6B6555;font-style:normal}
+.co-item-price{color:var(--deep-olive)}
+.co-total{border-top:1px solid rgb(35 42 24 / 0.18)}
+.co-total-label{color:#5C5647}
+.co-total-val{color:var(--deep-olive)}
+.co-edit{color:#5C5647}
+.co-edit:hover{color:var(--deep-olive)}
+
+/* Payment block */
+.co-section-title{
+  color:var(--olive-on-cream);
+  border-bottom:1px solid rgb(35 42 24 / 0.12);
+}
+.co-pay-note{color:#4A4636;font-style:normal}
+.co-pay-box{
+  background:#FFFDF9;
+  border:1px solid rgb(35 42 24 / 0.10);
+}
+.co-pay-fallback{color:#5C5647}
+.co-pay-fallback a{color:var(--olive-on-cream)}
+.co-pay-methods{color:#6B6555}
+.cd-stripe-note,.cd-delivery-note{color:#6B6555;font-style:normal}
+
+/* Pay button: olive, matching every other primary action on cream */
+.co-stripe-btn{
+  background:var(--deep-olive);
+  color:var(--warm-cream);
+  border:1px solid var(--deep-olive);
+}
+.co-stripe-btn:hover{background:var(--olive);border-color:var(--olive)}
+.co-stripe-btn:disabled{opacity:0.55}
+
+/* Trust list — it is a label/value list of <div><span>+<strong>, not a
+   ul/li, so it is styled as a spec list rather than bullets. */
+.co-trust-list{
+  display:grid;gap:0;margin-top:var(--sp-5);
+  background:#FFFDF9;
+  border:1px solid rgb(35 42 24 / 0.10);
+}
+.co-trust-list>div{
+  display:flex;align-items:baseline;justify-content:space-between;
+  gap:var(--sp-4);padding:0.85rem var(--sp-4);
+  border-bottom:1px solid rgb(35 42 24 / 0.07);
+}
+.co-trust-list>div:last-child{border-bottom:none}
+.co-trust-list>div>span{
+  font-family:var(--tenor);font-size:var(--fs-micro);
+  letter-spacing:var(--track-tight);text-transform:none;
+  color:#6B6555;flex-shrink:0;
+}
+.co-trust-list>div>strong{
+  font-family:var(--body);font-weight:400;font-style:normal;
+  font-size:var(--fs-body-s);color:var(--deep-olive);text-align:right;
+}
+
+/* Error: readable on cream, and clearly an error without shouting */
+.co-error{
+  background:rgb(140 60 40 / 0.06);
+  border:1px solid rgb(140 60 40 / 0.28);
+  color:#7A3A28;
+  text-transform:none;
+  letter-spacing:var(--track-tight);
+  font-family:var(--body);
+  font-size:var(--fs-body-s);
+  line-height:1.6;
+}
+
+/* Order-success screen */
+.order-success{background:var(--warm-cream);min-height:0}
+.os-title{color:var(--deep-olive)}
+.os-title em{color:var(--olive)}
+.os-body{color:#4A4636;font-style:normal}
+
+/* Fields, if the page ever renders them */
+.checkout-page .field label{color:#5C5647}
+.checkout-page .field input,
+.checkout-page .field select,
+.checkout-page .field textarea{
+  color:var(--deep-olive);
+  border-bottom-color:rgb(35 42 24 / 0.22);
+}
+.checkout-page .field input:focus,
+.checkout-page .field select:focus,
+.checkout-page .field textarea:focus{border-bottom-color:var(--olive-on-cream)}
+.checkout-page .field::after{background:var(--olive-on-cream)}
+

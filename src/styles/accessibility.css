@@ -1,0 +1,102 @@
+/* ================================================================ */
+/* === ACCESSIBILITY & RESILIENCE — critical fixes                === */
+/* ================================================================ */
+
+/* --- 1. NO-JS FALLBACK ---------------------------------------- */
+/* Scroll-reveal elements start hidden ONLY when JS is available to
+   reveal them again. Without JS the page renders fully visible. */
+.reveal{opacity:1;transform:none}
+.js .reveal{opacity:0;transform:translateY(38px)}
+.js .reveal.in{opacity:1;transform:none}
+.p-card,.j-card{opacity:1;transform:none}
+.js .p-card,.js .j-card{opacity:0;transform:translateY(30px)}
+.js .p-card.in,.js .j-card.in{opacity:1;transform:none}
+/* Preloader only covers the page when JS can dismiss it */
+#preloader{display:none}
+.js #preloader{display:flex}
+
+/* --- 2. CUSTOM CURSOR FALLBACK -------------------------------- */
+/* `cursor:pointer` now applies only once JS has confirmed a fine pointer
+   AND booted successfully. If script.js fails, the native cursor stays. */
+html{cursor:auto}
+@media(min-width:1024px){html{cursor:auto}}
+button,.filter-btn,.nav-ham,.cd-close,.cd-qty-btn,.cd-remove,.cd-continue,
+.pdm-close,.pdm-add-btn,.p-add-btn,.p-details-btn,.submit-btn,.newsletter-btn,
+.harvest-close,.lang-opt,.cookie-accept,.cookie-decline,
+.cd-promo-apply,.cd-promo-remove{cursor:pointer}
+
+/* --- 3. VISIBLE FOCUS -------------------------------------------- */
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:1px}
+.field input:focus-visible,.field textarea:focus-visible,.field select:focus-visible,
+.newsletter-input:focus-visible,.cd-promo-input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.nav-links a:focus-visible,.footer-legal a:focus-visible{outline-offset:5px}
+.p-card:focus-visible{outline:2px solid var(--gold);outline-offset:-6px}
+.skip-link:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+/* --- 4. TOUCH TARGETS ------------------------------------------- */
+/* Pointer devices keep the compact 26-36px controls (WCAG 2.5.8 = 24px).
+   Touch devices get the full 44px Apple HIG / 48dp Material target. */
+@media(hover:none){
+  .cd-qty-btn,.cd-remove,.cd-close,.pdm-close{width:44px;height:44px;font-size:1.05rem}
+  .cd-qty-row{gap:0.85rem}
+  .cd-item-right{gap:0.85rem}
+  .harvest-close{min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;right:0.35rem}
+  .lang-opt{min-height:44px;min-width:44px;display:flex;align-items:center;justify-content:center}
+  .cd-continue,.cd-promo-remove,.cookie-decline{min-height:44px}
+  .cd-promo-apply,.cookie-accept{min-height:44px}
+}
+
+/* --- 5. DYNAMIC VIEWPORT UNITS ---------------------------------- */
+/* 100vh overflows on mobile browsers with a retracting URL bar. */
+@supports (height:100dvh){
+  body{min-height:100dvh}
+  .hero{height:100dvh}
+  .article-hero{height:75dvh}
+  .tl-panel{height:52dvh}
+  .pdm{max-height:85dvh}
+  .checkout-wrap,.order-success{min-height:calc(100dvh - 100px)}
+}
+@supports (height:100dvh){
+  @media(max-width:500px){.article-hero{height:60dvh}}
+}
+
+/* --- 6. REDUCED MOTION ------------------------------------------ */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important;
+    scroll-behavior:auto !important;
+  }
+  /* Anything that animates INTO view must land in its final state,
+     otherwise killing the animation leaves it permanently invisible. */
+  .reveal,.js .reveal,.p-card,.js .p-card,.j-card,.js .j-card{opacity:1 !important;transform:none !important}
+  .hl,.hero-eyebrow,.hero-sub,.hero-actions,.scroll-ind,
+  .pre-logo,.pre-tagline,.form-success.show,.trade-form-success.show{opacity:1 !important;transform:none !important}
+  .hero-video{opacity:0.45 !important;transform:none !important}
+  .pre-bar{width:100% !important}
+  .hf-t,.hf-b{width:100% !important}
+  .hf-l,.hf-r{height:100% !important}
+  /* Infinite loops are the most disorienting — stop them outright */
+  .marquee-track,.cert-track,.tl-scroll-hint,.scroll-fill{animation:none !important}
+  .marquee-track{transform:none !important}
+  .scroll-fill{display:none}
+  .tl-scroll-hint{opacity:0.38}
+  /* Long decorative hover transitions */
+  .img-frame img,.j-card-img-wrap img{transition:none !important;transform:scale(1) !important}
+  /* Autoplaying background video */
+  .hero-video,.shop-video{animation:none !important}
+}
+
+/* --- 7. CONTRAST REPAIR (WCAG AA) ------------------------------- */
+/* --stone was 3.81:1 on --ink and is used for body copy throughout. */
+.cert-div{color:rgb(var(--gold-rgb) / 0.55)}
+.p-poly{color:rgb(var(--gold-rgb) / 0.72)}
+.j-arrow{color:rgb(var(--gold-rgb) / 0.72)}
+.tl-scroll-hint{color:rgb(var(--gold-rgb) / 0.55)}
+.lang-opt{color:rgb(var(--cream-rgb) / 0.62)}
+@keyframes tl-bob{0%,100%{opacity:0.55;letter-spacing:0.17em}50%{opacity:0.85;letter-spacing:0.22em}}
+
+/* --- 8. LONG DECORATIVE TRANSITIONS ----------------------------- */
+.img-frame img,.j-card-img-wrap img{transition:transform 1.2s cubic-bezier(0.16,1,0.3,1)}
+

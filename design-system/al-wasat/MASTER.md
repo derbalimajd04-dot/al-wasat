@@ -14,11 +14,12 @@ earlier dark ground / gold accent theme.
 
 | File | Role |
 |---|---|
-| `styles.css` | Original base: layout, components, behaviour. Still dark-themed in places — never restyle here. |
-| `assets/editorial.css` | Shared editorial layer for every page. Re-points the old tokens (`--ink`, `--cream`, `--gold`…) to the light palette and restyles shared components. |
-| `assets/editorial-home.css` | Homepage composition only (`.home-page …`). |
+| `src/styles/main.css` | Imports the base layout, component and refinement modules in cascade order. Builds to `/styles.css`; never restyle the legacy modules. |
+| `src/styles/editorial.css` | Shared editorial layer for every page. Re-points the old tokens (`--ink`, `--cream`, `--gold`…) to the light palette and restyles shared components. Builds to `/assets/editorial.css`. |
+| `src/styles/editorial-home.css` | Homepage composition only (`.home-page …`). Builds to `/assets/editorial-home.css`. |
 
-New visual work goes in the editorial files, not `styles.css`.
+New visual work goes in the editorial source files, not the legacy modules
+or generated files in `dist/`.
 
 ---
 
@@ -36,7 +37,7 @@ Warm paper ground, near-black olive ink, one olive accent. No gold.
 | Secondary text | `--editorial-muted` | `#61665b` |
 | Hairline | `--editorial-rule` | `rgb(32 37 30 / .22)` |
 
-The legacy token names still exist because `styles.css` uses them; in the
+The legacy token names still exist because the base style modules use them; in the
 editorial layer they resolve to the values above (`--gold` → olive,
 `--cream` → ink, `--ink` → paper). Read `--gold` as "accent", not as a colour.
 
@@ -117,14 +118,15 @@ reviews · newsletter · contact
 - Trust claims link to evidence or render as plain text. Placeholder
   `#TODO…` hrefs on `[data-verify]` links are stripped at runtime.
 - No emoji as icons; SVG only.
-- Every customer-facing string goes through `assets/translations.js`
+- Every customer-facing string goes through `src/js/locales/{en,fr,ar}.js`,
+  bundled to `/assets/translations.js`
   (`data-i18n`, `data-i18n-html`, `data-i18n-attr`, or `awT()` in JS).
 
 ---
 
 ## 7. Known debt
 
-- `styles.css` (~2,900 lines) still holds the dark theme; the editorial layer
+- The legacy modules imported by `src/styles/main.css` still hold dark theme rules; the editorial layer
   overrides it, sometimes with `!important` (legal pages). Removing the dead
   dark rules needs cascade analysis — a past bulk merge broke ~200 computed styles.
 - Journal articles, legal pages, the about facts and parts of trade are

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-/* Image optimiser — run once whenever a photo in /assets is added or replaced:
+/* Image optimiser — run once whenever a photo in public/assets/images is added or replaced:
      npm run optimize:images
 
-   For every content JPG in /assets it writes two WebP sizes next to it:
+   For every content JPG in public/assets/images it writes two WebP sizes next to it:
      name-640.webp   phones and small cards
      name-1280.webp  desktop and high-density screens
    and re-encodes the JPG itself at a sane size. The JPG is only used by
@@ -14,7 +14,7 @@ const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 
-const ASSETS = path.resolve(__dirname, '..', 'assets');
+const ASSETS = path.resolve(__dirname, '..', 'public', 'assets', 'images');
 const WIDTHS = [640, 1280];
 const JPG_MAX = 1600;
 const SKIP = new Set(['logo.jpg']);
