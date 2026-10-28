@@ -31,6 +31,31 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://al-wasat.co.uk/shop/tasting-250ml/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://al-wasat.co.uk/shop/bulk-3l/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://al-wasat.co.uk/shop/gift-box/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://al-wasat.co.uk/shop/subscription-box/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://al-wasat.co.uk/shop/gift-card/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://al-wasat.co.uk/journal/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

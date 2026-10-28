@@ -1,7 +1,7 @@
 /* === RESET === */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-.skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;z-index:10001}
-.skip-link:focus{position:fixed;top:1rem;left:1rem;width:auto;height:auto;padding:0.75rem 1.5rem;background:var(--gold);color:var(--ink);font-family:var(--tenor);font-size:var(--fs-label);letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;outline:none}
+.skip-link{position:absolute;left:0;top:0;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);z-index:10001}
+.skip-link:focus{position:fixed;top:1rem;left:1rem;width:auto;height:auto;padding:0.75rem 1.5rem;clip-path:none;background:var(--gold);color:var(--ink);font-family:var(--tenor);font-size:var(--fs-label);letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;outline:none}
 
 /* ================================================================ */
 /* === DESIGN TOKENS — single source of truth                    === */

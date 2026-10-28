@@ -5,6 +5,7 @@ const vm = require('node:vm');
 function element() {
   const attributes = new Map();
   const classes = new Set();
+  const handlers = new Map();
   return {
     style: {},
     attributes,
@@ -18,10 +19,22 @@ function element() {
         return on;
       },
     },
-    setAttribute: (name, value) => attributes.set(name, value),
+    setAttribute(name, value) {
+      attributes.set(name, value);
+      if (name === 'dir' || name === 'lang' || name === 'id') this[name] = value;
+    },
     getAttribute: name => attributes.get(name) ?? null,
-    appendChild() {},
-    addEventListener() {},
+    children: [],
+    appendChild(child) { this.children.push(child); child.parentNode = this; },
+    insertBefore(child) { this.appendChild(child); },
+    focus() { this.focused = true; },
+    addEventListener(type, handler) {
+      if (!handlers.has(type)) handlers.set(type, []);
+      handlers.get(type).push(handler);
+    },
+    dispatchEvent(event) {
+      for (const handler of handlers.get(event.type) || []) handler(event);
+    },
     querySelector: () => null,
     querySelectorAll: () => [],
   };
@@ -31,6 +44,8 @@ function browser(navigator = { userAgent: 'Version/18.0 Safari/605.1.15' }, opti
   const storage = new Map();
   const dispatched = [];
   const listeners = new Map();
+  const timers = new Map();
+  let nextTimer = 0;
   const text = element();
   text.setAttribute('data-i18n', 'nav-home');
   const html = element();
@@ -43,7 +58,7 @@ function browser(navigator = { userAgent: 'Version/18.0 Safari/605.1.15' }, opti
     const modal = element();
     modal.querySelector = () => element();
     nodes.set('pdModal', modal);
-    nodes.set('pdmClose', element());
+    for (const id of ['pdmClose', 'pdmInner', 'pdmAdd']) nodes.set(id, element());
     nodes.set('grid', element());
     const card = element();
     card.dataset = { pid: 'classic-500', cat: 'classic 500ml' };
@@ -63,14 +78,17 @@ function browser(navigator = { userAgent: 'Version/18.0 Safari/605.1.15' }, opti
       dispatched.push(event);
       for (const handler of listeners.get(event.type) || []) handler(event);
     },
+    activeElement: element(),
+    contains: () => true,
     getElementById: id => nodes.get(id) || null,
     querySelector: () => null,
     querySelectorAll: selector => selector === '[data-i18n]' ? [text] : selector === '.p-card' ? cards : [],
     createElement: element,
   };
+  if (options.setup) options.setup({ document, nodes, cards, element });
   const context = vm.createContext({
     document, navigator, console,
-    location: { search: '' },
+    location: { search: options.search || '', href: '/shop/', replace(url) { this.href = url; } },
     URLSearchParams,
     getComputedStyle: () => ({ gridTemplateColumns: '1fr 1fr' }),
     localStorage: {
@@ -78,10 +96,10 @@ function browser(navigator = { userAgent: 'Version/18.0 Safari/605.1.15' }, opti
       setItem: (key, value) => storage.set(key, String(value)),
       removeItem: key => storage.delete(key),
     },
-    matchMedia: () => ({ matches: false }),
+    matchMedia: query => ({ matches: Boolean(options.reducedMotion && query.includes('prefers-reduced-motion')), addEventListener() {} }),
     addEventListener() {},
-    setTimeout: () => 1,
-    clearTimeout() {},
+    setTimeout(handler) { timers.set(++nextTimer, handler); return nextTimer; },
+    clearTimeout(id) { timers.delete(id); },
     requestAnimationFrame: () => 1,
     CustomEvent: class { constructor(type, options) { this.type = type; this.detail = options.detail; } },
   });
@@ -98,7 +116,12 @@ function browser(navigator = { userAgent: 'Version/18.0 Safari/605.1.15' }, opti
     for (const handler of listeners.get('DOMContentLoaded') || []) handler();
     document.readyState = 'complete';
   }
-  return { window: context, storage, document, text, dispatched, ready, runScript };
+  function flushTimers() {
+    const pending = [...timers.values()];
+    timers.clear();
+    for (const handler of pending) handler();
+  }
+  return { window: context, storage, document, text, dispatched, ready, runScript, nodes, cards, flushTimers };
 }
 
 module.exports = { browser };

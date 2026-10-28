@@ -1,0 +1,60 @@
+{
+  "tool": "built-in image_gen",
+  "intent": "Additional product gallery photos; existing front and hover images retained.",
+  "images": [
+    {
+      "name": "classic-500ml",
+      "reference": "public/assets/images/classic-500ml.jpg",
+      "output": "public/assets/images/classic-500ml-lifestyle",
+      "prompt": "Use case: product-mockup. Create ONE photorealistic lifestyle product photograph for the AL WASAT Classic 500ml olive-oil product gallery. Reference image: exact product/packaging identity reference. Preserve the reference bottle's rectangular dark olive glass, gold cap, deep olive label, gold Arabic logo الوسط, exact AL WASAT branding, olive-branch emblem and 500 ml size. Change the setting: a quiet warm limestone kitchen counter beside natural ivory linen, a small ceramic dish of olive oil and a few olives. Soft directional morning window light, realistic glass reflections and tactile stone, modern editorial food photography. Landscape 3:2 composition with the ENTIRE bottle including cap and base fully visible, about 65 percent of image height, generous breathing room on every side. Product label faces camera and is sharp. Keep packaging faithful; do not invent claims, badges, extra wording or certifications. No people, hands, collage, border, watermark or overlaid text. This is a new supporting product image, not a redesign of the packaging."
+    },
+    {
+      "name": "classic-1l",
+      "reference": "public/assets/images/classic-1l.jpg",
+      "output": "public/assets/images/classic-1l-lifestyle",
+      "prompt": "Use case: product-mockup. ONE photorealistic editorial lifestyle photograph of the exact AL WASAT Classic 1 Litre olive oil bottle from the reference. Preserve bottle shape, dark olive glass, gold cap, olive label, gold Arabic الوسط and AL WASAT typography, olive branch emblem and the exact 1 Litre size marking. Place it on a warm ivory stone kitchen island beside a simple wooden board and small ceramic bowl of dressed tomatoes, with natural linen and subtle afternoon window light. Premium restrained Mediterranean tabletop photography, realistic reflections and materials. Landscape 3:2 image. Entire single bottle, cap and base visible, approximately 65 percent of frame height with generous margins, label sharp and front-facing. No people/hands, no new text, no badges or claims, no extra products, no collage, border or watermark. Faithful existing packaging; new scene only."
+    },
+    {
+      "name": "organic-500ml",
+      "reference": "public/assets/images/organic-500ml.jpg",
+      "output": "public/assets/images/organic-500ml-lifestyle",
+      "prompt": "Use case: product-mockup. ONE photorealistic lifestyle gallery photo of the exact AL WASAT Organic 500ml bottle in the reference, preserving its rounded dark-green glass silhouette, gold cap, olive-green label, gold Arabic الوسط and AL WASAT wordmark, olive-branch illustration and existing organic markings without inventing additional symbols or claims. Full bottle on pale limestone beside an ivory plate of fresh green leaves, one small dipping dish of golden oil, and a softly rumpled natural linen napkin. Restrained modern editorial Mediterranean food photography, soft morning window light, believable glass highlights. Landscape 3:2. Bottle completely visible from cap to base, 65 percent of frame height, generous space around it, label readable. No hands, people, cropped product, added text, collage, border or watermark."
+    },
+    {
+      "name": "organic-1l",
+      "reference": "public/assets/images/organic-1l.jpg",
+      "output": "public/assets/images/organic-1l-lifestyle",
+      "prompt": "Use case: product-mockup. Create ONE photorealistic lifestyle product gallery photograph matching the AL WASAT Organic 1 Litre bottle reference exactly: rounded dark olive-green glass bottle, gold screw cap, olive label, gold Arabic الوسط and AL WASAT lettering, olive branch and original organic markings. Preserve its 1 litre format and packaging design, without adding extra certification graphics or words. Set the single complete bottle on a pale travertine worktop in a quiet Mediterranean kitchen, an ivory ceramic plate with a few sliced tomatoes and green herbs beside it, a folded natural linen towel and subtle olive leaves. Soft late-afternoon window light, warm off-white plaster, realistic reflections, editorial food photography. Landscape 3:2, full cap and base visible, about 65 percent of frame height, plenty of room on every side. No people, hands, added text, badges, borders, collage or watermarks."
+    },
+    {
+      "name": "product-tasting-250ml",
+      "reference": "public/assets/images/product-tasting-250ml.jpg",
+      "output": "public/assets/images/product-tasting-250ml-lifestyle",
+      "prompt": "Use case: product-mockup. ONE photorealistic editorial gallery photograph featuring the exact AL WASAT Classic 250ml tasting bottle from the supplied reference. Keep the small rectangular dark olive glass bottle, gold cap, deep olive label, gold Arabic الوسط and AL WASAT wordmark, olive-branch artwork, and exact 250ml label. New tabletop scene: pale warm limestone, a small ivory ceramic dish filled with golden oil and two pieces of rustic bread on a wooden board, with a simple linen napkin and a few olives. Soft natural window light, restrained Mediterranean warmth, genuine stone and cloth textures, sharp readable product label. Landscape 3:2 with whole bottle cap and base entirely inside frame and generous breathing room; bottle around 60 percent of image height. No hands or people, no extra bottles, no new claims or words, no collage, borders or watermark."
+    },
+    {
+      "name": "product-bulk-3l-tin",
+      "reference": "public/assets/images/product-bulk-3l-tin.jpg",
+      "output": "public/assets/images/product-bulk-3l-tin-lifestyle",
+      "prompt": "Use case: product-mockup. ONE photorealistic commercial lifestyle product image of the exact AL WASAT 3L olive oil tin in the reference. Faithfully preserve the rectangular deep olive-green metal tin, gold rims and cap, gold Arabic الوسط and AL WASAT branding, olive-branch illustration, EXTRA VIRGIN OLIVE OIL wording and 3L capacity. Place the single tin on a clean light limestone kitchen prep counter beside a wooden chopping board with a small bowl of olives and natural ivory linen. Refined practical Mediterranean kitchen mood, soft side window light, real metal highlights and gentle shadows, subdued off-white background. Landscape 3:2, complete tin including cap and all bottom corners visible, occupies roughly 65 percent image height with wide margins. No humans, hands, changed packaging, extra branding, invented stamps or marketing text. No collage, borders or watermark."
+    },
+    {
+      "name": "product-gift-box-set",
+      "reference": "public/assets/images/product-gift-box-set.jpg",
+      "output": "public/assets/images/product-gift-box-set-lifestyle",
+      "prompt": "Use case: product-mockup. ONE photorealistic editorial lifestyle photograph of the exact AL WASAT Gift Box Set from the reference. Preserve the dark navy rigid box, navy ribbon with gold edge, gold Arabic الوسط and AL WASAT logo with olive-branch artwork on the lid, dark tissue, and exactly TWO small 250ml dark olive-glass bottles with gold caps and faithful labels. Arrange the open box and its lid naturally on a pale limestone table with a discreet piece of ivory linen, softly lit by morning window light against warm neutral plaster. Every box edge, both entire bottles and the full lid remain within the landscape 3:2 frame, generous margins and no tight crop. Elegant restrained Mediterranean product photography, accurate materials and subtle shadows, branding readable and faithful. Do not add products, gift contents, badges, people, hands, overlaid text, prices, claims, collage, borders or watermark."
+    },
+    {
+      "name": "product-subscription-box",
+      "reference": "public/assets/images/product-subscription-box.jpg",
+      "output": "public/assets/images/product-subscription-box-lifestyle",
+      "prompt": "Use case: product-mockup. Create ONE photorealistic editorial product gallery image of the AL WASAT subscription box using the supplied packaging reference. Keep the same deep olive-green branded shipping box with gold Arabic الوسط and AL WASAT olive-branch branding, natural packing paper and two dark olive-glass bottles with gold caps. Open box on a warm light limestone kitchen table beside ivory linen and a modest olive sprig, softly lit by natural window light, tactile paper and realistic glass. The insert card should show ONLY the exact words AL WASAT and the olive-branch emblem, no promises, dates, delivery frequency or additional copy. Landscape 3:2 composition, entire open box and full lid visible with generous breathing room, no cropped packaging. Restrained warm Mediterranean editorial photography matching the existing brand. No hands, people, extra gifts or unexpected contents, new claims, overlay text, price tags, collage, border or watermark."
+    },
+    {
+      "name": "product-gift-card",
+      "reference": "public/assets/images/product-gift-card.jpg",
+      "output": "public/assets/images/product-gift-card-lifestyle",
+      "prompt": "Use case: product-mockup. ONE photorealistic editorial gallery image showing the DIGITAL AL WASAT gift card design from the reference on the screen of one slim landscape tablet resting at a slight angle on a warm ivory limestone desk. Make clear the gift card is digital: its entire dark navy rounded rectangle is contained inside the tablet display. Preserve the reference gold Arabic الوسط and AL WASAT wordmark, gold olive-branch motif, and the exact text Gift Card — The Gift of Exceptional Olive Oil. No redemption code, denomination, QR code, printed physical card, envelope, shipping packaging or extra text. Soft natural window light with subtle olive-leaf shadows and a little ivory linen, quiet contemporary Mediterranean editorial style. Landscape 3:2 photograph, the entire tablet including every corner fully within frame, good margins and readable faithful card design. No people, hands, collage, border or watermark."
+    }
+  ]
+}

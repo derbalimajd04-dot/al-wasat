@@ -3,10 +3,21 @@ import { awT, unitLabel, SPEC_KEYS } from './copy.js';
 import { addToCartById, productName, openCart, isMobileViewport, showCartToast } from './cart.js';
 import { openDialog, closeDialog, getDialogReturn, setDialogReturn } from './dialog.js';
 
+/* Keep old /shop/?product=… links useful as the full catalogue gains pages. */
+export const PRODUCT_URLS = {
+  'classic-500': '/shop/classic-500ml/',
+  'classic-1l': '/shop/classic-1l/',
+  'organic-500': '/shop/organic-500ml/',
+  'organic-1l': '/shop/organic-1l/',
+  'tasting-250ml': '/shop/tasting-250ml/',
+  'bulk-3l': '/shop/bulk-3l/',
+  'gift-box': '/shop/gift-box/',
+  'subscription-box': '/shop/subscription-box/',
+  'gift-card': '/shop/gift-card/',
+};
+
 export function initShopProducts() {
-  /* === PRODUCT DETAIL MODAL (shop only) ===
-     Products with their own page (data-url) always go to that page, on every
-     screen size. The modal is only for products that do not have one yet. */
+  /* The Details button is a quick view; image/name links open the full page. */
   const pdModal = document.getElementById('pdModal');
   if (pdModal) {
     const pdmClose = document.getElementById('pdmClose');
@@ -23,7 +34,8 @@ export function initShopProducts() {
       pdModal.classList.remove('open'); document.body.style.overflow = '';
       closeDialog(pdModal);
     }
-    function showProduct(pid) {
+    let activeProduct = null;
+    function renderProduct(pid) {
       const d = PRODUCT_DATA[pid];
       if (!d) return;
       document.getElementById('pdmInner').innerHTML =
@@ -32,7 +44,8 @@ export function initShopProducts() {
          <div class="pdm-sub">${awT(d.subKey, d.sub)}</div>
          <div class="pdm-price">${d.price} <span class="pdm-price-lbl">${unitLabel(d.unit)}</span></div>
          <div class="pdm-specs">${d.specs.map(s=>`<div class="pdm-spec"><div class="pdm-spec-label">${SPEC_KEYS[s.l] ? awT(SPEC_KEYS[s.l], s.l) : s.l}</div><div class="pdm-spec-val">${s.v}</div></div>`).join('')}</div>
-         <button class="pdm-add-btn" type="button" id="pdmAdd">${awT('add-to-cart', 'Add to Cart')}</button>`;
+         <button class="pdm-add-btn" type="button" id="pdmAdd">${awT('add-to-cart', 'Add to Cart')}</button>
+         <a class="pdm-page-link" href="${PRODUCT_URLS[pid]}">${awT('pdm-view-page', 'View full product details')}</a>`;
       document.getElementById('pdmAdd').addEventListener('click', e => {
         e.stopPropagation();
         addToCartById(pid);
@@ -41,24 +54,46 @@ export function initShopProducts() {
         openCart();
         setDialogReturn(opener);   /* closing the cart returns focus to the card */
       });
+    }
+    function showProduct(pid, opener) {
+      if (!Object.hasOwn(PRODUCT_DATA, pid)) return;
+      activeProduct = pid;
+      renderProduct(pid);
       pdModal.classList.add('open');
       document.body.style.overflow = 'hidden';
       openDialog(pdModal, pdmClose);
+      if (opener) setDialogReturn(opener);
     }
     pdmClose.addEventListener('click', closePdm);
     pdModal.addEventListener('click', e => { if (e.target === pdModal) closePdm(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closePdm(); });
+    document.addEventListener('aw:languagechange', () => {
+      pdmClose.setAttribute('aria-label', awT('modal-close', 'Close'));
+      if (activeProduct && pdModal.classList.contains('open')) {
+        const focusedId = document.activeElement.id;
+        const pageFocused = document.activeElement.classList.contains('pdm-page-link');
+        renderProduct(activeProduct);
+        if (focusedId === 'pdmAdd') document.getElementById('pdmAdd').focus();
+        else if (pageFocused) pdModal.querySelector('.pdm-page-link').focus();
+      }
+    });
 
     window['openDetails'] = function(e, el) {
+      /* Let native links handle keyboard, middle-click and new-tab gestures. */
+      if (e.target?.closest?.('a[href]')) return;
       e.preventDefault(); e.stopPropagation();
       const card = el.closest('.p-card');
-      if (card.dataset.url) { window.location.href = card.dataset.url; return; }
-      showProduct(card.dataset.pid);
+      if (!card || !Object.hasOwn(PRODUCT_DATA, card.dataset.pid)) return;
+      if (!el.classList.contains('p-details-btn')) {
+        window.location.href = PRODUCT_URLS[card.dataset.pid];
+        return;
+      }
+      showProduct(card.dataset.pid, el);
     };
 
-    /* Deep link from elsewhere on the site: /shop/?product=gift-box */
+    /* Old shared links now reach the same dedicated page as the card. */
     const linked = new URLSearchParams(location.search).get('product');
-    if (linked && PRODUCT_DATA[linked]) showProduct(linked);
+    if (linked && Object.hasOwn(PRODUCT_URLS, linked)) location.replace(PRODUCT_URLS[linked]);
   }
 
   /* === ADD TO CART (shop only) === */

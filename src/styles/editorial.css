@@ -368,3 +368,30 @@ html.chrome-performance{scroll-behavior:smooth}
   transition:opacity .4s,visibility .4s;
 }
 .chrome-performance :is(.cart-overlay,.pdm-overlay).open{visibility:visible}
+
+/* Keep quick Details beside the purchase action and full-page links native. */
+.shop-page .p-img-link{display:block;color:inherit}
+.shop-page .p-name a{color:inherit;text-decoration:none}
+.shop-page .p-name a:hover{text-decoration:underline;text-underline-offset:.15em}
+.shop-page .p-details-btn{min-height:48px;padding:.65rem .9rem;font-size:.75rem;letter-spacing:.04em;color:var(--editorial-ink);border-color:var(--editorial-rule)}
+.pdm-page-link{display:flex;align-items:center;justify-content:center;min-height:48px;margin-top:.75rem;color:var(--editorial-ink);text-align:center;text-underline-offset:.2em}
+
+/* Native scroll-snap gallery: no zoom, cropping, animation loop or blur. */
+.pdp-gallery{min-width:0}
+.pdp-gallery .pdp-media{display:flex;gap:0;width:100%;margin:0;padding:0;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+.pdp-gallery .pdp-media::-webkit-scrollbar{display:none}
+.pdp-gallery .pdp-media img{flex:0 0 100%;width:100%;min-width:0;aspect-ratio:8/5;height:auto;object-fit:contain;object-position:center;scroll-snap-align:start;scroll-snap-stop:always;align-self:center;padding:0;border:0;background:transparent;filter:none}
+.pdp-gallery-controls{display:flex;justify-content:center;gap:.75rem;margin-top:1rem}
+.pdp-gallery-choice{display:grid;place-items:center;width:88px;min-height:56px;padding:3px;border:1px solid transparent;background:transparent;cursor:pointer}
+.pdp-gallery-choice[aria-current="true"]{border-color:var(--editorial-olive)}
+.pdp-gallery-choice img{display:block;width:100%;aspect-ratio:8/5;object-fit:contain}
+@media(max-width:767px){
+  .shop-page .p-actions{flex-wrap:wrap;gap:.35rem}
+  .shop-page .p-add-btn{flex-basis:100%}
+  .shop-page .p-details-btn{flex:1;min-height:44px;padding:.5rem;font-size:.75rem;letter-spacing:.015em}
+  .pdp-gallery-controls{gap:0;margin-top:0}
+  .pdp-gallery-choice{width:44px;min-height:44px;padding:0;border:0}
+  .pdp-gallery-choice img{display:none}
+  .pdp-gallery-choice::before{content:'';width:7px;height:7px;border:1px solid var(--editorial-olive);border-radius:50%}
+  .pdp-gallery-choice[aria-current="true"]::before{background:var(--editorial-olive)}
+}
